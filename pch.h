@@ -12,6 +12,8 @@
 
 #include <vector>
 #include <list>
+#include <unordered_map>
+#include <functional>
 #include <cmath>
 #include <string>
 #include <sstream>

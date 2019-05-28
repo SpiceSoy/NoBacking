@@ -2,149 +2,577 @@
 #include "Player.h"
 #include <atlimage.h>
 Player::Player(GameFramework* framework, const std::string& tag)
-	:GameObject(framework,tag)
+	:GameObject(framework, tag), playerState(this)
 {
-	this->playerAnime.ReSize(71);
-	//기본
-	this->playerAnime.AddImage(L"Resources/png/6.png");
-	this->playerAnime.AddImage(L"Resources/png/7.png");
-	this->playerAnime.AddImage(L"Resources/png/8.png");
-	this->playerAnime.AddImage(L"Resources/png/9.png");
-	this->playerAnime.AddImage(L"Resources/png/10.png");
-	this->playerAnime.AddImage(L"Resources/png/11.png");
-	subAnimation subAnim;
-	subAnim.next = CharacterState::LOOP;
-	subAnim.subImageStartIndex = 0;
-	subAnim.subImageSize = 6;
-	this->playerAnime.AddMotion(CharacterState::IDLE, subAnim);
-	//걷기
-	this->playerAnime.AddImage(L"Resources/png/12.png");
-	this->playerAnime.AddImage(L"Resources/png/13.png");
-	this->playerAnime.AddImage(L"Resources/png/14.png");
-	this->playerAnime.AddImage(L"Resources/png/15.png");
-	this->playerAnime.AddImage(L"Resources/png/16.png");
-	this->playerAnime.AddImage(L"Resources/png/17.png");
-	this->playerAnime.AddImage(L"Resources/png/18.png");
-	this->playerAnime.AddImage(L"Resources/png/19.png");
-	this->playerAnime.AddImage(L"Resources/png/20.png");
-	this->playerAnime.AddImage(L"Resources/png/21.png");
-	subAnim.next = CharacterState::LOOP;
-	subAnim.subImageStartIndex = 6;
-	subAnim.subImageSize = 10;
-	this->playerAnime.AddMotion(CharacterState::MOTION1, subAnim);
-	//달리기
-	this->playerAnime.AddImage(L"Resources/png/22.png");
-	this->playerAnime.AddImage(L"Resources/png/23.png");
-	this->playerAnime.AddImage(L"Resources/png/24.png");
-	this->playerAnime.AddImage(L"Resources/png/25.png");
-	this->playerAnime.AddImage(L"Resources/png/26.png");
-	this->playerAnime.AddImage(L"Resources/png/27.png");
-	this->playerAnime.AddImage(L"Resources/png/28.png");
-	this->playerAnime.AddImage(L"Resources/png/29.png");
-	subAnim.next = CharacterState::LOOP;
-	subAnim.subImageStartIndex = 16;
-	subAnim.subImageSize = 8;
-	this->playerAnime.AddMotion(CharacterState::MOTION2, subAnim);
-	//가드
-	this->playerAnime.AddImage(L"Resources/png/84.png");
-	this->playerAnime.AddImage(L"Resources/png/85.png");
-	this->playerAnime.AddImage(L"Resources/png/86.png");
-	this->playerAnime.AddImage(L"Resources/png/87.png");
-	this->playerAnime.AddImage(L"Resources/png/88.png");
-	this->playerAnime.AddImage(L"Resources/png/89.png");
-	this->playerAnime.AddImage(L"Resources/png/90.png");
-	subAnim.next = CharacterState::None;
-	subAnim.subImageStartIndex = 24;
-	subAnim.subImageSize = 7;
-	this->playerAnime.AddMotion(CharacterState::MOTION3, subAnim);
-	//찌르기
-	this->playerAnime.AddImage(L"Resources/png/60.png");
-	this->playerAnime.AddImage(L"Resources/png/61.png");
-	this->playerAnime.AddImage(L"Resources/png/62.png");
-	this->playerAnime.AddImage(L"Resources/png/63.png");
-	this->playerAnime.AddImage(L"Resources/png/64.png");
-	this->playerAnime.AddImage(L"Resources/png/65.png");
-	subAnim.next = CharacterState::None;
-	subAnim.subImageStartIndex = 31;
-	subAnim.scale = 1.15;
-	subAnim.subImageSize = 6;
-	this->playerAnime.AddMotion(CharacterState::MOTION4, subAnim);
-	//점프
-	this->playerAnime.AddImage(L"Resources/png/30.png");
-	this->playerAnime.AddImage(L"Resources/png/31.png");
-	this->playerAnime.AddImage(L"Resources/png/32.png");
-	subAnim.next = CharacterState::None;
-	subAnim.subImageStartIndex = 37;
-	subAnim.scale = 1.0;
-	subAnim.subImageSize = 3;
-	this->playerAnime.AddMotion(CharacterState::MOTION5, subAnim);
-	this->playerAnime.AddImage(L"Resources/png/33.png");
-	subAnim.next = CharacterState::None;
-	subAnim.subImageStartIndex = 40;
-	subAnim.scale = 1.0;
-	subAnim.subImageSize = 1;
-	this->playerAnime.AddMotion(CharacterState::MOTION6, subAnim);
-	this->playerAnime.AddImage(L"Resources/png/34.png");
-	this->playerAnime.AddImage(L"Resources/png/35.png");
-	subAnim.next = CharacterState::None;
-	subAnim.subImageStartIndex = 41;
-	subAnim.scale = 1.0;
-	subAnim.subImageSize = 2;
-	this->playerAnime.AddMotion(CharacterState::MOTION7, subAnim);
-	//점프 공격
-	this->playerAnime.AddImage(L"Resources/png/43.png");
-	this->playerAnime.AddImage(L"Resources/png/44.png");
-	this->playerAnime.AddImage(L"Resources/png/45.png");
-	this->playerAnime.AddImage(L"Resources/png/46.png");
-	this->playerAnime.AddImage(L"Resources/png/47.png");
-	this->playerAnime.AddImage(L"Resources/png/48.png");
-	this->playerAnime.AddImage(L"Resources/png/49.png");
-	this->playerAnime.AddImage(L"Resources/png/50.png");
-	subAnim.next = CharacterState::None;
-	subAnim.subImageStartIndex = 43;
-	subAnim.scale = 1.5;
-	subAnim.subImageSize = 8;
-	this->playerAnime.AddMotion(CharacterState::MOTION8, subAnim);
-	//베기
-	this->playerAnime.AddImage(L"Resources/png/51.png");
-	this->playerAnime.AddImage(L"Resources/png/52.png");
-	this->playerAnime.AddImage(L"Resources/png/53.png");
-	this->playerAnime.AddImage(L"Resources/png/54.png");
-	this->playerAnime.AddImage(L"Resources/png/55.png");
-	this->playerAnime.AddImage(L"Resources/png/56.png");
-	this->playerAnime.AddImage(L"Resources/png/57.png");
-	this->playerAnime.AddImage(L"Resources/png/58.png");
-	this->playerAnime.AddImage(L"Resources/png/59.png");
-	subAnim.next = CharacterState::None;
-	subAnim.subImageStartIndex = 51;
-	subAnim.scale = 1.0;
-	subAnim.subImageSize = 9;
-	this->playerAnime.AddMotion(CharacterState::MOTION9, subAnim);
+	const std::wstring fileDir = L"Resources/c3/";
+#pragma region AnimeDef
+	//애니메이션 정의 시작
+	{
+		this->playerAnime.ReSize(79);
+		//기본
+		this->playerAnime.AddImage(fileDir + L"6.png");
+		this->playerAnime.AddImage(fileDir + L"7.png");
+		this->playerAnime.AddImage(fileDir + L"8.png");
+		this->playerAnime.AddImage(fileDir + L"9.png");
+		this->playerAnime.AddImage(fileDir + L"10.png");
+		this->playerAnime.AddImage(fileDir + L"11.png");
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 0.85;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 6;
+		this->playerAnime.AddMotion(CharacterNormalState::IDLE, subAnim);
+		//걷기
+		//this->playerAnime.AddImage(fileDir + L"12.png");
+		//this->playerAnime.AddImage(fileDir + L"13.png");
+		//this->playerAnime.AddImage(fileDir + L"14.png");
+		//this->playerAnime.AddImage(fileDir + L"15.png");
+		//this->playerAnime.AddImage(fileDir + L"16.png");
+		//this->playerAnime.AddImage(fileDir + L"17.png");
+		//this->playerAnime.AddImage(fileDir + L"18.png");
+		//this->playerAnime.AddImage(fileDir + L"19.png");
+		//this->playerAnime.AddImage(fileDir + L"20.png");
+		//this->playerAnime.AddImage(fileDir + L"21.png");
 
-	//점공2
-	this->playerAnime.AddImage(L"Resources/png/36.png");
-	this->playerAnime.AddImage(L"Resources/png/37.png");
-	this->playerAnime.AddImage(L"Resources/png/38.png");
-	this->playerAnime.AddImage(L"Resources/png/39.png");
-	this->playerAnime.AddImage(L"Resources/png/40.png");
-	this->playerAnime.AddImage(L"Resources/png/41.png");
-	this->playerAnime.AddImage(L"Resources/png/42.png");
-	this->playerAnime.AddImage(L"Resources/png/43.png");
-	this->playerAnime.AddImage(L"Resources/png/44.png");
-	this->playerAnime.AddImage(L"Resources/png/45.png");
-	this->playerAnime.AddImage(L"Resources/png/46.png");
-	subAnim.next = CharacterState::None;
-	subAnim.subImageStartIndex = 60;
-	subAnim.scale = 1.0;
-	subAnim.subImageSize = 11;
-	this->playerAnime.AddMotion(CharacterState::MOTION10, subAnim);
+		this->playerAnime.AddImage(fileDir + L"21.png");
+		this->playerAnime.AddImage(fileDir + L"20.png");
+		this->playerAnime.AddImage(fileDir + L"19.png");
+		this->playerAnime.AddImage(fileDir + L"18.png");
+		this->playerAnime.AddImage(fileDir + L"17.png");
+		this->playerAnime.AddImage(fileDir + L"16.png");
+		this->playerAnime.AddImage(fileDir + L"15.png");
+		this->playerAnime.AddImage(fileDir + L"14.png");
+		this->playerAnime.AddImage(fileDir + L"13.png");
+		this->playerAnime.AddImage(fileDir + L"12.png");
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 0.75;
+		subAnim.subImageStartIndex = 6;
+		subAnim.subImageSize = 10;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION1, subAnim);
+		//달리기
+		this->playerAnime.AddImage(fileDir + L"22.png");
+		this->playerAnime.AddImage(fileDir + L"23.png");
+		this->playerAnime.AddImage(fileDir + L"24.png");
+		this->playerAnime.AddImage(fileDir + L"25.png");
+		this->playerAnime.AddImage(fileDir + L"26.png");
+		this->playerAnime.AddImage(fileDir + L"27.png");
+		this->playerAnime.AddImage(fileDir + L"28.png");
+		this->playerAnime.AddImage(fileDir + L"29.png");
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 0.75;
+		subAnim.subImageStartIndex = 16;
+		subAnim.subImageSize = 8;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION2, subAnim);
+		//가드
+		this->playerAnime.AddImage(fileDir + L"84.png");
+		this->playerAnime.AddImage(fileDir + L"85.png");
+		this->playerAnime.AddImage(fileDir + L"86.png");
+		this->playerAnime.AddImage(fileDir + L"87.png");
+		this->playerAnime.AddImage(fileDir + L"88.png");
+		this->playerAnime.AddImage(fileDir + L"89.png");
+		this->playerAnime.AddImage(fileDir + L"90.png");
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 24;
+		subAnim.subImageSize = 7;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION3, subAnim);
+		//찌르기
+		this->playerAnime.AddImage(fileDir + L"60.png");
+		this->playerAnime.AddImage(fileDir + L"61.png");
+		this->playerAnime.AddImage(fileDir + L"62.png");
+		this->playerAnime.AddImage(fileDir + L"63.png");
+		this->playerAnime.AddImage(fileDir + L"64.png");
+		this->playerAnime.AddImage(fileDir + L"65.png");
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 31;
+		subAnim.scale = 1.15;
+		subAnim.subImageSize = 6;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION4, subAnim);
+		//점프
+		this->playerAnime.AddImage(fileDir + L"30.png");
+		this->playerAnime.AddImage(fileDir + L"31.png");
+		this->playerAnime.AddImage(fileDir + L"32.png");
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 37;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 3;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION5, subAnim);
+		this->playerAnime.AddImage(fileDir + L"33.png");
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 40;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 1;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION6, subAnim);
+		this->playerAnime.AddImage(fileDir + L"34.png");
+		this->playerAnime.AddImage(fileDir + L"35.png");
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 41;
+		subAnim.scale = 2.0;
+		subAnim.subImageSize = 2;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION7, subAnim);
+		//점프 공격
+		this->playerAnime.AddImage(fileDir + L"43.png");
+		this->playerAnime.AddImage(fileDir + L"44.png");
+		this->playerAnime.AddImage(fileDir + L"45.png");
+		this->playerAnime.AddImage(fileDir + L"46.png");
+		this->playerAnime.AddImage(fileDir + L"47.png");
+		this->playerAnime.AddImage(fileDir + L"48.png");
+		this->playerAnime.AddImage(fileDir + L"49.png");
+		this->playerAnime.AddImage(fileDir + L"50.png");
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 43;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 8;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION8, subAnim);
+		//베기
+		this->playerAnime.AddImage(fileDir + L"51.png");
+		this->playerAnime.AddImage(fileDir + L"52.png");
+		this->playerAnime.AddImage(fileDir + L"53.png");
+		this->playerAnime.AddImage(fileDir + L"54.png");
+		this->playerAnime.AddImage(fileDir + L"55.png");
+		this->playerAnime.AddImage(fileDir + L"56.png");
+		this->playerAnime.AddImage(fileDir + L"57.png");
+		this->playerAnime.AddImage(fileDir + L"58.png");
+		this->playerAnime.AddImage(fileDir + L"59.png");
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 51;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 9;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION9, subAnim);
+
+		//점공2
+		this->playerAnime.AddImage(fileDir + L"36.png");
+		this->playerAnime.AddImage(fileDir + L"37.png");
+		this->playerAnime.AddImage(fileDir + L"38.png");
+		this->playerAnime.AddImage(fileDir + L"39.png");
+		this->playerAnime.AddImage(fileDir + L"40.png");
+		this->playerAnime.AddImage(fileDir + L"41.png");
+		this->playerAnime.AddImage(fileDir + L"42.png");
+		this->playerAnime.AddImage(fileDir + L"43.png");
+		this->playerAnime.AddImage(fileDir + L"44.png");
+		this->playerAnime.AddImage(fileDir + L"45.png");
+		this->playerAnime.AddImage(fileDir + L"46.png");
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 60;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 11;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION10, subAnim);
+
+		//가드 이동
+		this->playerAnime.AddImage(fileDir + L"91.png");
+		this->playerAnime.AddImage(fileDir + L"92.png");
+		this->playerAnime.AddImage(fileDir + L"93.png");
+		this->playerAnime.AddImage(fileDir + L"94.png");
+		this->playerAnime.AddImage(fileDir + L"95.png");
+		this->playerAnime.AddImage(fileDir + L"96.png");
+		this->playerAnime.AddImage(fileDir + L"97.png");
+		this->playerAnime.AddImage(fileDir + L"98.png");
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.subImageStartIndex = 71;
+		subAnim.scale = 0.45;
+		subAnim.subImageSize = 8;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION11, subAnim);
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.subImageStartIndex = 30;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 1;
+		this->playerAnime.AddMotion(CharacterNormalState::MOTION12, subAnim);
+
+	}
+#pragma endregion
 
 
+#pragma region StateDef
+	//State 정의 시작
+	{
+	//IDLE
+		{
+			this->playerState.SetStateFunctionSet(
+				CharacterNormalState::IDLE,
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(CharacterNormalState::IDLE);
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
+					}
+					else if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+					{
+						player.transform.Jump(500);
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPUP));
+					}
+					else if (GetAsyncKeyState('Z') & 0x8000)
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
+					}
+					else if (GetAsyncKeyState('X') & 0x8000)
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
+					}
+					else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
+					{
+						player.playerAnime.ChangeState(CharacterNormalState::MOTION1);
+						player.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+					}
+					else if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+					{
+						player.playerAnime.ChangeState(CharacterNormalState::MOTION2);
+						player.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+					}
+					else
+					{
+						player.playerAnime.ChangeState(CharacterNormalState::IDLE);
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+		//베기
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::SLASH),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH), true);
+					player.delayCounter = 0.0f;
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.delayCounter += deltaTime;
+					if (player.delayCounter > player.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::SLASH)) * 0.7)
+					{
+						if (GetAsyncKeyState('Z') & 0x8000)
+						{
+							player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
+						}
+						else if (GetAsyncKeyState('X') & 0x8000)
+						{
+							player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
+						}
+					}
+					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::SLASH)))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+		//찌르기
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::STING),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING), true);
+					player.delayCounter = 0.0f;
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.delayCounter += deltaTime;
+					if (player.delayCounter > player.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::STING)) * 0.7)
+					{
+						if (GetAsyncKeyState('X') & 0x8000)
+						{
+							player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
+						}
+						else if (GetAsyncKeyState('Z') & 0x8000)
+						{
+							player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
+						}
+					}
+					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::STING)))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+		//가드
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::GUARDUP),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP), true);
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::GUARDUP)))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+		//점프업
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::JUMPUP),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPUP), true);
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					if (GetAsyncKeyState(VK_LEFT))
+					{
+						player.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+					}
+					else if (GetAsyncKeyState(VK_RIGHT))
+					{
+						player.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+					}
+					if (((GetAsyncKeyState('Z') & 0x8000) || (GetAsyncKeyState('X') & 0x8000)))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1));
+					}
+					if (player.transform.GetJumpPower() < 0)
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPDOWN));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+		//점프다운
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::JUMPDOWN),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPDOWN), true);
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					if (GetAsyncKeyState(VK_LEFT))
+					{
+						player.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+					}
+					else if (GetAsyncKeyState(VK_RIGHT))
+					{
+						player.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+					}
+					if (((GetAsyncKeyState('X') ) || (GetAsyncKeyState('Z'))))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1));
+					}
+					if (!player.transform.GetJumpState())
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::LANDING));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+		//착지
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::LANDING),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::LANDING), true);
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::LANDING)))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+		//점프공격 1
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1), true);
+					player.delayCounter = 0.0f;
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.delayCounter += deltaTime;
+					if (GetAsyncKeyState(VK_LEFT))
+					{
+						player.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+					}
+					else if (GetAsyncKeyState(VK_RIGHT))
+					{
+						player.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+					}
+					if (player.delayCounter > player.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1)) * 0.75 && ((GetAsyncKeyState('X') & 0x8000) || (GetAsyncKeyState('Z') & 0x8000)))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2));
+					}
+					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1)))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPUP));
+					}
+					if (!player.transform.GetJumpState())
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+		//점프공격 2
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2), true);
+					player.delayCounter = 0.0f;
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.delayCounter += deltaTime;
+					if (GetAsyncKeyState(VK_LEFT))
+					{
+						player.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+					}
+					else if (GetAsyncKeyState(VK_RIGHT))
+					{
+						player.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+					}
+					if (player.delayCounter > player.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2)) * 0.7 && ((GetAsyncKeyState('Z') & 0x8000) || (GetAsyncKeyState('X') & 0x8000)))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1));
+					}
+					if (!player.transform.GetJumpState())
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+
+		//가드 온
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::GUARDON),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON), true);
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(VK_RIGHT))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDMOVE));
+					}
+					else if(!GetAsyncKeyState(VK_DOWN))
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+
+		//가드 이동
+		{
+			this->playerState.SetStateFunctionSet(
+				static_cast<CharacterNormalState>(PlayerState::GUARDMOVE),
+				[](GameObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDMOVE), true);
+				},
+				[](GameObject & object, float deltaTime) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					if (!GetAsyncKeyState(VK_DOWN))
+					{
+					player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+					}
+					else if (GetAsyncKeyState(VK_LEFT))
+					{
+						player.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+					}
+					else if (GetAsyncKeyState(VK_RIGHT))
+					{
+						player.transform.Translate(Vec2DF::Right() * 150.0f * deltaTime);
+					}
+					else 
+					{
+						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON));
+					}
+				},
+					[](GameObject & object, CharacterNormalState state) -> bool
+				{
+					return true;
+				}
+				);
+		}
+
+	}
+#pragma endregion
+
+	//State 정의 끝
 
 
-
-	this->playerAnime.ChangeState(CharacterState::IDLE);
-	this->transform.Translate(Vec2DF::Down() * 500,1);
+	this->playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+	this->transform.Translate(Vec2DF::Down() * 500, 1);
 
 }
 
@@ -152,83 +580,13 @@ void Player::Update(float deltaTime)
 {
 	this->transform.Update(deltaTime);
 	this->playerAnime.Update(deltaTime);
-	bool keyinput = false;
-	if (this->transform.GetJumpState())
-	{
-		if (GetAsyncKeyState('Z')) 
-		{
-			this->playerAnime.ChangeState(CharacterState::MOTION8);
-		}
-		else if (GetAsyncKeyState('X'))
-		{
-			this->playerAnime.ChangeState(CharacterState::MOTION10);
-		}
-		else if (this->transform.GetJumpPower() > 0)
-		{
-			this->playerAnime.ChangeState(CharacterState::MOTION5);
-		}
-		else if(this->transform.GetJumpPower() < 0)
-		{
-			this->playerAnime.ChangeState(CharacterState::MOTION6);
-
-		}
-
-		if (GetAsyncKeyState(VK_LEFT))
-		{
-			this->transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
-			keyinput = true;
-		}
-		else if (GetAsyncKeyState(VK_RIGHT))
-		{
-			this->transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
-			keyinput = true;
-		}
-		GetAsyncKeyState(VK_SPACE);
-		keyinput = true;
-	}
-	else if (GetAsyncKeyState(VK_DOWN))
-	{
-		this->playerAnime.ChangeState(CharacterState::MOTION3);
-		keyinput = true;
-	}
-	else if (GetAsyncKeyState(VK_SPACE) &0x0001)
-	{
- 		this->transform.Jump(500);
-		keyinput = true;
-	}
-	else if (GetAsyncKeyState('Z'))
-	{
-		this->playerAnime.ChangeState(CharacterState::MOTION4);
-		keyinput = true;
-	}
-	else if (GetAsyncKeyState('X'))
-	{
-		this->playerAnime.ChangeState(CharacterState::MOTION9);
-		keyinput = true;
-	}
-	else if (GetAsyncKeyState(VK_LEFT))
-	{
-		this->playerAnime.ChangeState(CharacterState::MOTION1);
-		this->transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
-		keyinput = true;
-	}
-	else if (GetAsyncKeyState(VK_RIGHT))
-	{
-		this->playerAnime.ChangeState(CharacterState::MOTION2);
-		this->transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
-		keyinput = true;
-	}
-
-	if (!keyinput)
-	{
-		this->playerAnime.ChangeState(CharacterState::IDLE);
-	}
+	this->playerState.Update(deltaTime);
 }
 
 void Player::Draw(PaintInfo info)
 {
 
-	auto rt = RECT{ 0,0,2200,2200};
+	auto rt = RECT{ 0,0,2200,2200 };
 	FillRect(info.hdc, &rt, (HBRUSH)GetStockObject(WHITE_BRUSH));
 	this->playerAnime.GetCurrentImage().img.Draw(info.hdc, this->transform.Position.x, this->transform.Position.y);
 }

@@ -19,6 +19,7 @@ public:
 	const Tag tag;
 	Transform transform;
 	GameObject(GameFramework* framework, const std::string& tag) : IFrameworkObject(framework), tag(tag), transform(*this, framework) {};
+	GameObject(const GameObject& other) = delete;
 	virtual ~GameObject() = default;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw(PaintInfo info) = 0;

@@ -9,7 +9,6 @@
 #include "AnimatedCollisionData.h"
 
 
-constexpr float frameTime = (1000.f / 60.f)/250.f;
 struct subImage
 {
 	CImage img;
@@ -23,26 +22,29 @@ struct subAnimation
 	size_t subImageStartIndex = 0;
 	size_t subImageSize = 0;
 	float scale = 1.0f;
-	CharacterState next = CharacterState::LOOP;
+	CharacterNormalState next = CharacterNormalState::LOOP;
 };
 
 class Animation
 {
+	static constexpr float frameTime = (1000.f / 60.f) / 250.f;
 	float thisTime;
 	bool isActive = true;
-	CharacterState thisState;
+	CharacterNormalState thisState;
 	std::vector<subImage> frameImageData;
 	std::vector<std::vector<AnimatedCollisionData>> frameCollisionData;
-	std::unordered_map<CharacterState,subAnimation> motionData;
+	std::unordered_map<CharacterNormalState,subAnimation> motionData;
 public:
-	void ChangeState(CharacterState state);
+	void ChangeState(CharacterNormalState state , bool reset = false);
 	void Update(float deltaTime);
 	const subImage& GetCurrentImage() const;
 	subAnimation GetCurrentAnimation() const;
 	void AddImage(subImage image);
 	void AddImage(const std::wstring& image);
-	void AddMotion(CharacterState state, subAnimation motion);
+	void AddMotion(CharacterNormalState state, subAnimation motion);
 	void ReSize(size_t cnt) { this->frameImageData.reserve(cnt); }
+	bool isEnd(CharacterNormalState state) const;
+	float GetTotalTime(CharacterNormalState state) const;
 	//subImage GetCurrentCollisionData() const;
 
 };
