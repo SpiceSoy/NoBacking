@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일\GameFramework">
+      <UniqueIdentifier>{adfe6472-ee3b-485f-8944-c8f6b84a5dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\GameFramework\Utill">
+      <UniqueIdentifier>{4be6d33c-0528-47b3-9092-62e9388e8378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\GameFramework\Core">
+      <UniqueIdentifier>{84e00b55-ec3d-403a-9756-57af5afd4674}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\GameFramework\Class">
+      <UniqueIdentifier>{35435060-2938-4160-99ff-74e7ac9e2455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\GameFramework\Class\Interface">
+      <UniqueIdentifier>{10848b73-eba8-40a7-9158-21bbaef9fd4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameFramework">
+      <UniqueIdentifier>{09db5648-f84c-4e44-834f-f13aed55f129}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameFramework\Utill">
+      <UniqueIdentifier>{a9ad705b-d7ef-4aae-bfb9-ee864a8b5e13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameFramework\Class">
+      <UniqueIdentifier>{c2e15377-86a3-417c-9141-a204bf11b550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\GameFramework\Class\Collision">
+      <UniqueIdentifier>{7be44d85-a537-4407-a42f-6f28fea20104}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\GameFramework\Data">
+      <UniqueIdentifier>{301b93ba-320b-4081-98fb-4d38d56dcb3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\GameFramework\Objects">
+      <UniqueIdentifier>{038c047a-f6a4-417a-98ac-09a8b0955e45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\GameFramework\Object">
+      <UniqueIdentifier>{05b1c1b5-5a2d-461b-8b07-dd146ca39d16}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="NoBacking.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="PaintInfo.h">
+      <Filter>헤더 파일\GameFramework\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2D.h">
+      <Filter>헤더 파일\GameFramework\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>헤더 파일\GameFramework\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework.h">
+      <Filter>헤더 파일\GameFramework\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>헤더 파일\GameFramework\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="IFrameworkObject.h">
+      <Filter>헤더 파일\GameFramework\Class\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>헤더 파일\GameFramework\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="UtillFunction.h">
+      <Filter>헤더 파일\GameFramework\Utill</Filter>
+    </ClInclude>
+    <ClInclude Include="ICollision.h">
+      <Filter>헤더 파일\GameFramework\Class\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionCollection.h">
+      <Filter>헤더 파일\GameFramework\Class\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>헤더 파일\GameFramework\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedCollisionData.h">
+      <Filter>헤더 파일\GameFramework\Class\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="StateEnum.h">
+      <Filter>헤더 파일\GameFramework\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>헤더 파일\GameFramework\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectContainer.h">
+      <Filter>헤더 파일\GameFramework\Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="NoBacking.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UtillFunction.cpp">
+      <Filter>소스 파일\GameFramework\Utill</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>소스 파일\GameFramework\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>소스 파일\GameFramework\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectContainer.cpp">
+      <Filter>소스 파일\GameFramework</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NoBacking.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="NoBacking.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
