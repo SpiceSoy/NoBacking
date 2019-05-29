@@ -12,4 +12,5 @@ struct PaintInfo
 	Vec2DU DrawSize;
 	Vec2DU StartPoint() const { return Vec2DU{ margin / 2, margin / 2 }; }
 	Vec2DU EndPoint() const { return Vec2DU{ DrawSize.x + margin / 2, DrawSize.y + margin / 2 }; }
+	HPEN CollisionPen[3];
 };

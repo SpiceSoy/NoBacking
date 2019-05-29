@@ -30,4 +30,5 @@ public:
 	virtual void Reset() {};
 	//true == StopMove, false == Moving
 	virtual bool isCollision(GameObject& other) { return false; };
+	virtual bool CheckCollision(GameObject& other) { return false; };
 };

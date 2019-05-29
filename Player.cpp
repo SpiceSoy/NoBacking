@@ -4,7 +4,7 @@
 Player::Player(GameFramework* framework, const std::string& tag)
 	:GameObject(framework, tag), playerState(this)
 {
-	const std::wstring fileDir = L"Resources/c3/";
+	const std::wstring fileDir = L"Resources/c1/";
 #pragma region AnimeDef
 	//애니메이션 정의 시작
 	{
@@ -179,7 +179,6 @@ Player::Player(GameFramework* framework, const std::string& tag)
 
 	}
 #pragma endregion
-
 
 #pragma region StateDef
 	//State 정의 시작
@@ -566,10 +565,8 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		}
 
 	}
-#pragma endregion
-
 	//State 정의 끝
-
+#pragma endregion
 
 	this->playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 	this->transform.Translate(Vec2DF::Down() * 500, 1);
@@ -585,7 +582,6 @@ void Player::Update(float deltaTime)
 
 void Player::Draw(PaintInfo info)
 {
-
 	auto rt = RECT{ 0,0,2200,2200 };
 	FillRect(info.hdc, &rt, (HBRUSH)GetStockObject(WHITE_BRUSH));
 	this->playerAnime.GetCurrentImage().img.Draw(info.hdc, this->transform.Position.x, this->transform.Position.y);

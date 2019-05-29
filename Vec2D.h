@@ -19,6 +19,10 @@ public:
 	{
 		return sqrt(pow(x, 2) + pow(y, 2));
 	}
+	float GetScaleSq() const
+	{
+		return (pow(x, 2) + pow(y, 2));
+	}
 	ThisType Nomal() const
 	{
 		return ThisType(x / this->GetScale(), y / this->GetScale());

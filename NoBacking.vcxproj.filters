@@ -52,6 +52,9 @@
     <Filter Include="소스 파일\GameFramework\Enum">
       <UniqueIdentifier>{74b7082c-6ed6-4364-b14c-a297e8416ddd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\GameFramework\Collision">
+      <UniqueIdentifier>{21794c13-7fb2-4f96-8a92-bfb3afab4c6a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -93,17 +96,8 @@
     <ClInclude Include="UtillFunction.h">
       <Filter>헤더 파일\GameFramework\Utill</Filter>
     </ClInclude>
-    <ClInclude Include="ICollision.h">
-      <Filter>헤더 파일\GameFramework\Class\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionCollection.h">
-      <Filter>헤더 파일\GameFramework\Class\Collision</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>헤더 파일\GameFramework\Class</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedCollisionData.h">
-      <Filter>헤더 파일\GameFramework\Class\Collision</Filter>
     </ClInclude>
     <ClInclude Include="StateEnum.h">
       <Filter>헤더 파일\GameFramework\Data</Filter>
@@ -116,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="State.h">
       <Filter>헤더 파일\GameFramework\Class</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>헤더 파일\GameFramework\Class\Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +145,12 @@
     </ClCompile>
     <ClCompile Include="StateEnum.cpp">
       <Filter>소스 파일\GameFramework\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>소스 파일\GameFramework\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionSet.cpp">
+      <Filter>소스 파일\GameFramework\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

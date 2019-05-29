@@ -2,10 +2,12 @@
 #include "GameFramework.h"
 #include "ObjectContainer.h"
 #include "GameObject.h"
+#include "Collision.h"
 
 GameFramework::GameFramework()
 {
 	this->Create();
+	CollisionResult::reserve(50);
 }
 
 GameFramework::~GameFramework()

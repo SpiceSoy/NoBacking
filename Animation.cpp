@@ -47,7 +47,7 @@ void Animation::Update(float deltaTime)
 
 const subImage& Animation::GetCurrentImage() const
 {
-	if (frameImageData.empty())
+	if (motionData.empty())
 	{
 		return this->frameImageData.at(0);
 	}
@@ -85,4 +85,21 @@ bool Animation::isEnd(CharacterNormalState state) const
 float Animation::GetTotalTime(CharacterNormalState state) const
 {
 	return motionData.at(state).subImageSize* motionData.at(state).scale * Animation::frameTime;
+}
+
+const CollisionCollection& Animation::GetCurrentCollisionData() const
+{
+	if (frameCollision.empty())
+	{
+		return CollisionCollection::Null();
+	}
+	if (motionData.empty())
+	{
+		return this->frameCollision.at(0);
+	}
+	else
+	{
+		auto ani = this->GetCurrentAnimation();
+		return this->frameCollision.at(ani.subImageStartIndex + thisTime / (frameTime));
+	}
 }

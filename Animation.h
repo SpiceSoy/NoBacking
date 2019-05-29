@@ -6,7 +6,7 @@
 #include "Vec2D.h"
 #include "Rect.h"
 #include "StateEnum.h"
-#include "AnimatedCollisionData.h"
+#include "Collision.h"
 
 
 struct subImage
@@ -32,7 +32,7 @@ class Animation
 	bool isActive = true;
 	CharacterNormalState thisState;
 	std::vector<subImage> frameImageData;
-	std::vector<std::vector<AnimatedCollisionData>> frameCollisionData;
+	std::vector<CollisionCollection> frameCollision;
 	std::unordered_map<CharacterNormalState,subAnimation> motionData;
 public:
 	void ChangeState(CharacterNormalState state , bool reset = false);
@@ -45,6 +45,6 @@ public:
 	void ReSize(size_t cnt) { this->frameImageData.reserve(cnt); }
 	bool isEnd(CharacterNormalState state) const;
 	float GetTotalTime(CharacterNormalState state) const;
-	//subImage GetCurrentCollisionData() const;
+	const CollisionCollection& GetCurrentCollisionData() const;
 
 };
