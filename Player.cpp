@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Player.h"
+#include "Collision.h"
 #include <atlimage.h>
 Player::Player(GameFramework* framework, const std::string& tag)
 	:GameObject(framework, tag), playerState(this)
@@ -568,6 +569,30 @@ Player::Player(GameFramework* framework, const std::string& tag)
 	//State Á¤ÀÇ ³¡
 #pragma endregion
 
+#pragma region CollisionSet
+
+	//6.png
+	CollisionCollection cc(Vec2DF{0,-40}, 400.0f);
+	Collision body(CollisionTag::PlayerBody, Vec2DF{ 0,-40 },90.0f);
+	Collision weapon(CollisionTag::PlayerAttack, Vec2DF{ 55,-70 }, 80.0f);
+	body.AddCollision(SubCollisionData{ CollisionShapeType::Circle,Vec2DF{0,-70},Vec2DF{20.0f,0.0f} });
+	cc.AddCollision((body));
+	cc.AddCollision((weapon));
+	this->playerAnime.AddCollision((cc));
+	//7.png
+	this->playerAnime.AddCollision((cc));
+	//8.png
+	this->playerAnime.AddCollision((cc));
+	//9.png
+	this->playerAnime.AddCollision((cc));
+	//10.png
+	this->playerAnime.AddCollision((cc));
+	//11.png
+	this->playerAnime.AddCollision((cc));
+
+#pragma endregion
+
+
 	this->playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 	this->transform.Translate(Vec2DF::Down() * 500, 1);
 
@@ -585,4 +610,5 @@ void Player::Draw(PaintInfo info)
 	auto rt = RECT{ 0,0,2200,2200 };
 	FillRect(info.hdc, &rt, (HBRUSH)GetStockObject(WHITE_BRUSH));
 	this->playerAnime.GetCurrentImage().img.Draw(info.hdc, this->transform.Position.x, this->transform.Position.y);
+	this->playerAnime.GetCurrentCollisionData().Draw(info, this->transform.Position + ImageMargin);
 }

@@ -1,20 +1,34 @@
 #include "pch.h"
 #include "Collision.h"
+#include "Vec2D.h"
 
 
 CollisionResult::ResultVector CollisionResult::result = CollisionResult::ResultVector();
 
-void Collision::Draw(PaintInfo info)
+void Collision::AddCollision(SubCollisionData& col)
 {
-	auto old = SelectObject(info.hdc, info.CollisionPen[1]);
-	auto rt = RectF(this->center, radius);
-	Ellipse(info.hdc, rt.left, rt.top, rt.right, rt.bottom);
-	SelectObject(info.hdc, old);
+	this->subCollision.push_back((col));
+}
+void Collision::AddCollision(SubCollisionData&& col)
+{
+	this->subCollision.emplace_back(std::move(col));
 }
 
-bool Collision::CheckIntersect(const Collision& A, const Collision& B)
+void Collision::Draw(PaintInfo info, const Vec2DF& parentPos) const
 {
-	auto dist = (A.center - B.center).GetScaleSq();
+	auto old = SelectObject(info.hdc, info.CollisionPen[1]);
+	auto rt = RectF(this->center + parentPos, radius);
+	Ellipse(info.hdc, rt.left, rt.top, rt.right, rt.bottom);
+	SelectObject(info.hdc, old);
+	for (auto& subC : this->subCollision)
+	{
+		subC.Draw(info, parentPos);
+	}
+}
+
+bool Collision::CheckIntersect(const Collision& A, const Vec2DF& APos, const Collision& B, const Vec2DF& BPos)
+{
+	auto dist = ((A.center + APos) - (B.center - BPos)).GetScaleSq();
 	auto r1 = abs(A.radius);
 	auto r2 = abs(B.radius);
 	if (dist <= pow(r1 + r2, 2))
@@ -23,30 +37,41 @@ bool Collision::CheckIntersect(const Collision& A, const Collision& B)
 		{
 			for (auto b = B.subCollision.cbegin(); b != B.subCollision.cend(); b++)
 			{
-				if (SubCollisionData::CheckIntersect(*a, *b)) { return true; }
+				if (SubCollisionData::CheckIntersect(*a, APos, *b, BPos)) { return true; }
 			}
 		}
 	}
 	return false;
 }
 
+void CollisionCollection::AddCollision(Collision& col)
+{
+	this->collection.push_back((col));
+}
 void CollisionCollection::AddCollision(Collision&& col)
 {
 	this->collection.emplace_back(std::move(col));
 }
 
-void CollisionCollection::Draw(PaintInfo info)
+void CollisionCollection::Draw(PaintInfo info , const Vec2DF& parentPos) const
 {
+
 	auto old = SelectObject(info.hdc, info.CollisionPen[0]);
-	auto rt = RectF(this->center, radius);
+	auto oldBr = SelectObject(info.hdc,GetStockObject(NULL_BRUSH));
+	auto rt = RectF(this->center + parentPos, radius);
 	Ellipse(info.hdc, rt.left, rt.top, rt.right, rt.bottom);
 	SelectObject(info.hdc, old);
+	for (auto& subC : this->collection)
+	{
+		subC.Draw(info, parentPos);
+	}
+	SelectObject(info.hdc, oldBr);
 }
 
-bool CollisionCollection::CheckIntersect(const CollisionCollection& A, const CollisionCollection& B)
+bool CollisionCollection::CheckIntersect(const CollisionCollection& A, const Vec2DF& APos, const CollisionCollection& B, const Vec2DF& BPos)
 {
 	bool Check = false;
-	auto dist = (A.center - B.center).GetScaleSq();
+	auto dist = ((A.center + APos) - (B.center+BPos)).GetScaleSq();
 	auto r1 = abs(A.radius);
 	auto r2 = abs(B.radius);
 	if (dist <= pow(r1 + r2, 2) && !A.isNull && !B.isNull)
@@ -55,7 +80,7 @@ bool CollisionCollection::CheckIntersect(const CollisionCollection& A, const Col
 		{
 			for (auto b = B.collection.cbegin(); b != B.collection.cend(); b++)
 			{
-				if (Collision::CheckIntersect(*a, *b)) 
+				if (Collision::CheckIntersect(*a,APos, *b,BPos)) 
 				{
 					if (!Check) 
 					{

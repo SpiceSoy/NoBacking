@@ -252,6 +252,9 @@ LRESULT CALLBACK wProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		pInfo.stretchDc = StretchDc;
 		pInfo.margin = Margin;
 		pInfo.DrawSize = Vec2DU{ ClientRect.right,ClientRect.bottom };
+		pInfo.CollisionPen[0] = CreatePen(PS_DASH, 2, RGB(0, 255, 0));
+		pInfo.CollisionPen[1] = CreatePen(PS_DASH, 2, RGB(255, 0, 255));
+		pInfo.CollisionPen[2] = CreatePen(PS_DASH, 2, RGB(255, 255, 0));
 
 		framework.Draw(pInfo);
 
@@ -261,6 +264,9 @@ LRESULT CALLBACK wProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		StretchBlt(hDc, 0, 0, ClientRect.right ,ClientRect.bottom,
 			bufferDc, pInfo.StartPoint().x, pInfo.StartPoint().y , pInfo.DrawSize.x, pInfo.DrawSize.y,
 			SRCCOPY);
+		DeleteObject(pInfo.CollisionPen[0]);
+		DeleteObject(pInfo.CollisionPen[1]);
+		DeleteObject(pInfo.CollisionPen[2]);
 
 
 		//BitBlt(hDc, 0, 0, ClientRect.right, ClientRect.bottom, StretchDc, 0, 0, SRCCOPY);

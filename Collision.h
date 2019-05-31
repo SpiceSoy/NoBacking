@@ -31,29 +31,31 @@ struct SubCollisionData
 	CollisionShapeType shape = CollisionShapeType::Point;
 	Vec2DF pos;
 	Vec2DF size;
-	void Draw(PaintInfo info);
-	static bool CheckIntersect(const SubCollisionData& A, const SubCollisionData& B);
-	static bool IntersectPointToPoint(const SubCollisionData& P1, const SubCollisionData& P2);
-	static bool IntersectPointToRect(const SubCollisionData& P1, const SubCollisionData& R2);
-	static bool IntersectRectToRect(const SubCollisionData& R1, const SubCollisionData& R2);
-	static bool IntersectCircleToPoint(const SubCollisionData& C1, const SubCollisionData& P2);
-	static bool IntersectCircleToCircle(const SubCollisionData& C1, const SubCollisionData& C2);
-	static bool IntersectCircleToRect(const SubCollisionData& C1, const SubCollisionData& R2);
+	void Draw(PaintInfo info, const Vec2DF& parentPos) const;
+	static bool CheckIntersect(const SubCollisionData& A, const Vec2DF& APos, const SubCollisionData& B, const Vec2DF& BPos);
+	static bool IntersectPointToPoint(const SubCollisionData& P1, const Vec2DF& P1Pos, const SubCollisionData& P2, const Vec2DF& P2Pos);
+	static bool IntersectPointToRect(const SubCollisionData& P1, const Vec2DF& P1Pos, const SubCollisionData& R2, const Vec2DF& R2Pos);
+	static bool IntersectRectToRect(const SubCollisionData& R1, const Vec2DF& R1Pos, const SubCollisionData& R2, const Vec2DF& R2Pos);
+	static bool IntersectCircleToPoint(const SubCollisionData& C1, const Vec2DF& C1Pos, const SubCollisionData& P2, const Vec2DF& P12os);
+	static bool IntersectCircleToCircle(const SubCollisionData& C1, const Vec2DF& C1Pos, const SubCollisionData& C2, const Vec2DF& C2Pos);
+	static bool IntersectCircleToRect(const SubCollisionData& C1, const Vec2DF& C1Pos, const SubCollisionData& R2, const Vec2DF& R2Pos);
 };
 
 //°¢ 2°èÃþ
 class Collision
 {
 	std::vector<SubCollisionData> subCollision;
-	const Vec2DF center;
-	const float radius;
 public:
+	Vec2DF center;
+	float radius;
 	const CollisionTag tag;
+	void AddCollision(SubCollisionData& col);
+	void AddCollision(SubCollisionData&& col);
 	Collision(CollisionTag tag,Vec2DF center, float radius) : tag(tag), center(center), radius(radius) {};
 	template <class Ty>
 	Collision(CollisionTag tag,Vec2DF center, float radius, Ty&& data) : tag(tag), center(center), radius(radius), subCollision(std::forward(data)) {};
-	void Draw(PaintInfo info);
-	static bool CheckIntersect(const Collision& A, const Collision& B);
+	void Draw(PaintInfo info , const Vec2DF& parentPos) const;
+	static bool CheckIntersect(const Collision& A, const Vec2DF& APos, const Collision& B, const Vec2DF& BPos);
 };
 //1°èÃþ
 class CollisionCollection
@@ -65,9 +67,10 @@ class CollisionCollection
 	CollisionCollection(bool isNull) :isNull(true), center(0, 0), radius(0) {};
 public:
 	CollisionCollection(Vec2DF center, float radius) : center(center), radius(radius) {};
+	void AddCollision(Collision& col);
 	void AddCollision(Collision&& col);
-	void Draw(PaintInfo info);
-	static bool CheckIntersect(const CollisionCollection& A, const CollisionCollection& B);
+	void Draw(PaintInfo info , const Vec2DF& parentPos) const;
+	static bool CheckIntersect(const CollisionCollection& A, const Vec2DF& APos, const CollisionCollection& B, const Vec2DF& BPos);
 	static CollisionCollection& Null();
 };
 //ÄÝ¸®Àü ¿ä¾à

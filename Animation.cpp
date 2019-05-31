@@ -72,6 +72,15 @@ void Animation::AddImage(const std::wstring& dir)
 	this->frameImageData.emplace_back(dir);
 }
 
+void Animation::AddCollision(CollisionCollection& col)
+{
+	this->frameCollision.push_back(col);
+}
+void Animation::AddCollision(CollisionCollection&& col)
+{
+	this->frameCollision.emplace_back(std::move(col));
+}
+
 void Animation::AddMotion(CharacterNormalState state, subAnimation motion)
 {
 	this->motionData[state] = motion;
@@ -100,6 +109,13 @@ const CollisionCollection& Animation::GetCurrentCollisionData() const
 	else
 	{
 		auto ani = this->GetCurrentAnimation();
-		return this->frameCollision.at(ani.subImageStartIndex + thisTime / (frameTime));
+		if (this->frameCollision.size() > ani.subImageStartIndex + thisTime / (frameTime))
+		{
+			return this->frameCollision.at(ani.subImageStartIndex + thisTime / (frameTime));
+		}
+		else 
+		{
+			return CollisionCollection::Null();
+		}
 	}
 }

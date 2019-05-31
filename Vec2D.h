@@ -127,6 +127,7 @@ public:
 	static ThisType Left() { return ThisType{ -1, 0 }; }
 	static ThisType Down() { return ThisType{ 0, 1 }; }
 	static ThisType Right() { return ThisType{ 1, 0 }; }
+	static ThisType Zero() { return ThisType{ 0, 0 }; }
 };
 using Vec2DU = Vec2D<int>;
 using Vec2DF = Vec2D<float>;
