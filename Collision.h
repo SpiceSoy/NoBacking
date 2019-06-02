@@ -2,13 +2,16 @@
 #include "Vec2D.h"
 #include "PaintInfo.h"
 #include <vector>
+#include <string>
 
-enum class CollisionTag
-{
-	None,
-	PlayerBody,
-	PlayerAttack,
-};
+//
+//enum class CollisionTag
+//{
+//	None,
+//	PlayerBody,
+//	PlayerAttack,
+//};
+using CollisionTag = std::string;
 
 enum class CollisionShapeType
 {
@@ -52,8 +55,7 @@ public:
 	void AddCollision(SubCollisionData& col);
 	void AddCollision(SubCollisionData&& col);
 	Collision(CollisionTag tag,Vec2DF center, float radius) : tag(tag), center(center), radius(radius) {};
-	template <class Ty>
-	Collision(CollisionTag tag,Vec2DF center, float radius, Ty&& data) : tag(tag), center(center), radius(radius), subCollision(std::forward(data)) {};
+	Collision(CollisionTag tag,Vec2DF center, float radius, std::vector<SubCollisionData>&& data) : tag(tag), center(center), radius(radius), subCollision(std::move(data)) {};
 	void Draw(PaintInfo info , const Vec2DF& parentPos) const;
 	static bool CheckIntersect(const Collision& A, const Vec2DF& APos, const Collision& B, const Vec2DF& BPos);
 };
@@ -62,16 +64,18 @@ class CollisionCollection
 {
 	bool isNull = false;
 	std::vector<Collision> collection;
-	const Vec2DF center;
-	const float radius;
+	Vec2DF center;
+	float radius;
 	CollisionCollection(bool isNull) :isNull(true), center(0, 0), radius(0) {};
 public:
 	CollisionCollection(Vec2DF center, float radius) : center(center), radius(radius) {};
+	CollisionCollection(const std::string dir) { this->Load(dir); };
 	void AddCollision(Collision& col);
 	void AddCollision(Collision&& col);
 	void Draw(PaintInfo info , const Vec2DF& parentPos) const;
 	static bool CheckIntersect(const CollisionCollection& A, const Vec2DF& APos, const CollisionCollection& B, const Vec2DF& BPos);
 	static CollisionCollection& Null();
+	void Load(const std::string& dir);
 };
 //콜리전 요약
 // UPDATE -> 애니메이트 프레임 계산 -> 해당 오브젝트 ANIMATE에서 해당 프레임의 콜리젼 데이터 가져와서 갱신

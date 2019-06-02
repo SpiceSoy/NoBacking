@@ -2,6 +2,8 @@
 #include "Collision.h"
 #include "Vec2D.h"
 
+#include <fstream>
+
 
 CollisionResult::ResultVector CollisionResult::result = CollisionResult::ResultVector();
 
@@ -99,4 +101,37 @@ CollisionCollection& CollisionCollection::Null()
 {
 	static CollisionCollection nullObj(true);
 	return nullObj;
+}
+
+void CollisionCollection::Load(const std::string& dir)
+{
+	std::ifstream ifs(dir);
+	std::string imgdir;
+	float imgPivotX;
+	float imgPivoty;
+	if (!ifs.eof())
+	{
+		ifs >> imgdir >> imgPivotX >> imgPivoty;
+		int CollisionCount = 0;
+		ifs >> this->center.x >> this->center.y >> this->radius >> CollisionCount;
+		for (int i = 0; i < CollisionCount; i++)
+		{
+			CollisionTag tag;
+			Vec2DF colPos;
+			float colRadius;
+			int subCollisionCount = 0;
+			ifs >> tag >> colPos.x >> colPos.y >> colRadius >> subCollisionCount;
+			std::vector<SubCollisionData> subColldata;
+			for (size_t i = 0; i < subCollisionCount; i++)
+			{
+				SubCollisionData subData;
+				int type;
+				ifs >> type >> subData.pos.x >> subData.pos.y >> subData.size.x >> subData.size.y;
+				subData.shape = static_cast<CollisionShapeType>(type);
+				subColldata.push_back(subData);
+			}
+			auto col = Collision(tag, colPos, colRadius,std::move(subColldata));
+			this->collection.push_back(std::move(col));
+		}
+	}
 }

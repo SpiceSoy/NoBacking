@@ -43,6 +43,7 @@ public:
 	void AddImage(const std::wstring& image);
 	void AddCollision(CollisionCollection& col);
 	void AddCollision(CollisionCollection&& col);
+	void AddCollision(const std::string& dir);
 	void AddMotion(CharacterNormalState state, subAnimation motion);
 	void ReSize(size_t cnt) { this->frameImageData.reserve(cnt); }
 	bool isEnd(CharacterNormalState state) const;

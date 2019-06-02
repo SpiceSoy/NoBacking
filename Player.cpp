@@ -5,18 +5,19 @@
 Player::Player(GameFramework* framework, const std::string& tag)
 	:GameObject(framework, tag), playerState(this)
 {
-	const std::wstring fileDir = L"Resources/c1/";
+	const std::wstring imgFileDir = L"Resources/c1/";
+	const std::string colFileDir = "Resources/cCol/";
 #pragma region AnimeDef
 	//애니메이션 정의 시작
 	{
 		this->playerAnime.ReSize(79);
 		//기본
-		this->playerAnime.AddImage(fileDir + L"6.png");
-		this->playerAnime.AddImage(fileDir + L"7.png");
-		this->playerAnime.AddImage(fileDir + L"8.png");
-		this->playerAnime.AddImage(fileDir + L"9.png");
-		this->playerAnime.AddImage(fileDir + L"10.png");
-		this->playerAnime.AddImage(fileDir + L"11.png");
+		this->playerAnime.AddImage(imgFileDir + L"6.png");
+		this->playerAnime.AddImage(imgFileDir + L"7.png");
+		this->playerAnime.AddImage(imgFileDir + L"8.png");
+		this->playerAnime.AddImage(imgFileDir + L"9.png");
+		this->playerAnime.AddImage(imgFileDir + L"10.png");
+		this->playerAnime.AddImage(imgFileDir + L"11.png");
 		subAnimation subAnim;
 		subAnim.next = CharacterNormalState::LOOP;
 		subAnim.scale = 0.85;
@@ -35,105 +36,105 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		//this->playerAnime.AddImage(fileDir + L"20.png");
 		//this->playerAnime.AddImage(fileDir + L"21.png");
 
-		this->playerAnime.AddImage(fileDir + L"21.png");
-		this->playerAnime.AddImage(fileDir + L"20.png");
-		this->playerAnime.AddImage(fileDir + L"19.png");
-		this->playerAnime.AddImage(fileDir + L"18.png");
-		this->playerAnime.AddImage(fileDir + L"17.png");
-		this->playerAnime.AddImage(fileDir + L"16.png");
-		this->playerAnime.AddImage(fileDir + L"15.png");
-		this->playerAnime.AddImage(fileDir + L"14.png");
-		this->playerAnime.AddImage(fileDir + L"13.png");
-		this->playerAnime.AddImage(fileDir + L"12.png");
+		this->playerAnime.AddImage(imgFileDir + L"21.png");
+		this->playerAnime.AddImage(imgFileDir + L"20.png");
+		this->playerAnime.AddImage(imgFileDir + L"19.png");
+		this->playerAnime.AddImage(imgFileDir + L"18.png");
+		this->playerAnime.AddImage(imgFileDir + L"17.png");
+		this->playerAnime.AddImage(imgFileDir + L"16.png");
+		this->playerAnime.AddImage(imgFileDir + L"15.png");
+		this->playerAnime.AddImage(imgFileDir + L"14.png");
+		this->playerAnime.AddImage(imgFileDir + L"13.png");
+		this->playerAnime.AddImage(imgFileDir + L"12.png");
 		subAnim.next = CharacterNormalState::LOOP;
 		subAnim.scale = 0.75;
 		subAnim.subImageStartIndex = 6;
 		subAnim.subImageSize = 10;
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION1, subAnim);
 		//달리기
-		this->playerAnime.AddImage(fileDir + L"22.png");
-		this->playerAnime.AddImage(fileDir + L"23.png");
-		this->playerAnime.AddImage(fileDir + L"24.png");
-		this->playerAnime.AddImage(fileDir + L"25.png");
-		this->playerAnime.AddImage(fileDir + L"26.png");
-		this->playerAnime.AddImage(fileDir + L"27.png");
-		this->playerAnime.AddImage(fileDir + L"28.png");
-		this->playerAnime.AddImage(fileDir + L"29.png");
+		this->playerAnime.AddImage(imgFileDir + L"22.png");
+		this->playerAnime.AddImage(imgFileDir + L"23.png");
+		this->playerAnime.AddImage(imgFileDir + L"24.png");
+		this->playerAnime.AddImage(imgFileDir + L"25.png");
+		this->playerAnime.AddImage(imgFileDir + L"26.png");
+		this->playerAnime.AddImage(imgFileDir + L"27.png");
+		this->playerAnime.AddImage(imgFileDir + L"28.png");
+		this->playerAnime.AddImage(imgFileDir + L"29.png");
 		subAnim.next = CharacterNormalState::LOOP;
 		subAnim.scale = 0.75;
 		subAnim.subImageStartIndex = 16;
 		subAnim.subImageSize = 8;
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION2, subAnim);
 		//가드
-		this->playerAnime.AddImage(fileDir + L"84.png");
-		this->playerAnime.AddImage(fileDir + L"85.png");
-		this->playerAnime.AddImage(fileDir + L"86.png");
-		this->playerAnime.AddImage(fileDir + L"87.png");
-		this->playerAnime.AddImage(fileDir + L"88.png");
-		this->playerAnime.AddImage(fileDir + L"89.png");
-		this->playerAnime.AddImage(fileDir + L"90.png");
+		this->playerAnime.AddImage(imgFileDir + L"84.png");
+		this->playerAnime.AddImage(imgFileDir + L"85.png");
+		this->playerAnime.AddImage(imgFileDir + L"86.png");
+		this->playerAnime.AddImage(imgFileDir + L"87.png");
+		this->playerAnime.AddImage(imgFileDir + L"88.png");
+		this->playerAnime.AddImage(imgFileDir + L"89.png");
+		this->playerAnime.AddImage(imgFileDir + L"90.png");
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 24;
 		subAnim.subImageSize = 7;
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION3, subAnim);
 		//찌르기
-		this->playerAnime.AddImage(fileDir + L"60.png");
-		this->playerAnime.AddImage(fileDir + L"61.png");
-		this->playerAnime.AddImage(fileDir + L"62.png");
-		this->playerAnime.AddImage(fileDir + L"63.png");
-		this->playerAnime.AddImage(fileDir + L"64.png");
-		this->playerAnime.AddImage(fileDir + L"65.png");
+		this->playerAnime.AddImage(imgFileDir + L"60.png");
+		this->playerAnime.AddImage(imgFileDir + L"61.png");
+		this->playerAnime.AddImage(imgFileDir + L"62.png");
+		this->playerAnime.AddImage(imgFileDir + L"63.png");
+		this->playerAnime.AddImage(imgFileDir + L"64.png");
+		this->playerAnime.AddImage(imgFileDir + L"65.png");
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 31;
 		subAnim.scale = 1.15;
 		subAnim.subImageSize = 6;
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION4, subAnim);
 		//점프
-		this->playerAnime.AddImage(fileDir + L"30.png");
-		this->playerAnime.AddImage(fileDir + L"31.png");
-		this->playerAnime.AddImage(fileDir + L"32.png");
+		this->playerAnime.AddImage(imgFileDir + L"30.png");
+		this->playerAnime.AddImage(imgFileDir + L"31.png");
+		this->playerAnime.AddImage(imgFileDir + L"32.png");
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 37;
 		subAnim.scale = 1.0;
 		subAnim.subImageSize = 3;
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION5, subAnim);
-		this->playerAnime.AddImage(fileDir + L"33.png");
+		this->playerAnime.AddImage(imgFileDir + L"33.png");
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 40;
 		subAnim.scale = 1.0;
 		subAnim.subImageSize = 1;
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION6, subAnim);
-		this->playerAnime.AddImage(fileDir + L"34.png");
-		this->playerAnime.AddImage(fileDir + L"35.png");
+		this->playerAnime.AddImage(imgFileDir + L"34.png");
+		this->playerAnime.AddImage(imgFileDir + L"35.png");
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 41;
 		subAnim.scale = 2.0;
 		subAnim.subImageSize = 2;
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION7, subAnim);
 		//점프 공격
-		this->playerAnime.AddImage(fileDir + L"43.png");
-		this->playerAnime.AddImage(fileDir + L"44.png");
-		this->playerAnime.AddImage(fileDir + L"45.png");
-		this->playerAnime.AddImage(fileDir + L"46.png");
-		this->playerAnime.AddImage(fileDir + L"47.png");
-		this->playerAnime.AddImage(fileDir + L"48.png");
-		this->playerAnime.AddImage(fileDir + L"49.png");
-		this->playerAnime.AddImage(fileDir + L"50.png");
+		this->playerAnime.AddImage(imgFileDir + L"43.png");
+		this->playerAnime.AddImage(imgFileDir + L"44.png");
+		this->playerAnime.AddImage(imgFileDir + L"45.png");
+		this->playerAnime.AddImage(imgFileDir + L"46.png");
+		this->playerAnime.AddImage(imgFileDir + L"47.png");
+		this->playerAnime.AddImage(imgFileDir + L"48.png");
+		this->playerAnime.AddImage(imgFileDir + L"49.png");
+		this->playerAnime.AddImage(imgFileDir + L"50.png");
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 43;
 		subAnim.scale = 1.0;
 		subAnim.subImageSize = 8;
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION8, subAnim);
 		//베기
-		this->playerAnime.AddImage(fileDir + L"51.png");
-		this->playerAnime.AddImage(fileDir + L"52.png");
-		this->playerAnime.AddImage(fileDir + L"53.png");
-		this->playerAnime.AddImage(fileDir + L"54.png");
-		this->playerAnime.AddImage(fileDir + L"55.png");
-		this->playerAnime.AddImage(fileDir + L"56.png");
-		this->playerAnime.AddImage(fileDir + L"57.png");
-		this->playerAnime.AddImage(fileDir + L"58.png");
-		this->playerAnime.AddImage(fileDir + L"59.png");
+		this->playerAnime.AddImage(imgFileDir + L"51.png");
+		this->playerAnime.AddImage(imgFileDir + L"52.png");
+		this->playerAnime.AddImage(imgFileDir + L"53.png");
+		this->playerAnime.AddImage(imgFileDir + L"54.png");
+		this->playerAnime.AddImage(imgFileDir + L"55.png");
+		this->playerAnime.AddImage(imgFileDir + L"56.png");
+		this->playerAnime.AddImage(imgFileDir + L"57.png");
+		this->playerAnime.AddImage(imgFileDir + L"58.png");
+		this->playerAnime.AddImage(imgFileDir + L"59.png");
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 51;
 		subAnim.scale = 1.0;
@@ -141,17 +142,17 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION9, subAnim);
 
 		//점공2
-		this->playerAnime.AddImage(fileDir + L"36.png");
-		this->playerAnime.AddImage(fileDir + L"37.png");
-		this->playerAnime.AddImage(fileDir + L"38.png");
-		this->playerAnime.AddImage(fileDir + L"39.png");
-		this->playerAnime.AddImage(fileDir + L"40.png");
-		this->playerAnime.AddImage(fileDir + L"41.png");
-		this->playerAnime.AddImage(fileDir + L"42.png");
-		this->playerAnime.AddImage(fileDir + L"43.png");
-		this->playerAnime.AddImage(fileDir + L"44.png");
-		this->playerAnime.AddImage(fileDir + L"45.png");
-		this->playerAnime.AddImage(fileDir + L"46.png");
+		this->playerAnime.AddImage(imgFileDir + L"36.png");
+		this->playerAnime.AddImage(imgFileDir + L"37.png");
+		this->playerAnime.AddImage(imgFileDir + L"38.png");
+		this->playerAnime.AddImage(imgFileDir + L"39.png");
+		this->playerAnime.AddImage(imgFileDir + L"40.png");
+		this->playerAnime.AddImage(imgFileDir + L"41.png");
+		this->playerAnime.AddImage(imgFileDir + L"42.png");
+		this->playerAnime.AddImage(imgFileDir + L"43.png");
+		this->playerAnime.AddImage(imgFileDir + L"44.png");
+		this->playerAnime.AddImage(imgFileDir + L"45.png");
+		this->playerAnime.AddImage(imgFileDir + L"46.png");
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 60;
 		subAnim.scale = 1.0;
@@ -159,14 +160,14 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		this->playerAnime.AddMotion(CharacterNormalState::MOTION10, subAnim);
 
 		//가드 이동
-		this->playerAnime.AddImage(fileDir + L"91.png");
-		this->playerAnime.AddImage(fileDir + L"92.png");
-		this->playerAnime.AddImage(fileDir + L"93.png");
-		this->playerAnime.AddImage(fileDir + L"94.png");
-		this->playerAnime.AddImage(fileDir + L"95.png");
-		this->playerAnime.AddImage(fileDir + L"96.png");
-		this->playerAnime.AddImage(fileDir + L"97.png");
-		this->playerAnime.AddImage(fileDir + L"98.png");
+		this->playerAnime.AddImage(imgFileDir + L"91.png");
+		this->playerAnime.AddImage(imgFileDir + L"92.png");
+		this->playerAnime.AddImage(imgFileDir + L"93.png");
+		this->playerAnime.AddImage(imgFileDir + L"94.png");
+		this->playerAnime.AddImage(imgFileDir + L"95.png");
+		this->playerAnime.AddImage(imgFileDir + L"96.png");
+		this->playerAnime.AddImage(imgFileDir + L"97.png");
+		this->playerAnime.AddImage(imgFileDir + L"98.png");
 		subAnim.next = CharacterNormalState::LOOP;
 		subAnim.subImageStartIndex = 71;
 		subAnim.scale = 0.45;
@@ -571,24 +572,94 @@ Player::Player(GameFramework* framework, const std::string& tag)
 
 #pragma region CollisionSet
 
-	//6.png
-	CollisionCollection cc(Vec2DF{0,-40}, 400.0f);
-	Collision body(CollisionTag::PlayerBody, Vec2DF{ 0,-40 },90.0f);
-	Collision weapon(CollisionTag::PlayerAttack, Vec2DF{ 55,-70 }, 80.0f);
-	body.AddCollision(SubCollisionData{ CollisionShapeType::Circle,Vec2DF{0,-70},Vec2DF{20.0f,0.0f} });
-	cc.AddCollision((body));
-	cc.AddCollision((weapon));
-	this->playerAnime.AddCollision((cc));
-	//7.png
-	this->playerAnime.AddCollision((cc));
-	//8.png
-	this->playerAnime.AddCollision((cc));
-	//9.png
-	this->playerAnime.AddCollision((cc));
-	//10.png
-	this->playerAnime.AddCollision((cc));
-	//11.png
-	this->playerAnime.AddCollision((cc));
+	this->playerAnime.AddCollision(colFileDir + "6.txt");
+	this->playerAnime.AddCollision(colFileDir + "7.txt");
+	this->playerAnime.AddCollision(colFileDir + "8.txt");
+	this->playerAnime.AddCollision(colFileDir + "9.txt");
+	this->playerAnime.AddCollision(colFileDir + "10.txt");
+	this->playerAnime.AddCollision(colFileDir + "11.txt");
+
+	this->playerAnime.AddCollision(colFileDir + "21.txt");
+	this->playerAnime.AddCollision(colFileDir + "20.txt");
+	this->playerAnime.AddCollision(colFileDir + "19.txt");
+	this->playerAnime.AddCollision(colFileDir + "18.txt");
+	this->playerAnime.AddCollision(colFileDir + "17.txt");
+	this->playerAnime.AddCollision(colFileDir + "16.txt");
+	this->playerAnime.AddCollision(colFileDir + "15.txt");
+	this->playerAnime.AddCollision(colFileDir + "14.txt");
+	this->playerAnime.AddCollision(colFileDir + "13.txt");
+	this->playerAnime.AddCollision(colFileDir + "12.txt");
+	//달리기
+	this->playerAnime.AddCollision(colFileDir + "22.txt");
+	this->playerAnime.AddCollision(colFileDir + "23.txt");
+	this->playerAnime.AddCollision(colFileDir + "24.txt");
+	this->playerAnime.AddCollision(colFileDir + "25.txt");
+	this->playerAnime.AddCollision(colFileDir + "26.txt");
+	this->playerAnime.AddCollision(colFileDir + "27.txt");
+	this->playerAnime.AddCollision(colFileDir + "28.txt");
+	this->playerAnime.AddCollision(colFileDir + "29.txt");
+	//가드
+	this->playerAnime.AddCollision(colFileDir + "84.txt");
+	this->playerAnime.AddCollision(colFileDir + "85.txt");
+	this->playerAnime.AddCollision(colFileDir + "86.txt");
+	this->playerAnime.AddCollision(colFileDir + "87.txt");
+	this->playerAnime.AddCollision(colFileDir + "88.txt");
+	this->playerAnime.AddCollision(colFileDir + "89.txt");
+	this->playerAnime.AddCollision(colFileDir + "90.txt");
+	//찌르기
+	this->playerAnime.AddCollision(colFileDir + "60.txt");
+	this->playerAnime.AddCollision(colFileDir + "61.txt");
+	this->playerAnime.AddCollision(colFileDir + "62.txt");
+	this->playerAnime.AddCollision(colFileDir + "63.txt");
+	this->playerAnime.AddCollision(colFileDir + "64.txt");
+	this->playerAnime.AddCollision(colFileDir + "65.txt");
+	//점프
+	this->playerAnime.AddCollision(colFileDir + "30.txt");
+	this->playerAnime.AddCollision(colFileDir + "31.txt");
+	this->playerAnime.AddCollision(colFileDir + "32.txt");
+	this->playerAnime.AddCollision(colFileDir + "33.txt");
+	this->playerAnime.AddCollision(colFileDir + "34.txt");
+	this->playerAnime.AddCollision(colFileDir + "35.txt");
+	//점프 공격
+	this->playerAnime.AddCollision(colFileDir + "43.txt");
+	this->playerAnime.AddCollision(colFileDir + "44.txt");
+	this->playerAnime.AddCollision(colFileDir + "45.txt");
+	this->playerAnime.AddCollision(colFileDir + "46.txt");
+	this->playerAnime.AddCollision(colFileDir + "47.txt");
+	this->playerAnime.AddCollision(colFileDir + "48.txt");
+	this->playerAnime.AddCollision(colFileDir + "49.txt");
+	this->playerAnime.AddCollision(colFileDir + "50.txt");
+	//베기
+	this->playerAnime.AddCollision(colFileDir + "51.txt");
+	this->playerAnime.AddCollision(colFileDir + "52.txt");
+	this->playerAnime.AddCollision(colFileDir + "53.txt");
+	this->playerAnime.AddCollision(colFileDir + "54.txt");
+	this->playerAnime.AddCollision(colFileDir + "55.txt");
+	this->playerAnime.AddCollision(colFileDir + "56.txt");
+	this->playerAnime.AddCollision(colFileDir + "57.txt");
+	this->playerAnime.AddCollision(colFileDir + "58.txt");
+	this->playerAnime.AddCollision(colFileDir + "59.txt");
+	//점공2
+	this->playerAnime.AddCollision(colFileDir + "36.txt");
+	this->playerAnime.AddCollision(colFileDir + "37.txt");
+	this->playerAnime.AddCollision(colFileDir + "38.txt");
+	this->playerAnime.AddCollision(colFileDir + "39.txt");
+	this->playerAnime.AddCollision(colFileDir + "40.txt");
+	this->playerAnime.AddCollision(colFileDir + "41.txt");
+	this->playerAnime.AddCollision(colFileDir + "42.txt");
+	this->playerAnime.AddCollision(colFileDir + "43.txt");
+	this->playerAnime.AddCollision(colFileDir + "44.txt");
+	this->playerAnime.AddCollision(colFileDir + "45.txt");
+	this->playerAnime.AddCollision(colFileDir + "46.txt");
+	//가드 이동
+	this->playerAnime.AddCollision(colFileDir + "91.txt");
+	this->playerAnime.AddCollision(colFileDir + "92.txt");
+	this->playerAnime.AddCollision(colFileDir + "93.txt");
+	this->playerAnime.AddCollision(colFileDir + "94.txt");
+	this->playerAnime.AddCollision(colFileDir + "95.txt");
+	this->playerAnime.AddCollision(colFileDir + "96.txt");
+	this->playerAnime.AddCollision(colFileDir + "97.txt");
+	this->playerAnime.AddCollision(colFileDir + "98.txt");
 
 #pragma endregion
 

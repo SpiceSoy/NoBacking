@@ -81,6 +81,11 @@ void Animation::AddCollision(CollisionCollection&& col)
 	this->frameCollision.emplace_back(std::move(col));
 }
 
+void Animation::AddCollision(const std::string& dir)
+{
+	this->frameCollision.emplace_back(dir);
+}
+
 void Animation::AddMotion(CharacterNormalState state, subAnimation motion)
 {
 	this->motionData[state] = motion;
