@@ -114,6 +114,9 @@
     <ClInclude Include="Collision.h">
       <Filter>헤더 파일\GameFramework\Class\Collision</Filter>
     </ClInclude>
+    <ClInclude Include="SandBag.h">
+      <Filter>헤더 파일\GameFramework\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NoBacking.cpp">
@@ -151,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="CollisionSet.cpp">
       <Filter>소스 파일\GameFramework\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="SandBag.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

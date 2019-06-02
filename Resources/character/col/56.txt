@@ -1,4 +1,4 @@
-D:\리소스\윈플텀프리소스\png\collision\slash\56.png -128 -184
+﻿C:\Users\Soy\OneDrive\NoBacking\NoBacking\Resources\character\c1\56.png -128 -184
 0 -50 300 3
 Body 0 -42 130 11
 2 30 -70 20 20

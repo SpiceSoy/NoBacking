@@ -164,6 +164,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SandBag.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateEnum.h" />
     <ClInclude Include="targetver.h" />
@@ -176,6 +177,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CollisionSet.cpp" />
     <ClCompile Include="GameFramework.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="NoBacking.cpp" />
     <ClCompile Include="ObjectContainer.cpp" />
     <ClCompile Include="pch.cpp">
@@ -185,6 +187,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SandBag.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateEnum.cpp" />
     <ClCompile Include="Transform.cpp" />

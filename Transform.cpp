@@ -31,13 +31,16 @@ void Transform::Update(float deltaTime)
 	}
 }
 
-void Transform::Translate(Vec2D<Ty> vec , int count)
+void Transform::Translate(Vec2D<Ty> vec , bool checkCol, int count)
 {
 	int cnt = Utill::clamp(count, 1, 5);
 	for (size_t i = 0; i < cnt; i++)
 	{
 		this->Position += vec / cnt;
-		if (this->framework->CheckCollision(this->obj)) { this->Position -= vec / cnt; break; }
+		if (checkCol && this->framework->CheckCollision(this->obj))
+		{
+			this->Position -= vec / cnt; break; 
+		}
 	}
 }
 

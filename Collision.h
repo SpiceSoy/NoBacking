@@ -17,16 +17,32 @@ enum class CollisionShapeType
 {
 	Point,Rect,Circle
 };
-class GameObject;
+class GameStateObject;
 
 struct CollisionResult
 {
 	using ResultVector = std::vector<std::pair<CollisionTag, CollisionTag>>;
 	static ResultVector result;
+	static ResultVector reverseResult;
+	static std::pair<const GameStateObject*, const GameStateObject*> AB;
 	static bool isFalse() { return result.size() == 0; }
-	static const ResultVector& GetResult() { return result; }
-	static void clear() { result.clear(); }
-	static void reserve(size_t size) { result.reserve(size); }
+	static const ResultVector& GetResult(GameStateObject* id) 
+	{
+		if (AB.first == id)
+		{
+			return result;
+		}
+		else if((AB.second == id))
+		{
+			return reverseResult; 
+		}
+		else 
+		{
+			assert(false);
+		}
+	}
+	static void clear() { result.clear(); reverseResult.clear(); }
+	static void reserve(size_t size) { result.reserve(size); reverseResult.reserve(size);}
 };
 
 struct SubCollisionData
@@ -73,7 +89,7 @@ public:
 	void AddCollision(Collision& col);
 	void AddCollision(Collision&& col);
 	void Draw(PaintInfo info , const Vec2DF& parentPos) const;
-	static bool CheckIntersect(const CollisionCollection& A, const Vec2DF& APos, const CollisionCollection& B, const Vec2DF& BPos);
+	static bool CheckIntersect(const CollisionCollection& A, const Vec2DF& APos, const  GameStateObject* Aptr, const CollisionCollection& B, const Vec2DF& BPos, const  GameStateObject* Bptr);
 	static CollisionCollection& Null();
 	void Load(const std::string& dir);
 };

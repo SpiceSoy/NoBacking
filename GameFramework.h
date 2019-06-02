@@ -18,7 +18,7 @@ public:
 	void Destory();
 	void Update(float deltaTime);
 	void Draw(PaintInfo info);
-	bool CheckCollision(GameObject& obj);
+	bool CheckCollision(GameStateObject& obj);
 	Vec2DF GetDisplaySize() const;
 	Vec2DF GetMargin() const;
 	void MouseInput(Vec2DU MousePos, UINT iMessage);

@@ -1,9 +1,10 @@
 #pragma once
-class GameObject;
+class GameStateObject;
 class GameFramework;
 struct ObjectContainer
 {
 	ObjectContainer(GameFramework* framework);
 	~ObjectContainer();
-	GameObject* player;
+	GameStateObject* player;
+	GameStateObject* sandBag;
 };

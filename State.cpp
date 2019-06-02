@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "State.h"
 
-State::State(GameObject* obj) : object(obj) , state(CharacterNormalState::None) 
+State::State(GameStateObject* obj) : object(obj) , state(CharacterNormalState::None) 
 {
 }
 
@@ -10,9 +10,9 @@ void State::SetStateFunction(CharacterNormalState state, StateFunction&& functio
 	functionMap[state] = std::move(functionSet);
 }
 
-void State::SetStateFunctionSet(CharacterNormalState state, StateFunction::StartFuncType&& startFunc, StateFunction::UpdateFuncType&& UpdateFunc, StateFunction::EndFuncType&& endFunc)
+void State::SetStateFunctionSet(CharacterNormalState state, StateFunction::StartFuncType&& startFunc, StateFunction::UpdateFuncType&& UpdateFunc, StateFunction::EndFuncType&& endFunc, StateFunction::CollisionFuncType&& colFunc)
 {
-	functionMap.emplace(state, StateFunction(std::move(startFunc), std::move(UpdateFunc), std::move(endFunc)));
+	functionMap.emplace(state, StateFunction(std::move(startFunc), std::move(UpdateFunc), std::move(endFunc),std::move(colFunc)));
 }
 
 bool State::ChangeState(CharacterNormalState state)
@@ -34,5 +34,17 @@ void State::Update(float deltaTime)
 	if (this->functionMap.count(this->state) != 0)
 	{
 		this->functionMap.at(state).Update(*this->object,deltaTime);
+	}
+}
+
+bool State::isCollision(GameStateObject& other)
+{
+	if (this->functionMap.count(this->state) != 0)
+	{
+		return this->functionMap.at(state).Collision(*this->object,other,CollisionResult::GetResult(this->object));
+	}
+	else 
+	{
+		return false;
 	}
 }

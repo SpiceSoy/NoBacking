@@ -34,7 +34,8 @@ enum class CharacterNormalState : int
 	MOTION27,
 	MOTION28,
 	MOTION29,
-	MOTION30
+	MOTION30,
+	THISMOTION
 };
 
 enum class PlayerState : int

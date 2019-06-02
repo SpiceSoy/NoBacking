@@ -3,10 +3,12 @@
 #include "Vec2D.h"
 
 #include <fstream>
+#include <algorithm>
 
 
 CollisionResult::ResultVector CollisionResult::result = CollisionResult::ResultVector();
-
+CollisionResult::ResultVector CollisionResult::reverseResult = CollisionResult::ResultVector();
+std::pair<const GameStateObject*, const GameStateObject*> CollisionResult::AB = { nullptr,nullptr };
 void Collision::AddCollision(SubCollisionData& col)
 {
 	this->subCollision.push_back((col));
@@ -30,9 +32,9 @@ void Collision::Draw(PaintInfo info, const Vec2DF& parentPos) const
 
 bool Collision::CheckIntersect(const Collision& A, const Vec2DF& APos, const Collision& B, const Vec2DF& BPos)
 {
-	auto dist = ((A.center + APos) - (B.center - BPos)).GetScaleSq();
-	auto r1 = abs(A.radius);
-	auto r2 = abs(B.radius);
+	auto dist = ((A.center + APos) - (B.center + BPos)).GetScaleSq();
+	auto r1 = abs(A.radius/2);
+	auto r2 = abs(B.radius/2);
 	if (dist <= pow(r1 + r2, 2))
 	{
 		for (auto a = A.subCollision.cbegin(); a != A.subCollision.cend(); a++)
@@ -70,12 +72,12 @@ void CollisionCollection::Draw(PaintInfo info , const Vec2DF& parentPos) const
 	SelectObject(info.hdc, oldBr);
 }
 
-bool CollisionCollection::CheckIntersect(const CollisionCollection& A, const Vec2DF& APos, const CollisionCollection& B, const Vec2DF& BPos)
+bool CollisionCollection::CheckIntersect(const CollisionCollection& A, const Vec2DF& APos,const  GameStateObject* Aptr, const CollisionCollection& B, const Vec2DF& BPos, const  GameStateObject* Bptr)
 {
 	bool Check = false;
 	auto dist = ((A.center + APos) - (B.center+BPos)).GetScaleSq();
-	auto r1 = abs(A.radius);
-	auto r2 = abs(B.radius);
+	auto r1 = abs(A.radius/2);
+	auto r2 = abs(B.radius/2);
 	if (dist <= pow(r1 + r2, 2) && !A.isNull && !B.isNull)
 	{
 		for (auto a = A.collection.cbegin(); a != A.collection.cend(); a++)
@@ -88,8 +90,11 @@ bool CollisionCollection::CheckIntersect(const CollisionCollection& A, const Vec
 					{
 						CollisionResult::clear();
 						Check = true;
+						CollisionResult::AB.first = Aptr;
+						CollisionResult::AB.second = Bptr;
 					}
 					CollisionResult::result.push_back(std::make_pair(a->tag, b->tag));
+					CollisionResult::reverseResult.push_back(std::make_pair(b->tag, a->tag));
 				}
 			}
 		}
@@ -121,6 +126,8 @@ void CollisionCollection::Load(const std::string& dir)
 			float colRadius;
 			int subCollisionCount = 0;
 			ifs >> tag >> colPos.x >> colPos.y >> colRadius >> subCollisionCount;
+			std::transform(tag.begin(), tag.end(), tag.begin(), tolower);
+
 			std::vector<SubCollisionData> subColldata;
 			for (size_t i = 0; i < subCollisionCount; i++)
 			{

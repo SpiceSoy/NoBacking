@@ -11,25 +11,25 @@
 
 
 using Tag = std::string;
-class GameObject;
+class GameStateObject;
 
 class Transform : public IFrameworkObject
 {
 	static constexpr float gravity = 9.8f * 100;
 	using Ty = float;
 	//태그간의 충돌 관계 지정
-	GameObject& obj;
+	GameStateObject& obj;
 	std::map<Tag, bool> checkMap;
 	float MaxJumpPower = 0;
 	float JumpPower = 0;
 public:
-	Transform(GameObject& obj, GameFramework* framework) : obj(obj), IFrameworkObject(framework) {};
+	Transform(GameStateObject& obj, GameFramework* framework) : obj(obj), IFrameworkObject(framework) {};
 	Vec2D<Ty> Position = Vec2D<Ty>{ 0, 0 };
 	Vec2D<Ty> Size = Vec2D<Ty>{ 0,0 };
 	Vec2D<Ty> Scale = Vec2D<Ty>{ 1,1 };
 	Ty Roation = 0.0f;
 	void Update(float deltaTime);
-	void Translate(Vec2D<Ty> vec, int count = 4);
+	void Translate(Vec2D<Ty> vec,bool checkCol = true, int count = 4);
 	void Jump(float power);
 	bool CheckCollision(Transform& other);
 	bool GetCheckMap(const Tag& tag);

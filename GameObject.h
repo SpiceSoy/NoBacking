@@ -3,13 +3,15 @@
 #include "IFrameworkObject.h"
 #include "PaintInfo.h"
 #include "Transform.h"
+#include "Animation.h"
+#include "State.h"
 
 using Tag = std::string;
 
 
 class GameFramework;
 
-class GameObject : public IFrameworkObject
+class GameStateObject : public IFrameworkObject
 {
 private:
 protected:
@@ -18,9 +20,12 @@ protected:
 public:
 	const Tag tag;
 	Transform transform;
-	GameObject(GameFramework* framework, const std::string& tag) : IFrameworkObject(framework), tag(tag), transform(*this, framework) {};
-	GameObject(const GameObject& other) = delete;
-	virtual ~GameObject() = default;
+	Vec2DF ImageMargin;
+	Animation playerAnime;
+	State playerState;
+	GameStateObject(GameFramework* framework, const std::string& tag) : IFrameworkObject(framework), tag(tag), transform(*this, framework), playerState(this) {};
+	GameStateObject(const GameStateObject& other) = delete;
+	virtual ~GameStateObject() = default;
 	virtual void Update(float deltaTime) = 0;
 	virtual void Draw(PaintInfo info) = 0;
 	virtual void Destory() { this->isDestroy = true; };
@@ -29,6 +34,6 @@ public:
 	virtual bool GetActiveState() const { return this->isActive; }
 	virtual void Reset() {};
 	//true == StopMove, false == Moving
-	virtual bool isCollision(GameObject& other) { return false; };
-	virtual bool CheckCollision(GameObject& other) { return false; };
+	virtual bool isCollision(GameStateObject& other);
+	virtual bool CheckCollision(GameStateObject& other);
 };

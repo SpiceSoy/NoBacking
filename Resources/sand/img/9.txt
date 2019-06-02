@@ -1,0 +1,4 @@
+C:\Users\Soy\OneDrive\NoBacking\NoBacking\Resources\sand\img\9.png -200 -235
+-40 -100 200 1
+Collision -40 -100 150 1
+1 -33 -100 42 120

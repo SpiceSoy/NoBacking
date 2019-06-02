@@ -35,16 +35,21 @@ void GameFramework::Destory()
 void GameFramework::Update(float deltaTime)
 {
 	this->container->player->Update(deltaTime);
+	this->container->sandBag->Update(deltaTime);
 }
 
 void GameFramework::Draw(PaintInfo info)
 {
+	this->container->sandBag->Draw(info);
 	this->container->player->Draw(info);
 }
 
-bool GameFramework::CheckCollision(GameObject& obj)
+bool GameFramework::CheckCollision(GameStateObject& obj)
 {
-	return false;
+	if (this->container != nullptr)
+	{
+		return this->container->player->CheckCollision(*this->container->sandBag);
+	}
 }
 
 Vec2DF GameFramework::GetDisplaySize() const

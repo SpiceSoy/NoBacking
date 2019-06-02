@@ -29,6 +29,7 @@ class Animation
 {
 	static constexpr float frameTime = (1000.f / 60.f) / 250.f;
 	float thisTime;
+	int lastIndex = -1;
 	bool isActive = true;
 	CharacterNormalState thisState;
 	std::vector<subImage> frameImageData;
@@ -37,6 +38,7 @@ class Animation
 public:
 	void ChangeState(CharacterNormalState state , bool reset = false);
 	void Update(float deltaTime);
+	bool isChangeFrame();
 	const subImage& GetCurrentImage() const;
 	subAnimation GetCurrentAnimation() const;
 	void AddImage(subImage image);
@@ -46,7 +48,7 @@ public:
 	void AddCollision(const std::string& dir);
 	void AddMotion(CharacterNormalState state, subAnimation motion);
 	void ReSize(size_t cnt) { this->frameImageData.reserve(cnt); }
-	bool isEnd(CharacterNormalState state) const;
+	bool isEnd(CharacterNormalState state = CharacterNormalState::THISMOTION) const;
 	float GetTotalTime(CharacterNormalState state) const;
 	const CollisionCollection& GetCurrentCollisionData() const;
 

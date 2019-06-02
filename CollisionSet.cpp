@@ -92,23 +92,24 @@ bool SubCollisionData::IntersectRectToRect(const SubCollisionData& R1, const Vec
 bool SubCollisionData::IntersectCircleToPoint(const SubCollisionData& C1, const Vec2DF& C1Pos, const SubCollisionData& P2, const Vec2DF& P2Pos)
 {
 	assert(C1.shape == CollisionShapeType::Circle && P2.shape == CollisionShapeType::Point);
-	auto r = abs(C1.size.x);
+	auto r = abs(C1.size.x/2);
 	return ((P2.pos + P2Pos) - (C1.pos + C1Pos)).GetScaleSq() <= r*r;
 }
 bool SubCollisionData::IntersectCircleToCircle(const SubCollisionData& C1, const Vec2DF& C1Pos, const SubCollisionData& C2, const Vec2DF& C2Pos)
 {
 	assert(C1.shape == CollisionShapeType::Circle && C2.shape == CollisionShapeType::Circle);
 	auto dist = ((C2.pos + C2Pos) - (C1.pos + C1Pos)).GetScaleSq();
-	auto r1 = abs(C1.size.x);
-	auto r2 = abs(C1.size.x);
+	auto r1 = abs(C1.size.x/2);
+	auto r2 = abs(C1.size.x/2);
 	return dist <= pow(r1+r2,2);
 }
 bool SubCollisionData::IntersectCircleToRect(const SubCollisionData& C1, const Vec2DF& C1Pos, const SubCollisionData& R2, const Vec2DF& R2Pos)
 {
 	assert(C1.shape == CollisionShapeType::Circle && R2.shape == CollisionShapeType::Rect);
 	auto rt = RectF(R2.pos + R2Pos, R2.size.x, R2.size.y);
-	auto r = abs(C1.size.x);
+	auto r = abs(C1.size.x/2);
 
+	//06-03
 	bool rt1 = RectF(R2.pos+ R2Pos, R2.size.x + 2 * r, R2.size.y).hasIn(C1.pos + C1Pos);
 	bool rt2 = RectF(R2.pos+ R2Pos, R2.size.x, R2.size.y + 2 * r).hasIn(C1.pos + C1Pos);
 	bool secTL = (((C1.pos + C1Pos) - Vec2DF{rt.top, rt.left}).GetScaleSq() <= r * r);

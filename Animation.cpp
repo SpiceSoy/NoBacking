@@ -45,6 +45,35 @@ void Animation::Update(float deltaTime)
 	//현재 프레임 계산
 }
 
+bool Animation::isChangeFrame()
+{
+	if (motionData.empty())
+	{
+		if (lastIndex != 0)
+		{
+			lastIndex = 0;
+			return true;
+		}
+		else 
+		{
+			return false;
+		}
+	}
+	else
+	{
+		auto ani = this->GetCurrentAnimation();
+		if (lastIndex != static_cast<int>(ani.subImageStartIndex + thisTime / (frameTime)))
+		{
+			lastIndex = ani.subImageStartIndex + thisTime / (frameTime);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+}
+
 const subImage& Animation::GetCurrentImage() const
 {
 	if (motionData.empty())
@@ -93,6 +122,7 @@ void Animation::AddMotion(CharacterNormalState state, subAnimation motion)
 
 bool Animation::isEnd(CharacterNormalState state) const
 {
+	if (state == CharacterNormalState::THISMOTION) { return this->isActive == false; }
 	return (this->thisState == state && this->isActive == false);
 }
 

@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "Player.h"
 #include "Collision.h"
+#include "GameFramework.h"
 #include <atlimage.h>
 Player::Player(GameFramework* framework, const std::string& tag)
-	:GameObject(framework, tag), playerState(this)
+	:GameStateObject(framework, tag)
 {
-	const std::wstring imgFileDir = L"Resources/c1/";
-	const std::string colFileDir = "Resources/cCol/";
+	const std::wstring imgFileDir = L"Resources/character/c1/";
+	const std::string colFileDir = "Resources/character/col/";
+	ImageMargin = Vec2DF{ 128,184 };
 #pragma region AnimeDef
 	//애니메이션 정의 시작
 	{
@@ -189,12 +191,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				CharacterNormalState::IDLE,
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(CharacterNormalState::IDLE);
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					if (GetAsyncKeyState(VK_DOWN) & 0x8000)
@@ -217,19 +219,19 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 					{
 						player.playerAnime.ChangeState(CharacterNormalState::MOTION1);
-						player.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+						player.transform.Translate(Vec2DF::Left()* 150.0f* deltaTime, false);
 					}
 					else if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 					{
 						player.playerAnime.ChangeState(CharacterNormalState::MOTION2);
-						player.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+						player.transform.Translate(Vec2DF::Right()* 350.0f* deltaTime, false);
 					}
 					else
 					{
 						player.playerAnime.ChangeState(CharacterNormalState::IDLE);
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -239,16 +241,17 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::SLASH),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH), true);
 					player.delayCounter = 0.0f;
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[framework](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.delayCounter += deltaTime;
+					framework->CheckCollision(object);
 					if (player.delayCounter > player.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::SLASH)) * 0.7)
 					{
 						if (GetAsyncKeyState('Z') & 0x8000)
@@ -265,7 +268,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -275,13 +278,13 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::STING),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING), true);
 					player.delayCounter = 0.0f;
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.delayCounter += deltaTime;
@@ -301,7 +304,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -311,12 +314,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::GUARDUP),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP), true);
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::GUARDUP)))
@@ -324,7 +327,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -334,12 +337,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::JUMPUP),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPUP), true);
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					if (GetAsyncKeyState(VK_LEFT))
@@ -359,7 +362,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPDOWN));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -369,12 +372,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::JUMPDOWN),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPDOWN), true);
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					if (GetAsyncKeyState(VK_LEFT))
@@ -394,7 +397,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::LANDING));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -404,12 +407,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::LANDING),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::LANDING), true);
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::LANDING)))
@@ -417,7 +420,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -427,13 +430,13 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1), true);
 					player.delayCounter = 0.0f;
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.delayCounter += deltaTime;
@@ -458,7 +461,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -468,13 +471,13 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2), true);
 					player.delayCounter = 0.0f;
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.delayCounter += deltaTime;
@@ -495,7 +498,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -506,12 +509,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::GUARDON),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON), true);
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(VK_RIGHT))
@@ -523,7 +526,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -534,12 +537,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::GUARDMOVE),
-				[](GameObject & object) -> void
+				[](GameStateObject& object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDMOVE), true);
 				},
-				[](GameObject & object, float deltaTime) -> void
+				[](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					if (!GetAsyncKeyState(VK_DOWN))
@@ -559,7 +562,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON));
 					}
 				},
-					[](GameObject & object, CharacterNormalState state) -> bool
+					[](GameStateObject& object, CharacterNormalState state) -> bool
 				{
 					return true;
 				}
@@ -665,7 +668,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 
 
 	this->playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
-	this->transform.Translate(Vec2DF::Down() * 500, 1);
+	this->transform.Translate(Vec2DF::Down() * 500,false, 1);
 
 }
 
@@ -678,8 +681,6 @@ void Player::Update(float deltaTime)
 
 void Player::Draw(PaintInfo info)
 {
-	auto rt = RECT{ 0,0,2200,2200 };
-	FillRect(info.hdc, &rt, (HBRUSH)GetStockObject(WHITE_BRUSH));
 	this->playerAnime.GetCurrentImage().img.Draw(info.hdc, this->transform.Position.x, this->transform.Position.y);
 	this->playerAnime.GetCurrentCollisionData().Draw(info, this->transform.Position + ImageMargin);
 }
