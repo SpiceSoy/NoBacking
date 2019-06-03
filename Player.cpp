@@ -262,6 +262,10 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						{
 							player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
 						}
+						else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+						{
+							player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
+						}
 					}
 					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::SLASH)))
 					{
@@ -284,10 +288,11 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					player.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING), true);
 					player.delayCounter = 0.0f;
 				},
-				[](GameStateObject& object, float deltaTime) -> void
+				[framework](GameStateObject& object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					player.delayCounter += deltaTime;
+					framework->CheckCollision(object);
 					if (player.delayCounter > player.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::STING)) * 0.7)
 					{
 						if (GetAsyncKeyState('X') & 0x8000)
@@ -297,6 +302,10 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						else if (GetAsyncKeyState('Z') & 0x8000)
 						{
 							player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
+						}
+						else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+						{
+							player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
 						}
 					}
 					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::STING)))
@@ -417,6 +426,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					auto& player = static_cast<Player&>(object);
 					if (player.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::LANDING)))
 					{
+						player.transform.SetY(500);
 						player.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},

@@ -31,6 +31,7 @@ public:
 	void Update(float deltaTime);
 	void Translate(Vec2D<Ty> vec,bool checkCol = true, int count = 4);
 	void Jump(float power);
+	void SetY(float pos);
 	bool CheckCollision(Transform& other);
 	bool GetCheckMap(const Tag& tag);
 	void SetCheckMap(const Tag& tag, bool checkCollision);

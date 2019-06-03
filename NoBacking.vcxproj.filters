@@ -55,6 +55,9 @@
     <Filter Include="소스 파일\GameFramework\Collision">
       <UniqueIdentifier>{21794c13-7fb2-4f96-8a92-bfb3afab4c6a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\GameFramework\Core">
+      <UniqueIdentifier>{a469f55b-623e-4a84-b354-0318454f2f08}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -117,11 +120,14 @@
     <ClInclude Include="SandBag.h">
       <Filter>헤더 파일\GameFramework\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>헤더 파일\GameFramework\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>헤더 파일\GameFramework\Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="NoBacking.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -131,17 +137,8 @@
     <ClCompile Include="Transform.cpp">
       <Filter>소스 파일\GameFramework\Class</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>소스 파일\GameFramework\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectContainer.cpp">
-      <Filter>소스 파일\GameFramework</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
       <Filter>소스 파일\GameFramework\Class</Filter>
@@ -155,10 +152,25 @@
     <ClCompile Include="CollisionSet.cpp">
       <Filter>소스 파일\GameFramework\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="SandBag.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\GameFramework\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="SandBag.cpp">
+      <Filter>소스 파일\GameFramework\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="NoBacking.cpp">
+      <Filter>소스 파일\GameFramework\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework.cpp">
+      <Filter>소스 파일\GameFramework\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>소스 파일\GameFramework\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectContainer.cpp">
+      <Filter>소스 파일\GameFramework\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

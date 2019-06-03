@@ -98,7 +98,7 @@ void Animation::AddImage(subImage image)
 }
 void Animation::AddImage(const std::wstring& dir)
 {
-	this->frameImageData.emplace_back(dir);
+	this->frameImageData.emplace_back(subImage(dir));
 }
 
 void Animation::AddCollision(CollisionCollection& col)

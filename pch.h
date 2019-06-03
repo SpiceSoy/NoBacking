@@ -20,9 +20,14 @@
 #include <memory>
 #include <ctime>
 #include <cassert>
+#include <map>
+#include <atlimage.h>
 
 #include "Vec2D.h"
 #include "Rect.h"
 #include "UtillFunction.h"
-
+#include "Collision.h"
+#include "IFrameworkObject.h"
+#include "State.h"
+#include "StateEnum.h"
 #endif //PCH_H

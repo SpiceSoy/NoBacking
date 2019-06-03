@@ -22,11 +22,12 @@ void Transform::Update(float deltaTime)
 	if (MaxJumpPower != 0)
 	{
 		JumpPower -= gravity*deltaTime;
-		this->Translate(Vec2DF::Up() * JumpPower * deltaTime,1);
+		this->Translate(Vec2DF::Up() * JumpPower * deltaTime,true, 1);
 	}
 	if(JumpPower < MaxJumpPower)
 	{
-		MaxJumpPower = 0;
+		this->Translate(Vec2DF::Up() * (JumpPower- MaxJumpPower),false, 1);
+		MaxJumpPower = 0; 
 		JumpPower = 0;
 	}
 }
@@ -51,6 +52,11 @@ void Transform::Jump(float power)
 		this->JumpPower = power;
 		MaxJumpPower = this->JumpPower * -1;
 	}
+}
+
+void Transform::SetY(float pos)
+{
+	this->Position.y = pos;
 }
 
 void Transform::SetCheckMap(const Tag& tag, bool checkCollision)

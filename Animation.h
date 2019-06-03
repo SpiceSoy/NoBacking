@@ -7,16 +7,9 @@
 #include "Rect.h"
 #include "StateEnum.h"
 #include "Collision.h"
+#include "ResourceManager.h"
 
 
-struct subImage
-{
-	CImage img;
-	subImage(const std::wstring& image);
-	//HBITMAP bitmap;
-	//RectU size;
-	//subImage(const subImage& other);
-};
 struct subAnimation
 {
 	size_t subImageStartIndex = 0;
