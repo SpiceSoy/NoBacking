@@ -391,6 +391,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					}
 					if (!object.transform.GetJumpState())
 					{
+						object.transform.SetY(500);
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
@@ -438,6 +439,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					}
 					if (!object.transform.GetJumpState())
 					{
+						object.transform.SetY(500);
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
@@ -551,6 +553,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					auto& player = static_cast<Player&>(object);
 					if (object.playerAnime.isEnd(CharacterNormalState::MOTION14) && !object.transform.GetJumpState())
 					{
+						object.transform.SetY(500);
 						if (this->hp == 0)
 						{
 							object.Deactive();

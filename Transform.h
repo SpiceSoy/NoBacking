@@ -24,6 +24,7 @@ class Transform : public IFrameworkObject
 	float JumpPower = 0;
 	float frictionPower = 0;
 	int frictionVector = 0;
+	bool JumpFriction = false;
 public:
 	Transform(GameStateObject& obj, GameFramework* framework) : obj(obj), IFrameworkObject(framework) {};
 	Vec2D<Ty> Position = Vec2D<Ty>{ 0, 0 };

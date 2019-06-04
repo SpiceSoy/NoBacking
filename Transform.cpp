@@ -34,14 +34,27 @@ void Transform::Update(float deltaTime)
 	{
 		if (this->GetJumpState()) 
 		{
+			JumpFriction = true;
 			frictionPower -= 1.0f * deltaTime;
 			this->Translate(Vec2DF::Right() * frictionVector * (frictionPower)/5, true, 1);
 		}
 		else 
 		{
-			frictionPower -= 10.0f * deltaTime;
-			this->Translate(Vec2DF::Right() * frictionVector * (frictionPower), true, 1);
+			if (JumpFriction)
+			{
+				frictionPower -= frictionPower + 1;
+				JumpFriction = false;
+			}
+			else 
+			{
+				frictionPower -= 10.0f * deltaTime;
+				this->Translate(Vec2DF::Right() * frictionVector * (frictionPower), true, 1);
+			}
 		}
+	}
+	else 
+	{
+		JumpFriction = false;
 	}
 }
 
