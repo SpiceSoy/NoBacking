@@ -30,6 +30,19 @@ void Transform::Update(float deltaTime)
 		MaxJumpPower = 0; 
 		JumpPower = 0;
 	}
+	if (frictionPower > 0)
+	{
+		if (this->GetJumpState()) 
+		{
+			frictionPower -= 1.0f * deltaTime;
+			this->Translate(Vec2DF::Right() * frictionVector * (frictionPower)/5, true, 1);
+		}
+		else 
+		{
+			frictionPower -= 10.0f * deltaTime;
+			this->Translate(Vec2DF::Right() * frictionVector * (frictionPower), true, 1);
+		}
+	}
 }
 
 void Transform::Translate(Vec2D<Ty> vec , bool checkCol, int count)
@@ -51,6 +64,23 @@ void Transform::Jump(float power)
 	{
 		this->JumpPower = power;
 		MaxJumpPower = this->JumpPower * -1;
+	}
+}
+
+void Transform::KnockBack(const Vec2DF vector)
+{
+	frictionPower = abs(vector.x);
+	frictionVector = (vector.x>0)?(1):(-1);
+	if (vector.y != 0)
+	{
+		if (this->GetJumpState())
+		{
+			JumpPower += vector.y;
+		}
+		else 
+		{
+			this->Jump(vector.y);
+		}
 	}
 }
 

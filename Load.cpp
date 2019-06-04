@@ -718,11 +718,7 @@ void GameFramework::Load()
 	const std::string sndAttackDir = "Resources/sound/attack/";
 	const std::string sndHitDir = "Resources/sound/hit/";
 	const std::string bgmDir = "Resources/sound/bgm/";
-	SoundSystem::Load("zero", bgmDir + "zero.mp3");
-	SoundSystem::Load("liber", bgmDir + "liber.mp3");
-	SoundSystem::Load("naval", bgmDir + "naval.mp3");
-	SoundSystem::Load("keep", bgmDir + "keep.mp3");
-	SoundSystem::Load("war", bgmDir + "war.mp3");
+	//SoundSystem::Load("zero", bgmDir + "zero.mp3");
 	SoundSystem::Load("atk-slash", sndAttackDir + "blunt_01.wav");
 	SoundSystem::Load("hit-bite", sndHitDir + "bite.wav");
 	SoundSystem::Load("hit-steel", sndHitDir + "steel.wav");

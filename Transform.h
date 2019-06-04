@@ -22,6 +22,8 @@ class Transform : public IFrameworkObject
 	std::map<Tag, bool> checkMap;
 	float MaxJumpPower = 0;
 	float JumpPower = 0;
+	float frictionPower = 0;
+	int frictionVector = 0;
 public:
 	Transform(GameStateObject& obj, GameFramework* framework) : obj(obj), IFrameworkObject(framework) {};
 	Vec2D<Ty> Position = Vec2D<Ty>{ 0, 0 };
@@ -31,6 +33,7 @@ public:
 	void Update(float deltaTime);
 	void Translate(Vec2D<Ty> vec,bool checkCol = true, int count = 4);
 	void Jump(float power);
+	void KnockBack(const Vec2DF vector);
 	void SetY(float pos);
 	bool CheckCollision(Transform& other);
 	bool GetCheckMap(const Tag& tag);

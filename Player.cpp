@@ -19,10 +19,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				SoundSystem::PlaySound("hit-bite");
 				if (hp == 0)
 				{
+					this->transform.KnockBack((Vec2DF::Left() * 0.1f) + (Vec2DF::Up() * 0.5f));
 					object.playerState.ChangeState(CharacterNormalState::MOTION14);
 				}
 				else
 				{
+					this->transform.KnockBack(Vec2DF::Left() * 1);
 					object.playerState.ChangeState(CharacterNormalState::MOTION13);
 				}
 			}
@@ -35,9 +37,10 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			if (res.first == "body" && res.second == "attack1"&& this->isCanDamaged)
 			{
-				this->hp--;
 				SoundSystem::PlaySound("hit-bite");
 				framework->OnEffect("effect1", this->transform.Position);
+				//this->transform.KnockBack((Vec2DF::Left() * 2) + (Vec2DF::Up() * 0.5f));
+				this->transform.KnockBack((Vec2DF::Left() * 1.5f) + (Vec2DF::Up() * 1.5f));
 				object.playerState.ChangeState(CharacterNormalState::MOTION14);
 			}
 		}
@@ -52,6 +55,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					SoundSystem::PlaySound("hit-steel");
 					framework->OnEffect("effect1", this->transform.Position);
 					this->delayCounter = 0;
+					this->transform.KnockBack(Vec2DF::Left() * 1);
 			}
 		}
 		return false;
@@ -136,11 +140,17 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				},
 				[framework, this](GameStateObject & object, float deltaTime) -> void
 				{
+					static bool snd = true;
 					auto& player = static_cast<Player&>(object);
 					framework->CheckCollision(object);
-					if (this->playerAnime.GetCurrentFrame() == 2)
+					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 					{
 						SoundSystem::PlaySound("atk-slash");
+						snd = false;
+					}
+					if (this->playerAnime.GetCurrentFrame() > 2)
+					{
+						snd = true;
 					}
 					if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::SLASH)) * 0.7)
 					{
@@ -183,9 +193,14 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				{
 					auto& player = static_cast<Player&>(object);
 					framework->CheckCollision(object);
-					if (this->playerAnime.GetCurrentFrame() == 2)
+					static bool snd = true;
+					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 					{
 						SoundSystem::PlaySound("atk-slash");
+					}
+					if (this->playerAnime.GetCurrentFrame() > 2)
+					{
+						snd = false;
 					}
 					if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::STING)) * 0.7)
 					{
@@ -348,9 +363,15 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				[this](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
-					if (this->playerAnime.GetCurrentFrame() == 2)
+					static bool snd = true;
+					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 					{
 						SoundSystem::PlaySound("atk-slash");
+						snd = false;
+					}
+					if (this->playerAnime.GetCurrentFrame() > 2)
+					{
+						snd = true;
 					}
 					if (GetAsyncKeyState(VK_LEFT))
 					{
@@ -393,9 +414,15 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				[this](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
-					if (this->playerAnime.GetCurrentFrame() == 2)
+					static bool snd = true;
+					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 					{
 						SoundSystem::PlaySound("atk-slash");
+						snd = false;
+					}
+					if (this->playerAnime.GetCurrentFrame() > 2)
+					{
+						snd = true;
 					}
 					if (GetAsyncKeyState(VK_LEFT))
 					{
