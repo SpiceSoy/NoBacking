@@ -140,9 +140,9 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				},
 				[framework, this](GameStateObject & object, float deltaTime) -> void
 				{
-					static bool snd = true;
 					auto& player = static_cast<Player&>(object);
 					framework->CheckCollision(object);
+					static bool snd = true;
 					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 					{
 						SoundSystem::PlaySound("atk-slash");
@@ -197,10 +197,11 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 					{
 						SoundSystem::PlaySound("atk-slash");
+						snd = false;
 					}
 					if (this->playerAnime.GetCurrentFrame() > 2)
 					{
-						snd = false;
+						snd = true;
 					}
 					if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::STING)) * 0.7)
 					{
