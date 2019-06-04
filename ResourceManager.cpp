@@ -5,7 +5,7 @@
 
 std::map<std::string, std::vector<subImage>> ResourceManager::ImageSet = std::map<std::string, std::vector<subImage>>();
 std::map<std::string, std::vector<CollisionCollection>> ResourceManager::CollisionSet = std::map<std::string, std::vector<CollisionCollection>>();
-
+std::map<std::string, std::unordered_map<CharacterNormalState, subAnimation>> ResourceManager::MotionSet = std::map<std::string, std::unordered_map<CharacterNormalState, subAnimation>>();
 subImage::subImage(const std::wstring& image)
 {
 	img = new CImage();
@@ -26,14 +26,25 @@ subImage::~subImage()
 	}
 }
 
-std::vector<subImage>* ResourceManager::GetImages(const std::string& tag)
+ImageSetContainer* ResourceManager::GetImages(const std::string& tag)
 {
 	return &ResourceManager::ImageSet.at(tag);
 }
 
-std::vector<CollisionCollection>* ResourceManager::GetCollision(const std::string& tag)
+CollisionCollectionContainer* ResourceManager::GetCollision(const std::string& tag)
 {
-	return &ResourceManager::CollisionSet.at(tag);
+	if (ResourceManager::CollisionSet.count(tag) == 0)
+	{
+		return nullptr;
+	}
+	else 
+	{
+		return &ResourceManager::CollisionSet.at(tag);
+	}
+}
+MotionContainer* ResourceManager::GetMotion(const std::string& tag)
+{
+	return &ResourceManager::MotionSet.at(tag);
 }
 
 void ResourceManager::AddImages(const std::string& tag, const std::wstring& dir)
@@ -53,6 +64,11 @@ void ResourceManager::AddCollision(const std::string& tag, const std::string& di
 	}
 	ResourceManager::CollisionSet[tag].emplace_back(dir);
 }
+void ResourceManager::AddMotion(const std::string& tag, MotionContainer&& motion)
+{
+	ResourceManager::MotionSet[tag] = std::move(motion);
+}
+
 
 void ResourceManager::Load(const std::string& tag)
 {

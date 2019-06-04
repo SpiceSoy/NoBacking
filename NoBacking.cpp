@@ -140,7 +140,6 @@ LRESULT CALLBACK wProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 	case WM_CREATE:
 	{
 		hDc = GetDC(hWnd);
-		framework.Create();
 
 
 

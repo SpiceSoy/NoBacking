@@ -16,7 +16,9 @@ class GameStateObject : public IFrameworkObject
 private:
 protected:
 	bool isDestroy = false;
-	bool isActive = false;
+	bool isActive = true;
+	int hp = 5;
+	bool isCanDamaged = true;
 public:
 	const Tag tag;
 	Transform transform;
@@ -36,4 +38,8 @@ public:
 	//true == StopMove, false == Moving
 	virtual bool isCollision(GameStateObject& other);
 	virtual bool CheckCollision(GameStateObject& other);
+	virtual void Damaged(int hp, bool off = false);
+	virtual void ResetDamageCounter();
+	bool GetisActive() const { return isActive; }
+	bool GetisDestory() const { return isDestroy; }
 };

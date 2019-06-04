@@ -14,6 +14,10 @@ struct StateFunction
 	using EndFuncType = std::function<bool(GameStateObject&, CharacterNormalState)>;
 
 	StateFunction() = default;
+	//StateFunction(StateFunction::StartFuncType startFunc, StateFunction::UpdateFuncType UpdateFunc, StateFunction::EndFuncType endFunc, StateFunction::CollisionFuncType colFunc)
+	//	:_stateStart((startFunc)), _stateUpdate((UpdateFunc)), _stateEnd((endFunc)), _stateCollision((colFunc))
+	//{
+	//}
 	StateFunction(StateFunction::StartFuncType&& startFunc, StateFunction::UpdateFuncType&& UpdateFunc, StateFunction::EndFuncType&& endFunc, StateFunction::CollisionFuncType&& colFunc)
 		:_stateStart(std::move(startFunc)) , _stateUpdate(std::move(UpdateFunc)), _stateEnd(std::move(endFunc)),_stateCollision(std::move(colFunc))
 	{
@@ -51,6 +55,7 @@ public:
 	State(GameStateObject* obj);
 	std::unordered_map<CharacterNormalState, StateFunction> functionMap;
 	auto GetCurrentState() const { return this->state; }
+	void SetStateFunction(CharacterNormalState state, StateFunction& functionSet);
 	void SetStateFunction(CharacterNormalState state, StateFunction&& functionSet);
 	void SetStateFunctionSet(CharacterNormalState state, StateFunction::StartFuncType&& startFunc = nullptr, StateFunction::UpdateFuncType&& UpdateFunc = nullptr, StateFunction::EndFuncType&& endFunc = nullptr, StateFunction::CollisionFuncType&& colFunc = nullptr);
 	bool ChangeState(CharacterNormalState state);

@@ -5,9 +5,9 @@
 
 void Animation::ChangeState(CharacterNormalState state, bool reset)
 {
-	assert(this->motionData.count(state) == 1);
-	if (this->thisState != state || reset)
-	{
+	assert(this->motionData->count(state) == 1);
+	if (this->thisState != state || reset || isEnd())
+	{ 
 		this->isActive = true;
 		this->thisState = state;
 		this->thisTime = 0;
@@ -18,22 +18,22 @@ void Animation::Update(float deltaTime)
 {
 	if (this->isActive == true)
 	{
-		float scale = motionData[thisState].scale;
+		float scale = (*motionData)[thisState].scale;
 		thisTime += scale * deltaTime;
-		if (thisTime > motionData[thisState].subImageSize * frameTime)
+		if (thisTime > (*motionData)[thisState].subImageSize * frameTime)
 		{
-			switch (motionData[thisState].next)
+			switch ((*motionData)[thisState].next)
 			{
 			case CharacterNormalState::None: thisTime -= scale * deltaTime; this->isActive = false; break;
 			case CharacterNormalState::LOOP: 
 			{
-				while (thisTime > motionData[thisState].subImageSize * frameTime)
+				while (thisTime > (*motionData)[thisState].subImageSize * frameTime)
 				{
-					thisTime -= (motionData[thisState].subImageSize * frameTime);
+					thisTime -= ((*motionData)[thisState].subImageSize * frameTime);
 				}
 			} break;
 			default:
-				this->ChangeState(motionData[thisState].next);
+				this->ChangeState((*motionData)[thisState].next);
 				break;
 			}
 
@@ -44,7 +44,7 @@ void Animation::Update(float deltaTime)
 
 bool Animation::isChangeFrame()
 {
-	if (motionData.empty())
+	if (motionData->empty())
 	{
 		if (lastIndex != 0)
 		{
@@ -73,7 +73,7 @@ bool Animation::isChangeFrame()
 
 const subImage& Animation::GetCurrentImage() const
 {
-	if (motionData.empty())
+	if (motionData->empty())
 	{
 		return this->frameImageData->at(0);
 	}
@@ -86,34 +86,35 @@ const subImage& Animation::GetCurrentImage() const
 
 subAnimation Animation::GetCurrentAnimation() const
 {
-	return motionData.at(thisState);
+	return motionData->at(thisState);
 }
 
-void Animation::SetCollision(std::vector<CollisionCollection>* data)
+void Animation::SetCollision(CollisionCollectionContainer* data)
 {
 	this->frameCollision = data;
 }
 
-void Animation::SetImageSet(std::vector<subImage>* data)
+void Animation::SetImageSet(ImageSetContainer* data)
 {
 	this->frameImageData = data;
+}
+void Animation::SetMotionSet(MotionContainer* data)
+{
+	this->motionData = data;
 }
 
 void Animation::Set(const std::string& tag)
 {
 	this->SetImageSet(ResourceManager::GetImages(tag));
+	this->SetMotionSet(ResourceManager::GetMotion(tag));
 	this->SetCollision(ResourceManager::GetCollision(tag));
 }
 
-void Animation::Set(const std::string& imgTag, const std::string& colTag)
+void Animation::Set(const std::string& imgTag, const std::string& motionTag, const std::string& colTag)
 {
 	this->SetImageSet(ResourceManager::GetImages(imgTag));
+	this->SetMotionSet(ResourceManager::GetMotion(motionTag));
 	this->SetCollision(ResourceManager::GetCollision(colTag));
-}
-
-void Animation::AddMotion(CharacterNormalState state, subAnimation motion)
-{
-	this->motionData[state] = motion;
 }
 
 bool Animation::isEnd(CharacterNormalState state) const
@@ -124,18 +125,37 @@ bool Animation::isEnd(CharacterNormalState state) const
 
 float Animation::GetTotalTime(CharacterNormalState state) const
 {
-	return motionData.at(state).subImageSize* motionData.at(state).scale * Animation::frameTime;
+	if (state == CharacterNormalState::THISMOTION) { state = this->thisState; }
+	return motionData->at(state).subImageSize* motionData->at(state).scale * Animation::frameTime;
+}
+
+int Animation::GetCurrentFrame() const
+{
+	if (motionData->empty())
+	{
+		return 0;
+	}
+	else
+	{
+		return thisTime / (frameTime);
+	}
+}
+
+CharacterNormalState Animation::GetThisState() const
+{
+	return this->thisState;
 }
 
 const CollisionCollection& Animation::GetCurrentCollisionData() const
 {
-	if (frameCollision->empty())
+	if (frameCollision == nullptr || frameCollision->empty())
 	{
 		return CollisionCollection::Null();
 	}
-	if (motionData.empty())
+	if (motionData == nullptr || motionData->empty())
 	{
-		return this->frameCollision->at(0);
+		return CollisionCollection::Null();
+		//return this->frameCollision->at(0);
 	}
 	else
 	{

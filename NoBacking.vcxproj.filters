@@ -129,6 +129,12 @@
     <ClInclude Include="ResourceManager.h">
       <Filter>헤더 파일\GameFramework\Data</Filter>
     </ClInclude>
+    <ClInclude Include="CommonEffectFuctionSet.h">
+      <Filter>헤더 파일\GameFramework\Utill</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundSystem.h">
+      <Filter>헤더 파일\GameFramework\Class</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -155,9 +161,6 @@
     <ClCompile Include="CollisionSet.cpp">
       <Filter>소스 파일\GameFramework\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>소스 파일\GameFramework\Object</Filter>
-    </ClCompile>
     <ClCompile Include="SandBag.cpp">
       <Filter>소스 파일\GameFramework\Object</Filter>
     </ClCompile>
@@ -173,10 +176,22 @@
     <ClCompile Include="ObjectContainer.cpp">
       <Filter>소스 파일\GameFramework\Class</Filter>
     </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Load.cpp">
+      <Filter>소스 파일\GameFramework\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundSystem.cpp">
+      <Filter>소스 파일\GameFramework\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>소스 파일\GameFramework\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일\GameFramework\Class</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonEffectFuctionSet.cpp">
+      <Filter>소스 파일\GameFramework\Utill</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
       <Filter>소스 파일\GameFramework\Data</Filter>
     </ClCompile>
   </ItemGroup>

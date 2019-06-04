@@ -30,4 +30,6 @@
 #include "IFrameworkObject.h"
 #include "State.h"
 #include "StateEnum.h"
+#include "fmod.hpp"
+#include "SoundSystem.h"
 #endif //PCH_H

@@ -7,23 +7,27 @@
 
 
 
-class subEffect
+struct subEffect
 {
 	std::string ImageTag;
-	//모션벡터
-
+	std::string MotionTag;
+	std::string CollisionTag;
+	StateFunction func;
 };
 
+//단일 스테이트 오브젝트
 class Effect : public GameStateObject
 {
 	using EffectTag = std::string;
-	static std::map<std::string,subEffect>
+	static std::map<std::string, subEffect> EffectSet;
+	bool isXor = false;
 public:
-	SandBag(GameFramework* framework, const std::string& tag);
+	static void AddEffect(const std::string& tag, subEffect&& sub);
+	Effect(GameFramework* framework, const std::string& tag);
 	float delayCounter = 0.0f;
 	std::string CurrentEffect;
 	virtual void Update(float deltaTime) override;
 	virtual void Draw(PaintInfo info) override;
 	virtual void Reset() {};
-	virtual void EffectOn()
+	virtual void EffectOn(const std::string& tag, const Vec2DF& Position, bool isXor = false);
 };

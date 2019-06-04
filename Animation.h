@@ -10,13 +10,7 @@
 #include "ResourceManager.h"
 
 
-struct subAnimation
-{
-	size_t subImageStartIndex = 0;
-	size_t subImageSize = 0;
-	float scale = 1.0f;
-	CharacterNormalState next = CharacterNormalState::LOOP;
-};
+
 
 class Animation
 {
@@ -27,20 +21,22 @@ class Animation
 	CharacterNormalState thisState;
 	std::vector<subImage>* frameImageData = nullptr;
 	std::vector<CollisionCollection>* frameCollision = nullptr;
-	std::unordered_map<CharacterNormalState,subAnimation> motionData;
+	std::unordered_map<CharacterNormalState,subAnimation>* motionData = nullptr;
 public:
 	void ChangeState(CharacterNormalState state , bool reset = false);
 	void Update(float deltaTime);
 	bool isChangeFrame();
 	const subImage& GetCurrentImage() const;
 	subAnimation GetCurrentAnimation() const;
-	void SetCollision(std::vector<CollisionCollection>* data);
-	void SetImageSet(std::vector<subImage>* data);
+	void SetCollision(CollisionCollectionContainer* data);
+	void SetImageSet(ImageSetContainer* data);
+	void SetMotionSet(MotionContainer* data);
 	void Set(const std::string& tag);
-	void Set(const std::string& imgTag, const std::string& colTag);
-	void AddMotion(CharacterNormalState state, subAnimation motion);
+	void Set(const std::string& imgTag, const std::string& motionTag, const std::string& colTag);
 	bool isEnd(CharacterNormalState state = CharacterNormalState::THISMOTION) const;
-	float GetTotalTime(CharacterNormalState state) const;
+	float GetTotalTime(CharacterNormalState state = CharacterNormalState::THISMOTION) const;
+	int GetCurrentFrame() const;
+	CharacterNormalState GetThisState() const;
 	const CollisionCollection& GetCurrentCollisionData() const;
 
 };

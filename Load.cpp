@@ -1,6 +1,9 @@
 #include "pch.h"
+#include "CommonEffectFuctionSet.h"
 #include "GameFramework.h"
 #include "ResourceManager.h"
+#include "Effect.h"
+#include "SoundSystem.h"
 void GameFramework::Load()
 {
 #pragma region PlayerC1
@@ -101,7 +104,15 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character1", C1Dir + L"96.png");
 		ResourceManager::AddImages("character1", C1Dir + L"97.png");
 		ResourceManager::AddImages("character1", C1Dir + L"98.png");
+		//피격
+		ResourceManager::AddImages("character1", C1Dir + L"140.png");
+		ResourceManager::AddImages("character1", C1Dir + L"141.png");
+		//다운
+		ResourceManager::AddImages("character1", C1Dir + L"142.png");
+		ResourceManager::AddImages("character1", C1Dir + L"143.png");
+		ResourceManager::AddImages("character1", C1Dir + L"144.png");
 	}
+
 	//C2 이미지 정의
 	{
 		// 기본
@@ -195,8 +206,15 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character2", C2Dir + L"96.png");
 		ResourceManager::AddImages("character2", C2Dir + L"97.png");
 		ResourceManager::AddImages("character2", C2Dir + L"98.png");
-
+		//피격
+		ResourceManager::AddImages("character2", C2Dir + L"140.png");
+		ResourceManager::AddImages("character2", C2Dir + L"141.png");
+		//다운
+		ResourceManager::AddImages("character2", C2Dir + L"142.png");
+		ResourceManager::AddImages("character2", C2Dir + L"143.png");
+		ResourceManager::AddImages("character2", C2Dir + L"144.png");
 	}
+
 	//C3 이미지 정의
 	{
 		// 기본
@@ -290,6 +308,111 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character3", C3Dir + L"96.png");
 		ResourceManager::AddImages("character3", C3Dir + L"97.png");
 		ResourceManager::AddImages("character3", C3Dir + L"98.png");
+		//피격
+		ResourceManager::AddImages("character3", C3Dir + L"140.png");
+		ResourceManager::AddImages("character3", C3Dir + L"141.png");
+		//다운
+		ResourceManager::AddImages("character3", C3Dir + L"142.png");
+		ResourceManager::AddImages("character3", C3Dir + L"143.png");
+		ResourceManager::AddImages("character3", C3Dir + L"144.png");
+
+	}
+
+	//모션 정의
+	{
+		//기본
+		MotionContainer motionContainer;
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 0.85;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		//걷기
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 0.75;
+		subAnim.subImageStartIndex = 6;
+		subAnim.subImageSize = 10;
+		motionContainer[CharacterNormalState::MOTION1] = subAnim;
+		//달리기
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 0.75;
+		subAnim.subImageStartIndex = 16;
+		subAnim.subImageSize = 8;
+		motionContainer[CharacterNormalState::MOTION2] = subAnim;
+		//가드
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 24;
+		subAnim.subImageSize = 7;
+		motionContainer[CharacterNormalState::MOTION3] = subAnim;
+		//찌르기
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 31;
+		subAnim.scale = 1.15;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::MOTION4] = subAnim;
+		//점프
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 37;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 3;
+		motionContainer[CharacterNormalState::MOTION5] = subAnim;
+		//점프 중간
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 40;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 1;
+		motionContainer[CharacterNormalState::MOTION6] = subAnim;
+		//착지
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 41;
+		subAnim.scale = 2.0;
+		subAnim.subImageSize = 2;
+		motionContainer[CharacterNormalState::MOTION7] = subAnim;
+		//점프 공격
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 43;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 8;
+		motionContainer[CharacterNormalState::MOTION8] = subAnim;
+		//베기
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 51;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 9;
+		motionContainer[CharacterNormalState::MOTION9] = subAnim;
+		//점공2
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 60;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 11;
+		motionContainer[CharacterNormalState::MOTION10] = subAnim;
+		//가드 이동
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.subImageStartIndex = 71;
+		subAnim.scale = 0.45;
+		subAnim.subImageSize = 8;
+		motionContainer[CharacterNormalState::MOTION11] = subAnim;
+		//가드 중
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.subImageStartIndex = 30;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 1;
+		motionContainer[CharacterNormalState::MOTION12] = subAnim;
+		//피격
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 79;
+		subAnim.scale = 0.5;
+		subAnim.subImageSize = 2;
+		motionContainer[CharacterNormalState::MOTION13] = subAnim;
+		//다운
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 81;
+		subAnim.scale = 0.5;
+		subAnim.subImageSize = 3;
+		motionContainer[CharacterNormalState::MOTION14] = subAnim;
+		ResourceManager::AddMotion("character", std::move(motionContainer));
+
 	}
 	//물리 정의
 	{
@@ -384,7 +507,13 @@ void GameFramework::Load()
 		ResourceManager::AddCollision("character", ChaColDir + "96.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "97.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "98.txt");
-
+		//피격
+		ResourceManager::AddCollision("character", ChaColDir + "140.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "141.txt");
+		//다운
+		ResourceManager::AddCollision("character", ChaColDir + "142.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "143.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "144.txt");
 	}
 #pragma endregion
 
@@ -455,6 +584,37 @@ void GameFramework::Load()
 		ResourceManager::AddImages("sandbag", sandDir + L"55.png");
 		ResourceManager::AddImages("sandbag", sandDir + L"56.png");
 	}
+	//모션 정의
+	{
+		MotionContainer motionContainer;
+		//일반 모션
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 0.85;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 18;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		//피격 1
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.85;
+		subAnim.subImageStartIndex = 18;
+		subAnim.subImageSize = 14;
+		motionContainer[CharacterNormalState::MOTION1] = subAnim;
+		//피격 2
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.85;
+		subAnim.subImageStartIndex = 32;
+		subAnim.subImageSize = 14;
+		motionContainer[CharacterNormalState::MOTION2] = subAnim;
+		//사망
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.85;
+		subAnim.subImageStartIndex = 46;
+		subAnim.subImageSize = 11;
+		motionContainer[CharacterNormalState::MOTION3] = subAnim;
+		ResourceManager::AddMotion("sandbag", std::move(motionContainer));
+	}
+	
 	//물리 정의
 	{
 		//일반 모션
@@ -519,6 +679,53 @@ void GameFramework::Load()
 		ResourceManager::AddCollision("sandbag", sandColDir + "55.txt");
 		ResourceManager::AddCollision("sandbag", sandColDir + "56.txt");
 	}
+#pragma endregion
+
+#pragma region Effects
+	const std::wstring effect1Dir = L"Resources/effect/effect1_1/img/";
+	const std::string effect1ColDir = "Resources/effect1/effect1_1/col/";
+
+	//이미지 정의
+	{
+
+		ResourceManager::AddImages("effect1", effect1Dir + L"0.png");
+		ResourceManager::AddImages("effect1", effect1Dir + L"1.png");
+		ResourceManager::AddImages("effect1", effect1Dir + L"2.png");
+		ResourceManager::AddImages("effect1", effect1Dir + L"3.png");
+		ResourceManager::AddImages("effect1", effect1Dir + L"4.png");
+		ResourceManager::AddImages("effect1", effect1Dir + L"5.png");
+
+		MotionContainer motionContainer;
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("effect1", std::move(motionContainer));
+		
+		subEffect subEffect;
+		subEffect.ImageTag = "effect1";
+		subEffect.MotionTag = "effect1";
+		subEffect.CollisionTag = "effect1";
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("effect1", std::move(subEffect));
+
+	}
+#pragma endregion
+
+#pragma region Sound
+	const std::string sndAttackDir = "Resources/sound/attack/";
+	const std::string sndHitDir = "Resources/sound/hit/";
+	const std::string bgmDir = "Resources/sound/bgm/";
+	SoundSystem::Load("zero", bgmDir + "zero.mp3");
+	SoundSystem::Load("liber", bgmDir + "liber.mp3");
+	SoundSystem::Load("naval", bgmDir + "naval.mp3");
+	SoundSystem::Load("keep", bgmDir + "keep.mp3");
+	SoundSystem::Load("war", bgmDir + "war.mp3");
+	SoundSystem::Load("atk-slash", sndAttackDir + "blunt_01.wav");
+	SoundSystem::Load("hit-bite", sndHitDir + "bite.wav");
+	SoundSystem::Load("hit-steel", sndHitDir + "steel.wav");
 #pragma endregion
 
 

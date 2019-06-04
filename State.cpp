@@ -5,6 +5,11 @@ State::State(GameStateObject* obj) : object(obj) , state(CharacterNormalState::N
 {
 }
 
+void State::SetStateFunction(CharacterNormalState state, StateFunction& functionSet)
+{
+	functionMap[state] = (functionSet);
+}
+
 void State::SetStateFunction(CharacterNormalState state, StateFunction&& functionSet)
 {
 	functionMap[state] = std::move(functionSet);
@@ -12,7 +17,8 @@ void State::SetStateFunction(CharacterNormalState state, StateFunction&& functio
 
 void State::SetStateFunctionSet(CharacterNormalState state, StateFunction::StartFuncType&& startFunc, StateFunction::UpdateFuncType&& UpdateFunc, StateFunction::EndFuncType&& endFunc, StateFunction::CollisionFuncType&& colFunc)
 {
-	functionMap.emplace(state, StateFunction(std::move(startFunc), std::move(UpdateFunc), std::move(endFunc),std::move(colFunc)));
+	functionMap.emplace(state, StateFunction(std::move(startFunc), std::move(UpdateFunc), std::move(endFunc), std::move(colFunc)));
+	//functionMap.emplace(state, std::move(startFunc), std::move(UpdateFunc), std::move(endFunc), std::move(colFunc));
 }
 
 bool State::ChangeState(CharacterNormalState state)

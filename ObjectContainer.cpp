@@ -2,14 +2,18 @@
 #include "ObjectContainer.h"
 #include "Player.h"
 #include "SandBag.h"
+#include "Effect.h"
 
 ObjectContainer::ObjectContainer(GameFramework* framework)
 {
-	this->player = new Player(framework, "Player");
-	this->sandBag = new SandBag(framework, "SandBag");
+	this->player = std::make_unique<Player>(framework, "Player");
+	this->sandBag = std::make_unique<SandBag>(framework, "SandBag");
+	for (size_t i = 0; i < 20; i++)
+	{
+		this->Effects.emplace_back(std::make_unique<Effect>(framework, "Effects"));
+	}
 }
 
 ObjectContainer::~ObjectContainer()
 {
-	delete this->player;
 }

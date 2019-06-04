@@ -3,28 +3,49 @@
 
 bool GameStateObject::isCollision(GameStateObject& other)
 {
-	return this->playerState.isCollision(other);
+	if (isActive)
+	{
+		return this->playerState.isCollision(other);
+	}
+	else 
+	{
+		return false;
+	}
 }
 
 bool GameStateObject::CheckCollision(GameStateObject& other)
 {
-	auto& thisCol = this->playerAnime.GetCurrentCollisionData();
-	auto thisPos = this->transform.Position + this->ImageMargin;
-	auto& otherCol = other.playerAnime.GetCurrentCollisionData();
-	auto otherPos = other.transform.Position + other.ImageMargin;
-	if (this->playerAnime.isChangeFrame() || other.playerAnime.isChangeFrame())
+	if (isActive)
 	{
-		if (CollisionCollection::CheckIntersect(thisCol, thisPos, this, otherCol, otherPos, &other))
+		auto& thisCol = this->playerAnime.GetCurrentCollisionData();
+		auto thisPos = this->transform.Position + this->ImageMargin;
+		auto& otherCol = other.playerAnime.GetCurrentCollisionData();
+		auto otherPos = other.transform.Position + other.ImageMargin;
+		if (this->playerAnime.isChangeFrame() || other.playerAnime.isChangeFrame())
 		{
-			bool ret = false;
-			ret |= this->isCollision(other);
-			ret |= other.isCollision(*this);
-			return ret;
-		}
-		else
-		{
-			return false;
+			if (CollisionCollection::CheckIntersect(thisCol, thisPos, this, otherCol, otherPos, &other))
+			{
+				bool ret = false;
+				ret |= this->isCollision(other);
+				ret |= other.isCollision(*this);
+				return ret;
+			}
+			else
+			{
+				return false;
+			}
 		}
 	}
 	return false;
+}
+
+void GameStateObject::Damaged(int hp , bool off)
+{
+	this->hp = Utill::clamp(this->hp - hp, 0, INT_MAX);
+	if (!off) { this->isCanDamaged = false; }
+}
+
+void GameStateObject::ResetDamageCounter()
+{
+	this->isCanDamaged = true;
 }
