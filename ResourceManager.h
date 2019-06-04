@@ -4,15 +4,15 @@
 #include <string>
 #include <atlimage.h>
 #include "Collision.h"
+
 struct subImage
 {
-	CImage img;
+	CImage* img = nullptr;
 	subImage(const std::wstring& image);
-	//HBITMAP bitmap;
-	//RectU size;
-	//subImage(const subImage& other);
+	subImage(const subImage& other) = delete;
+	subImage(subImage&& other);
+	~subImage();
 };
-
 
 class ResourceManager
 {
@@ -21,6 +21,7 @@ class ResourceManager
 public:
 	static std::vector<subImage>* GetImages(const std::string& tag);
 	static std::vector<CollisionCollection>* GetCollision(const std::string& tag);
-	static void LoadImages(const std::string& tag, const std::wstring& dir);
-	static void LoadCollision(const std::string& tag, const std::string& dir);
+	static void AddImages(const std::string& tag, const std::wstring& dir);
+	static void AddCollision(const std::string& tag, const std::string& dir);
+	static void Load(const std::string& tag);
 };

@@ -1,10 +1,7 @@
 #include "pch.h"
 #include "Animation.h"
+#include "ResourceManager.h"
 
-subImage::subImage(const std::wstring& image)
-{
-	this->img.Load(image.c_str());
-}
 
 void Animation::ChangeState(CharacterNormalState state, bool reset)
 {
@@ -78,12 +75,12 @@ const subImage& Animation::GetCurrentImage() const
 {
 	if (motionData.empty())
 	{
-		return this->frameImageData.at(0);
+		return this->frameImageData->at(0);
 	}
 	else 
 	{
 		auto ani = this->GetCurrentAnimation();
-		return this->frameImageData.at(ani.subImageStartIndex + thisTime / (frameTime));
+		return this->frameImageData->at(ani.subImageStartIndex + thisTime / (frameTime));
 	}
 }
 
@@ -92,27 +89,26 @@ subAnimation Animation::GetCurrentAnimation() const
 	return motionData.at(thisState);
 }
 
-void Animation::AddImage(subImage image)
+void Animation::SetCollision(std::vector<CollisionCollection>* data)
 {
-	this->frameImageData.push_back(image);
-}
-void Animation::AddImage(const std::wstring& dir)
-{
-	this->frameImageData.emplace_back(subImage(dir));
+	this->frameCollision = data;
 }
 
-void Animation::AddCollision(CollisionCollection& col)
+void Animation::SetImageSet(std::vector<subImage>* data)
 {
-	this->frameCollision.push_back(col);
-}
-void Animation::AddCollision(CollisionCollection&& col)
-{
-	this->frameCollision.emplace_back(std::move(col));
+	this->frameImageData = data;
 }
 
-void Animation::AddCollision(const std::string& dir)
+void Animation::Set(const std::string& tag)
 {
-	this->frameCollision.emplace_back(dir);
+	this->SetImageSet(ResourceManager::GetImages(tag));
+	this->SetCollision(ResourceManager::GetCollision(tag));
+}
+
+void Animation::Set(const std::string& imgTag, const std::string& colTag)
+{
+	this->SetImageSet(ResourceManager::GetImages(imgTag));
+	this->SetCollision(ResourceManager::GetCollision(colTag));
 }
 
 void Animation::AddMotion(CharacterNormalState state, subAnimation motion)
@@ -133,20 +129,20 @@ float Animation::GetTotalTime(CharacterNormalState state) const
 
 const CollisionCollection& Animation::GetCurrentCollisionData() const
 {
-	if (frameCollision.empty())
+	if (frameCollision->empty())
 	{
 		return CollisionCollection::Null();
 	}
 	if (motionData.empty())
 	{
-		return this->frameCollision.at(0);
+		return this->frameCollision->at(0);
 	}
 	else
 	{
 		auto ani = this->GetCurrentAnimation();
-		if (this->frameCollision.size() > ani.subImageStartIndex + thisTime / (frameTime))
+		if (this->frameCollision->size() > ani.subImageStartIndex + thisTime / (frameTime))
 		{
-			return this->frameCollision.at(ani.subImageStartIndex + thisTime / (frameTime));
+			return this->frameCollision->at(ani.subImageStartIndex + thisTime / (frameTime));
 		}
 		else 
 		{

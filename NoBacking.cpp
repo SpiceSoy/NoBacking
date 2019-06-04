@@ -28,6 +28,7 @@ static GameFramework framework;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR ipszCmdParam, int mCmdShow)
 {
+	framework.Create();
 	static bool timeStart = false;
 	static LARGE_INTEGER Frequency;
 	static LARGE_INTEGER BeginTime;

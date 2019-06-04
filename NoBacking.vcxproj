@@ -180,6 +180,7 @@
     <ClCompile Include="CollisionSet.cpp" />
     <ClCompile Include="GameFramework.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Load.cpp" />
     <ClCompile Include="NoBacking.cpp" />
     <ClCompile Include="ObjectContainer.cpp" />
     <ClCompile Include="pch.cpp">

@@ -25,8 +25,8 @@ class Animation
 	int lastIndex = -1;
 	bool isActive = true;
 	CharacterNormalState thisState;
-	std::vector<subImage> frameImageData;
-	std::vector<CollisionCollection> frameCollision;
+	std::vector<subImage>* frameImageData = nullptr;
+	std::vector<CollisionCollection>* frameCollision = nullptr;
 	std::unordered_map<CharacterNormalState,subAnimation> motionData;
 public:
 	void ChangeState(CharacterNormalState state , bool reset = false);
@@ -34,13 +34,11 @@ public:
 	bool isChangeFrame();
 	const subImage& GetCurrentImage() const;
 	subAnimation GetCurrentAnimation() const;
-	void AddImage(subImage image);
-	void AddImage(const std::wstring& image);
-	void AddCollision(CollisionCollection& col);
-	void AddCollision(CollisionCollection&& col);
-	void AddCollision(const std::string& dir);
+	void SetCollision(std::vector<CollisionCollection>* data);
+	void SetImageSet(std::vector<subImage>* data);
+	void Set(const std::string& tag);
+	void Set(const std::string& imgTag, const std::string& colTag);
 	void AddMotion(CharacterNormalState state, subAnimation motion);
-	void ReSize(size_t cnt) { this->frameImageData.reserve(cnt); }
 	bool isEnd(CharacterNormalState state = CharacterNormalState::THISMOTION) const;
 	float GetTotalTime(CharacterNormalState state) const;
 	const CollisionCollection& GetCurrentCollisionData() const;

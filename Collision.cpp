@@ -59,21 +59,24 @@ void CollisionCollection::AddCollision(Collision&& col)
 
 void CollisionCollection::Draw(PaintInfo info , const Vec2DF& parentPos) const
 {
-
-	auto old = SelectObject(info.hdc, info.CollisionPen[0]);
-	auto oldBr = SelectObject(info.hdc,GetStockObject(NULL_BRUSH));
-	auto rt = RectF(this->center + parentPos, radius);
-	Ellipse(info.hdc, rt.left, rt.top, rt.right, rt.bottom);
-	SelectObject(info.hdc, old);
-	for (auto& subC : this->collection)
+	if (info.DrawCollision)
 	{
-		subC.Draw(info, parentPos);
+		auto old = SelectObject(info.hdc, info.CollisionPen[0]);
+		auto oldBr = SelectObject(info.hdc,GetStockObject(NULL_BRUSH));
+		auto rt = RectF(this->center + parentPos, radius);
+		Ellipse(info.hdc, rt.left, rt.top, rt.right, rt.bottom);
+		SelectObject(info.hdc, old);
+		for (auto& subC : this->collection)
+		{
+			subC.Draw(info, parentPos);
+		}
+		SelectObject(info.hdc, oldBr);
 	}
-	SelectObject(info.hdc, oldBr);
 }
 
 bool CollisionCollection::CheckIntersect(const CollisionCollection& A, const Vec2DF& APos,const  GameStateObject* Aptr, const CollisionCollection& B, const Vec2DF& BPos, const  GameStateObject* Bptr)
 {
+
 	bool Check = false;
 	auto dist = ((A.center + APos) - (B.center+BPos)).GetScaleSq();
 	auto r1 = abs(A.radius/2);

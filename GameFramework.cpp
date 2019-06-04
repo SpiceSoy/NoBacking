@@ -6,8 +6,6 @@
 
 GameFramework::GameFramework()
 {
-	this->Create();
-	CollisionResult::reserve(50);
 }
 
 GameFramework::~GameFramework()
@@ -24,6 +22,8 @@ void GameFramework::End()
 
 void GameFramework::Create()
 {
+	CollisionResult::reserve(50);
+	this->Load();
 	this->container = new ObjectContainer(this);
 }
 
@@ -40,6 +40,7 @@ void GameFramework::Update(float deltaTime)
 
 void GameFramework::Draw(PaintInfo info)
 {
+	info.DrawCollision = isDrawCollision;
 	this->container->sandBag->Draw(info);
 	this->container->player->Draw(info);
 }
@@ -50,6 +51,11 @@ bool GameFramework::CheckCollision(GameStateObject& obj)
 	{
 		return this->container->player->CheckCollision(*this->container->sandBag);
 	}
+}
+
+void GameFramework::ToggleDebugCollision()
+{
+	isDrawCollision = !isDrawCollision;
 }
 
 Vec2DF GameFramework::GetDisplaySize() const

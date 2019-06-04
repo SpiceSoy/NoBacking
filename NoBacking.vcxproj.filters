@@ -58,6 +58,9 @@
     <Filter Include="소스 파일\GameFramework\Core">
       <UniqueIdentifier>{a469f55b-623e-4a84-b354-0318454f2f08}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\GameFramework\Data">
+      <UniqueIdentifier>{b55855e4-3490-4e23-82a6-7dfd23b46cc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Load.cpp">
+      <Filter>소스 파일\GameFramework\Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@
 
 class SandBag : public GameStateObject
 {
+	int hp = 3;
 public:
 	SandBag(GameFramework* framework, const std::string& tag);
 	float delayCounter = 0.0f;
