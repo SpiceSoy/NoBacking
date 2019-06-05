@@ -23,7 +23,7 @@ void State::SetStateFunctionSet(CharacterNormalState state, StateFunction::Start
 
 bool State::ChangeState(CharacterNormalState state)
 {
-	if ((this->functionMap.count(state) != 0 || state == CharacterNormalState::None) && functionMap[state].End(state, *object))
+	if ((this->functionMap.count(state) != 0 || state == CharacterNormalState::None) && functionMap[this->state].End(state, *object))
 	{
 		this->state = state;
 		functionMap[state].Start(*object);

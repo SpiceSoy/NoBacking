@@ -39,8 +39,8 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			{
 				SoundSystem::PlaySound("hit-bite");
 				framework->OnEffect("effect1", this->transform.Position);
-				//this->transform.KnockBack((Vec2DF::Left() * 2) + (Vec2DF::Up() * 0.5f));
-				this->transform.KnockBack((Vec2DF::Left() * 1.5f) + (Vec2DF::Up() * 1.5f));
+				this->transform.KnockBack((Vec2DF::Left() * 5) + (Vec2DF::Up() * 3.5f));
+				//this->transform.KnockBack((Vec2DF::Left() * 1.5f) + (Vec2DF::Up() * 1.5f));
 				object.playerState.ChangeState(CharacterNormalState::MOTION14);
 			}
 		}
@@ -239,9 +239,15 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					auto& player = static_cast<Player&>(object);
 					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP), true);
 				},
-				[](GameStateObject & object, float deltaTime) -> void
+				[this](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
+					if (object.playerAnime.GetCurrentFrame() <= 1 && !this->isCanDamaged && (GetAsyncKeyState('Z') & 0x8000))
+					{
+						object.playerState.ChangeState(CharacterNormalState::MOTION15);
+						object.ResetDamageCounter();
+
+					}
 					if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::GUARDUP)))
 					{
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON));
@@ -570,6 +576,49 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					return true;
 				}
 				);
+			//д╚©Нем
+			{
+				this->playerState.SetStateFunctionSet(
+					CharacterNormalState::MOTION15,
+					[this](GameStateObject & object) -> void
+					{
+						auto& player = static_cast<Player&>(object);
+						object.playerAnime.ChangeState(CharacterNormalState::MOTION15, true);
+						this->delayCounter = 0;
+					},
+					[this](GameStateObject & object, float deltaTime) -> void
+					{
+						auto& player = static_cast<Player&>(object);
+						if (this->delayCounter > object.playerAnime.GetTotalTime(CharacterNormalState::MOTION15) * 0.35)
+						{
+							if ((GetAsyncKeyState('X') & 0x8000)|| (GetAsyncKeyState('Z') & 0x8000)|| (GetAsyncKeyState(VK_DOWN) & 0x8000)|| (GetAsyncKeyState(VK_LEFT) & 0x8000)|| (GetAsyncKeyState(VK_SPACE) & 0x8000))
+							{
+								object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+								//object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
+							}
+							//if (GetAsyncKeyState('X') & 0x8000)
+							//{
+							//	object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+							//	//object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
+							//}
+							//else if (GetAsyncKeyState('Z') & 0x8000)
+							//{
+							//	object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+							//	//object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
+							//}
+							if (object.playerAnime.isEnd())
+							{
+								object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+							}
+						}
+					},
+						[](GameStateObject & object, CharacterNormalState state) -> bool
+					{
+						return true;
+					},
+						guardFunc
+						);
+			}
 		}
 
 	}

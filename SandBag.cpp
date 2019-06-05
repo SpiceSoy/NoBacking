@@ -92,6 +92,10 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 			},
 			[framework](GameStateObject& object, float deltaTime) -> void
 			{
+				if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
+				{
+					framework->GetPlayer().ResetDamageCounter();
+				}
 				if (object.playerAnime.isEnd())
 				{
 					object.playerState.ChangeState(CharacterNormalState::IDLE);
@@ -152,6 +156,7 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 #pragma endregion
 
 	this->playerState.ChangeState(CharacterNormalState::IDLE);
+	this->hp = 100;
 	this->transform.Translate(Vec2DF::Down() * 500,false, 1);
 	this->transform.Translate(Vec2DF::Right() * 400,false, 1);
 }

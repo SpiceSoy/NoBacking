@@ -111,6 +111,16 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character1", C1Dir + L"142.png");
 		ResourceManager::AddImages("character1", C1Dir + L"143.png");
 		ResourceManager::AddImages("character1", C1Dir + L"144.png");
+		//카운터
+		ResourceManager::AddImages("character1", C1Dir + L"118.png");
+		ResourceManager::AddImages("character1", C1Dir + L"119.png");
+		ResourceManager::AddImages("character1", C1Dir + L"120.png");
+		ResourceManager::AddImages("character1", C1Dir + L"121.png");
+		ResourceManager::AddImages("character1", C1Dir + L"122.png");
+		ResourceManager::AddImages("character1", C1Dir + L"123.png");
+		ResourceManager::AddImages("character1", C1Dir + L"124.png");
+		ResourceManager::AddImages("character1", C1Dir + L"125.png");
+		ResourceManager::AddImages("character1", C1Dir + L"126.png");
 	}
 
 	//C2 이미지 정의
@@ -213,6 +223,16 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character2", C2Dir + L"142.png");
 		ResourceManager::AddImages("character2", C2Dir + L"143.png");
 		ResourceManager::AddImages("character2", C2Dir + L"144.png");
+		//카운터
+		ResourceManager::AddImages("character2", C2Dir + L"118.png");
+		ResourceManager::AddImages("character2", C2Dir + L"119.png");
+		ResourceManager::AddImages("character2", C2Dir + L"120.png");
+		ResourceManager::AddImages("character2", C2Dir + L"121.png");
+		ResourceManager::AddImages("character2", C2Dir + L"122.png");
+		ResourceManager::AddImages("character2", C2Dir + L"123.png");
+		ResourceManager::AddImages("character2", C2Dir + L"124.png");
+		ResourceManager::AddImages("character2", C2Dir + L"125.png");
+		ResourceManager::AddImages("character2", C2Dir + L"126.png");
 	}
 
 	//C3 이미지 정의
@@ -315,6 +335,16 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character3", C3Dir + L"142.png");
 		ResourceManager::AddImages("character3", C3Dir + L"143.png");
 		ResourceManager::AddImages("character3", C3Dir + L"144.png");
+		//카운터
+		ResourceManager::AddImages("character3", C3Dir + L"118.png");
+		ResourceManager::AddImages("character3", C3Dir + L"119.png");
+		ResourceManager::AddImages("character3", C3Dir + L"120.png");
+		ResourceManager::AddImages("character3", C3Dir + L"121.png");
+		ResourceManager::AddImages("character3", C3Dir + L"122.png");
+		ResourceManager::AddImages("character3", C3Dir + L"123.png");
+		ResourceManager::AddImages("character3", C3Dir + L"124.png");
+		ResourceManager::AddImages("character3", C3Dir + L"125.png");
+		ResourceManager::AddImages("character3", C3Dir + L"126.png");
 
 	}
 
@@ -411,6 +441,12 @@ void GameFramework::Load()
 		subAnim.scale = 0.5;
 		subAnim.subImageSize = 3;
 		motionContainer[CharacterNormalState::MOTION14] = subAnim;
+		//카운터
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 84;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 9;
+		motionContainer[CharacterNormalState::MOTION15] = subAnim;
 		ResourceManager::AddMotion("character", std::move(motionContainer));
 
 	}
@@ -514,6 +550,16 @@ void GameFramework::Load()
 		ResourceManager::AddCollision("character", ChaColDir + "142.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "143.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "144.txt");
+		//카운터
+		ResourceManager::AddCollision("character", ChaColDir + "118.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "119.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "120.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "121.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "122.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "123.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "124.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "125.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "126.txt");
 	}
 #pragma endregion
 

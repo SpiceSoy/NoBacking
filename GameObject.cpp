@@ -41,8 +41,11 @@ bool GameStateObject::CheckCollision(GameStateObject& other)
 
 void GameStateObject::Damaged(int hp , bool off)
 {
-	this->hp = Utill::clamp(this->hp - hp, 0, INT_MAX);
-	if (!off) { this->isCanDamaged = false; }
+	if (isCanDamaged)
+	{
+		this->hp = Utill::clamp(this->hp - hp, 0, INT_MAX);
+		if (!off) { this->isCanDamaged = false; }
+	}
 }
 
 void GameStateObject::ResetDamageCounter()
