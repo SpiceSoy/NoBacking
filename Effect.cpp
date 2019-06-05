@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Effect.h"
+#include "GameFramework.h"
 
 std::map<std::string, subEffect> Effect::EffectSet = std::map<std::string, subEffect>();
 
@@ -28,19 +29,25 @@ void Effect::Draw(PaintInfo info)
 {
 	if (isActive)
 	{
-		POINT pt = this->transform.Position;
-		RECT rt = RectF(this->transform.Position, this->playerAnime.GetCurrentImage().img->GetWidth(), this->playerAnime.GetCurrentImage().img->GetHeight());
-		this->playerAnime.GetCurrentImage().img->BitBlt(info.hdc, pt, SRCPAINT);
-		this->playerAnime.GetCurrentCollisionData().Draw(info, this->transform.Position + ImageMargin);
+		if (isCopy) 
+		{
+			this->playerAnime.GetCurrentImage().img->Draw(info.hdc, framework->GetCameraTransform(this->transform.Position - this->ImageMargin));
+		}
+		else 
+		{
+			this->playerAnime.GetCurrentImage().img->BitBlt(info.hdc, framework->GetCameraTransform(this->transform.Position - this->ImageMargin), SRCPAINT);
+		}
+		this->playerAnime.GetCurrentCollisionData().Draw(info, framework->GetCameraTransform(this->transform.Position));
 	}
 }
 
-void Effect::EffectOn(const std::string& tag, const Vec2DF& Position, bool isXor)
+void Effect::EffectOn(const std::string& tag, const Vec2DF& Position, bool isCopy)
 {
 	if (!isActive)
 	{
-		this->isXor = isXor;
+		this->isCopy = isCopy;
 		this->transform.Position = Position;
+		this->ImageMargin = EffectSet[tag].ImageMargin;
 		this->playerAnime.Set(EffectSet[tag].ImageTag, EffectSet[tag].MotionTag, EffectSet[tag].CollisionTag);
 		this->playerState.SetStateFunction(CharacterNormalState::IDLE, EffectSet[tag].func);
 		this->playerState.ChangeState(CharacterNormalState::IDLE);

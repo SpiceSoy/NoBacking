@@ -6,12 +6,12 @@
 #include "SoundSystem.h"
 void GameFramework::Load()
 {
-#pragma region PlayerC1
+#pragma region Player
 	const std::wstring C1Dir = L"Resources/character/c1/";
 	const std::wstring C2Dir = L"Resources/character/c2/";
 	const std::wstring C3Dir = L"Resources/character/c3/";
 	const std::string ChaColDir = "Resources/character/col/";
-	//C1 이미지 정의
+#pragma region C1
 	{
 		// 기본
 		ResourceManager::AddImages("character1", C1Dir + L"6.png");
@@ -122,8 +122,8 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character1", C1Dir + L"125.png");
 		ResourceManager::AddImages("character1", C1Dir + L"126.png");
 	}
-
-	//C2 이미지 정의
+#pragma endregion
+#pragma region C2
 	{
 		// 기본
 		ResourceManager::AddImages("character2", C2Dir + L"6.png");
@@ -234,8 +234,8 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character2", C2Dir + L"125.png");
 		ResourceManager::AddImages("character2", C2Dir + L"126.png");
 	}
-
-	//C3 이미지 정의
+#pragma endregion
+#pragma region C3
 	{
 		// 기본
 		ResourceManager::AddImages("character3", C3Dir + L"6.png");
@@ -347,8 +347,8 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character3", C3Dir + L"126.png");
 
 	}
-
-	//모션 정의
+#pragma endregion
+#pragma region Motion
 	{
 		//기본
 		MotionContainer motionContainer;
@@ -378,7 +378,7 @@ void GameFramework::Load()
 		//찌르기
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 31;
-		subAnim.scale = 1.15;
+		subAnim.scale = 0.70;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION4] = subAnim;
 		//점프
@@ -408,7 +408,7 @@ void GameFramework::Load()
 		//베기
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 51;
-		subAnim.scale = 1.0;
+		subAnim.scale = 1.15;
 		subAnim.subImageSize = 9;
 		motionContainer[CharacterNormalState::MOTION9] = subAnim;
 		//점공2
@@ -448,9 +448,9 @@ void GameFramework::Load()
 		subAnim.subImageSize = 9;
 		motionContainer[CharacterNormalState::MOTION15] = subAnim;
 		ResourceManager::AddMotion("character", std::move(motionContainer));
-
 	}
-	//물리 정의
+#pragma endregion
+#pragma region Collision
 	{
 		// 기본
 		ResourceManager::AddCollision("character", ChaColDir + "6.txt");
@@ -563,6 +563,8 @@ void GameFramework::Load()
 	}
 #pragma endregion
 
+#pragma endregion
+
 #pragma region SandBag
 	const std::wstring sandDir = L"Resources/sand/img/";
 	const std::string sandColDir = "Resources/sand/col/";
@@ -642,15 +644,17 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::IDLE] = subAnim;
 		//피격 1
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.85;
+		subAnim.scale = 1.6;
 		subAnim.subImageStartIndex = 18;
-		subAnim.subImageSize = 14;
+		subAnim.subImageSize = 8;
+		//subAnim.subImageSize = 14;
 		motionContainer[CharacterNormalState::MOTION1] = subAnim;
 		//피격 2
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.85;
+		subAnim.scale = 1.25;
 		subAnim.subImageStartIndex = 32;
-		subAnim.subImageSize = 14;
+		subAnim.subImageSize = 8;
+		//subAnim.subImageSize = 14;
 		motionContainer[CharacterNormalState::MOTION2] = subAnim;
 		//사망
 		subAnim.next = CharacterNormalState::None;
@@ -728,37 +732,145 @@ void GameFramework::Load()
 #pragma endregion
 
 #pragma region Effects
-	const std::wstring effect1Dir = L"Resources/effect/effect1_1/img/";
-	const std::string effect1ColDir = "Resources/effect1/effect1_1/col/";
-
-	//이미지 정의
 	{
+		const std::wstring effect1Dir = L"Resources/effect/effect1_1/img/";
+		const std::string effect1ColDir = "Resources/effect1/effect1_1/col/";
 
-		ResourceManager::AddImages("effect1", effect1Dir + L"0.png");
-		ResourceManager::AddImages("effect1", effect1Dir + L"1.png");
-		ResourceManager::AddImages("effect1", effect1Dir + L"2.png");
-		ResourceManager::AddImages("effect1", effect1Dir + L"3.png");
-		ResourceManager::AddImages("effect1", effect1Dir + L"4.png");
-		ResourceManager::AddImages("effect1", effect1Dir + L"5.png");
+		//이미지 정의
+		{
 
+			ResourceManager::AddImages("effect1", effect1Dir + L"0.png");
+			ResourceManager::AddImages("effect1", effect1Dir + L"1.png");
+			ResourceManager::AddImages("effect1", effect1Dir + L"2.png");
+			ResourceManager::AddImages("effect1", effect1Dir + L"3.png");
+			ResourceManager::AddImages("effect1", effect1Dir + L"4.png");
+			ResourceManager::AddImages("effect1", effect1Dir + L"5.png");
+
+			MotionContainer motionContainer;
+			subAnimation subAnim;
+			subAnim.next = CharacterNormalState::None;
+			subAnim.scale = 1;
+			subAnim.subImageStartIndex = 0;
+			subAnim.subImageSize = 6;
+			motionContainer[CharacterNormalState::IDLE] = subAnim;
+			ResourceManager::AddMotion("effect1", std::move(motionContainer));
+		
+			subEffect subEffect;
+			subEffect.ImageTag = "effect1";
+			subEffect.MotionTag = "effect1";
+			subEffect.CollisionTag = "effect1";
+			subEffect.ImageMargin = Vec2DF{ 165,120 };
+			subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+			Effect::AddEffect("effect1", std::move(subEffect));
+		}
+	}
+	//실드 히트
+	{
+		const std::wstring shieldDir = L"Resources/effect/shield/";
+		const std::string shieldColDir = "Resources/effect1/shield/col/";
+		ResourceManager::AddImages("shield", shieldDir + L"0.png");
+		ResourceManager::AddImages("shield", shieldDir + L"1.png");
+		ResourceManager::AddImages("shield", shieldDir + L"2.png");
+		ResourceManager::AddImages("shield", shieldDir + L"3.png");
+		ResourceManager::AddImages("shield", shieldDir + L"4.png");
 		MotionContainer motionContainer;
+
 		subAnimation subAnim;
 		subAnim.next = CharacterNormalState::None;
 		subAnim.scale = 1;
 		subAnim.subImageStartIndex = 0;
-		subAnim.subImageSize = 6;
+		subAnim.subImageSize = 5;
 		motionContainer[CharacterNormalState::IDLE] = subAnim;
-		ResourceManager::AddMotion("effect1", std::move(motionContainer));
-		
-		subEffect subEffect;
-		subEffect.ImageTag = "effect1";
-		subEffect.MotionTag = "effect1";
-		subEffect.CollisionTag = "effect1";
-		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
-		Effect::AddEffect("effect1", std::move(subEffect));
+		ResourceManager::AddMotion("shield", std::move(motionContainer));
 
+		subEffect subEffect;
+		subEffect.ImageTag = "shield";
+		subEffect.MotionTag = "shield";
+		subEffect.CollisionTag = "shield";
+		subEffect.ImageMargin = Vec2DF{ 63,98 };
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("shield", std::move(subEffect));
+	}
+	//퍼펙트 실드 히트
+	{
+		const std::wstring shieldDir = L"Resources/effect/perfect/";
+		const std::string shieldColDir = "Resources/effect1/perfect/col/";
+		ResourceManager::AddImages("perfect", shieldDir + L"0.png");
+		ResourceManager::AddImages("perfect", shieldDir + L"1.png");
+		ResourceManager::AddImages("perfect", shieldDir + L"2.png");
+		ResourceManager::AddImages("perfect", shieldDir + L"3.png");
+		ResourceManager::AddImages("perfect", shieldDir + L"4.png");
+		ResourceManager::AddImages("perfect", shieldDir + L"5.png");
+		ResourceManager::AddImages("perfect", shieldDir + L"6.png");
+		MotionContainer motionContainer;
+
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 7;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("perfect", std::move(motionContainer));
+
+		subEffect subEffect;
+		subEffect.ImageTag = "perfect";
+		subEffect.MotionTag = "perfect";
+		subEffect.CollisionTag = "perfect";
+		subEffect.ImageMargin = Vec2DF{ 131,125 };
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("perfect", std::move(subEffect));
 	}
 #pragma endregion
+
+#pragma region BackGround
+
+#pragma region Drago
+
+	{
+		const std::wstring bgDragoDir = L"Resources/back/bg_drago/back/";
+		const std::wstring midDragoDir = L"Resources/back/bg_drago/mid/";
+		const std::wstring tileDragoDir = L"Resources/back/bg_drago/tile/";
+		//이미지 정의
+		{
+			//일반 모션
+			ResourceManager::AddImages("bg-drago-back", bgDragoDir + L"0.png");
+			ResourceManager::AddImages("bg-drago-mid", midDragoDir + L"0.png");
+			ResourceManager::AddImages("bg-drago-mid", midDragoDir + L"1.png");
+			ResourceManager::AddImages("bg-drago-tile", tileDragoDir + L"0.png");
+			ResourceManager::AddImages("bg-drago-tile", tileDragoDir + L"1.png");
+			ResourceManager::AddImages("bg-drago-tile", tileDragoDir + L"2.png");
+			ResourceManager::AddImages("bg-drago-tile", tileDragoDir + L"3.png");
+			ResourceManager::AddImages("bg-drago-tile", tileDragoDir + L"4.png");
+			ResourceManager::AddImages("bg-drago-tile", tileDragoDir + L"5.png");
+		}
+	}
+
+	{
+		const std::wstring bgDragoDir = L"Resources/back/bg_drago_n/back/";
+		const std::wstring midDragoDir = L"Resources/back/bg_drago_n/mid/";
+		const std::wstring tileDragoDir = L"Resources/back/bg_drago_n/tile/";
+		const std::wstring lowDragoDir = L"Resources/back/bg_drago_n/low/";
+		//이미지 정의
+		{
+			//일반 모션
+			ResourceManager::AddImages("bg-drago-n-back", bgDragoDir + L"0.png");
+			ResourceManager::AddImages("bg-drago-n-mid", midDragoDir + L"0.png");
+			ResourceManager::AddImages("bg-drago-n-mid", midDragoDir + L"1.png");
+			ResourceManager::AddImages("bg-drago-n-tile", tileDragoDir + L"0.png");
+			ResourceManager::AddImages("bg-drago-n-tile", tileDragoDir + L"1.png");
+			ResourceManager::AddImages("bg-drago-n-tile", tileDragoDir + L"2.png");
+			ResourceManager::AddImages("bg-drago-n-tile", tileDragoDir + L"3.png");
+			ResourceManager::AddImages("bg-drago-n-tile", tileDragoDir + L"4.png");
+			ResourceManager::AddImages("bg-drago-n-tile", tileDragoDir + L"5.png");
+			ResourceManager::AddImages("bg-drago-n-low", tileDragoDir + L"0.png");
+		}
+	}
+
+#pragma endregion
+
+#pragma endregion
+
+
 
 #pragma region Sound
 	const std::string sndAttackDir = "Resources/sound/attack/";
@@ -768,6 +880,7 @@ void GameFramework::Load()
 	SoundSystem::Load("atk-slash", sndAttackDir + "blunt_01.wav");
 	SoundSystem::Load("hit-bite", sndHitDir + "bite.wav");
 	SoundSystem::Load("hit-steel", sndHitDir + "steel.wav");
+	SoundSystem::Load("hit-cut", sndHitDir + "cut.wav");
 #pragma endregion
 
 

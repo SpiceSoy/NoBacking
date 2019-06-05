@@ -15,8 +15,8 @@ HINSTANCE g_hInst;
 LPCTSTR lpszClass = L"S";
 LPCTSTR lpszWindowName = L"Inversus";
 
-constexpr size_t X_SIZE = 1000;
-constexpr size_t Y_SIZE = 820;
+constexpr size_t X_SIZE = 1280;
+constexpr size_t Y_SIZE = 720;
 constexpr size_t Margin = 50;
 
 constexpr int interval = 1000;

@@ -18,9 +18,9 @@ bool GameStateObject::CheckCollision(GameStateObject& other)
 	if (isActive)
 	{
 		auto& thisCol = this->playerAnime.GetCurrentCollisionData();
-		auto thisPos = this->transform.Position + this->ImageMargin;
+		auto thisPos = this->transform.Position;
 		auto& otherCol = other.playerAnime.GetCurrentCollisionData();
-		auto otherPos = other.transform.Position + other.ImageMargin;
+		auto otherPos = other.transform.Position;
 		if (this->playerAnime.isChangeFrame() || other.playerAnime.isChangeFrame())
 		{
 			if (CollisionCollection::CheckIntersect(thisCol, thisPos, this, otherCol, otherPos, &other))

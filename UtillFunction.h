@@ -15,6 +15,16 @@ namespace Utill
 		if (target > _max) target %= _max;
 		return target;
 	}
+	template <typename Ty>
+	Ty Circular(Ty target, Ty _min, Ty _max)
+	{
+		if (target < _min) target += _max;
+		while (target > _max)
+		{
+			target -= _max;
+		}
+		return target;
+	}
 
 	bool approximation(float a, float b, float error = 5);
 }

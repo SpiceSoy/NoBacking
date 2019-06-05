@@ -32,9 +32,20 @@ public:
 		this->x /= this->GetScale();
 		this->y /= this->GetScale();
 	}
-	ThisType Lerp(const ThisType & dest, float t) const
+	ThisType Lerp(const ThisType& dest, float t, float xerror = 0.15f, float yerror = 0.5f ) const
 	{
-		return (1 - t) * this + t * dest;
+		auto ret = (*this) * (1 - t) + dest * t;
+		if (dest.x + xerror > this->x - xerror && this->x + xerror > dest.x - xerror)
+		{
+			//ret.x = dest.x;
+			ret.x = this->x;
+		}
+		if (dest.y + yerror > this->y - yerror && this->y + yerror > dest.y - yerror)
+		{
+			ret.y = this->y;
+			//ret.y = dest.y;
+		}
+		return ret;
 	}
 	ThisType RotatedPoint(const ThisType & pivot, float angle) const
 	{

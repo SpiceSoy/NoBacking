@@ -15,7 +15,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			if (res.first == "body" && res.second == "attack1" && this->isCanDamaged)
 			{
-				framework->OnEffect("effect1", this->transform.Position);
+				framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 				SoundSystem::PlaySound("hit-bite");
 				if (hp == 0)
 				{
@@ -38,7 +38,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			if (res.first == "body" && res.second == "attack1"&& this->isCanDamaged)
 			{
 				SoundSystem::PlaySound("hit-bite");
-				framework->OnEffect("effect1", this->transform.Position);
+				framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 				this->transform.KnockBack((Vec2DF::Left() * 5) + (Vec2DF::Up() * 3.5f));
 				//this->transform.KnockBack((Vec2DF::Left() * 1.5f) + (Vec2DF::Up() * 1.5f));
 				object.playerState.ChangeState(CharacterNormalState::MOTION14);
@@ -53,9 +53,17 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			if (res.second == "attack1" && this->isCanDamaged)
 			{
 					SoundSystem::PlaySound("hit-steel");
-					framework->OnEffect("effect1", this->transform.Position);
+					if (object.playerState.GetCurrentState() == static_cast<CharacterNormalState>(PlayerState::GUARDUP)&& object.playerAnime.GetCurrentFrame() <= 2)
+					{
+						framework->OnEffect("perfect", this->transform.Position + Vec2DF::Up() * 55 + Vec2DF::Right() * 30);
+						framework->OnEffect("shield", this->transform.Position + Vec2DF::Up() * 55 + Vec2DF::Right() * 30);
+					}
+					else 
+					{
+						framework->OnEffect("shield", this->transform.Position + Vec2DF::Up() * 55 + Vec2DF::Right() * 30);
+					}
 					this->delayCounter = 0;
-					this->transform.KnockBack(Vec2DF::Left() * 1);
+					this->transform.KnockBack(Vec2DF::Left() * 0.5f);
 			}
 		}
 		return false;
@@ -109,7 +117,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 					{
 						object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
-						object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime, false);
+						object.transform.Translate(Vec2DF::Left() * 350.0f * deltaTime, false);
 					}
 					else if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 					{
@@ -203,7 +211,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					{
 						snd = true;
 					}
-					if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::STING)) * 0.7)
+					if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::STING)) * 0.9)
 					{
 						if (GetAsyncKeyState('X') & 0x8000)
 						{
@@ -234,19 +242,26 @@ Player::Player(GameFramework* framework, const std::string& tag)
 		{
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::GUARDUP),
-				[](GameStateObject & object) -> void
+				[this](GameStateObject & object) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP), true);
+					this->isPerfect = false;
 				},
 				[this](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
-					if (object.playerAnime.GetCurrentFrame() <= 1 && !this->isCanDamaged && (GetAsyncKeyState('Z') & 0x8000))
+					if (object.playerAnime.GetCurrentFrame() <= 2 && !this->isCanDamaged)
+					{
+						this->isPerfect = true;
+					}
+					if (this->isPerfect && (GetAsyncKeyState('Z') & 0x8000))
 					{
 						object.playerState.ChangeState(CharacterNormalState::MOTION15);
-						object.ResetDamageCounter();
-
+					}
+					if (this->isPerfect && (GetAsyncKeyState('X') & 0x8000))
+					{
+						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
 					}
 					if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::GUARDUP)))
 					{
@@ -346,7 +361,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					auto& player = static_cast<Player&>(object);
 					if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::LANDING)))
 					{
-						object.transform.SetY(500);
+						object.transform.SetY(600);
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
@@ -398,7 +413,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					}
 					if (!object.transform.GetJumpState())
 					{
-						object.transform.SetY(500);
+						object.transform.SetY(600);
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
@@ -446,7 +461,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					}
 					if (!object.transform.GetJumpState())
 					{
-						object.transform.SetY(500);
+						object.transform.SetY(600);
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 					}
 				},
@@ -467,9 +482,13 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					auto& player = static_cast<Player&>(object);
 					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON), true);
 				},
-				[](GameStateObject & object, float deltaTime) -> void
+				[this](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
+					if (this->isPerfect && (GetAsyncKeyState('X') & 0x8000))
+					{
+						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
+					}
 					if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(VK_RIGHT))
 					{
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDMOVE));
@@ -560,7 +579,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					auto& player = static_cast<Player&>(object);
 					if (object.playerAnime.isEnd(CharacterNormalState::MOTION14) && !object.transform.GetJumpState())
 					{
-						object.transform.SetY(500);
+						object.transform.SetY(600);
 						if (this->hp == 0)
 						{
 							object.Deactive();
@@ -589,9 +608,9 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					[this](GameStateObject & object, float deltaTime) -> void
 					{
 						auto& player = static_cast<Player&>(object);
-						if (this->delayCounter > object.playerAnime.GetTotalTime(CharacterNormalState::MOTION15) * 0.35)
+						if (this->delayCounter > object.playerAnime.GetTotalTime(CharacterNormalState::MOTION15) * 0.6)
 						{
-							if ((GetAsyncKeyState('X') & 0x8000)|| (GetAsyncKeyState('Z') & 0x8000)|| (GetAsyncKeyState(VK_DOWN) & 0x8000)|| (GetAsyncKeyState(VK_LEFT) & 0x8000)|| (GetAsyncKeyState(VK_SPACE) & 0x8000))
+							if ((GetAsyncKeyState('X') & 0x8000)|| (GetAsyncKeyState('Z') & 0x8000)|| (GetAsyncKeyState(VK_DOWN) & 0x8000))
 							{
 								object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 								//object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
@@ -624,7 +643,8 @@ Player::Player(GameFramework* framework, const std::string& tag)
 	}
 #pragma endregion
 	this->playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
-	this->transform.Translate(Vec2DF::Down() * 500, false, 1);
+	this->transform.Translate(Vec2DF::Down() * 600, false, 1);
+	this->transform.Translate(Vec2DF::Right() * 300, false, 1);
 }
 
 void Player::Update(float deltaTime)
@@ -642,7 +662,7 @@ void Player::Draw(PaintInfo info)
 {
 	if (isActive)
 	{
-		this->playerAnime.GetCurrentImage().img->Draw(info.hdc, this->transform.Position.x, this->transform.Position.y);
-		this->playerAnime.GetCurrentCollisionData().Draw(info, this->transform.Position + ImageMargin);
+		this->playerAnime.GetCurrentImage().img->Draw(info.hdc, framework->GetCameraTransform(this->transform.Position - this->ImageMargin));
+		this->playerAnime.GetCurrentCollisionData().Draw(info, framework->GetCameraTransform(this->transform.Position));
 	}
 }

@@ -4,6 +4,7 @@
 #include <vector>
 class ObjectContainer;
 class Player;
+class Camera;
 class GameFramework
 {
 private:
@@ -23,10 +24,12 @@ public:
 	void Load();
 	bool CheckCollision(GameStateObject& obj);
 	void ToggleDebugCollision();
-	void OnEffect(const std::string& tag, const Vec2DF& Position, bool isXor = false);
+	void OnEffect(const std::string& tag, const Vec2DF& Position, bool isCopy = false);
 	Vec2DF GetDisplaySize() const;
 	Vec2DF GetMargin() const;
 	void MouseInput(Vec2DU MousePos, UINT iMessage);
 	Player& GetPlayer() const;
 	ObjectContainer& operator()() { return *container; }
+	Camera& GetCamera() const;
+	Vec2DF GetCameraTransform(const Vec2DF& transform) const;
 };

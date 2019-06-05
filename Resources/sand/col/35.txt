@@ -1,4 +1,4 @@
 C:\Users\Soy\OneDrive\NoBacking\NoBacking\Resources\sand\img\35.png -200 -235
-0 0 535 1
-attack1 -118 -135 150 1
-1 -120 -133 103 84
+0 0 589 1
+attack1 -121 -120 206 1
+1 -120 -111 109 157

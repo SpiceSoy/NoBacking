@@ -22,7 +22,7 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 			},
 			[framework](GameStateObject& object, float deltaTime) -> void
 			{
-				if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 120)
+				if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 220)
 				{
 					object.playerState.ChangeState(CharacterNormalState::MOTION2);
 				}
@@ -49,8 +49,9 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 				{
 					if (res.second == "weapon")
 					{
-						this->hp--;
-						framework->OnEffect("effect1", this->transform.Position);
+						this->Damaged(5);
+						framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+						SoundSystem::PlaySound("hit-cut");
 						if (hp == 0)
 						{
 							object.playerState.ChangeState(CharacterNormalState::MOTION3);
@@ -70,6 +71,7 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 			[](GameStateObject& object) -> void
 			{
 				object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
+				object.ResetDamageCounter();
 			},
 			[](GameStateObject& object, float deltaTime) -> void
 			{
@@ -111,10 +113,11 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 			{
 				for (auto& res : result)
 				{
-					if (res.second == "weapon")
+					if (res.second == "weapon" && this->isCanDamaged)
 					{
-						this->hp--;
-						framework->OnEffect("effect1", this->transform.Position);
+						this->Damaged(5);
+						framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+						SoundSystem::PlaySound("hit-cut");
 						if (hp == 0)
 						{
 							object.playerState.ChangeState(CharacterNormalState::MOTION3);
@@ -157,8 +160,8 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 
 	this->playerState.ChangeState(CharacterNormalState::IDLE);
 	this->hp = 100;
-	this->transform.Translate(Vec2DF::Down() * 500,false, 1);
-	this->transform.Translate(Vec2DF::Right() * 400,false, 1);
+	this->transform.Translate(Vec2DF::Down() * 600,false, 1);
+	this->transform.Translate(Vec2DF::Right() * 900,false, 1);
 }
 
 void SandBag::Update(float deltaTime)
@@ -175,7 +178,7 @@ void SandBag::Draw(PaintInfo info)
 {
 	if (isActive)
 	{
-		this->playerAnime.GetCurrentImage().img->Draw(info.hdc, this->transform.Position.x, this->transform.Position.y);
-		this->playerAnime.GetCurrentCollisionData().Draw(info, this->transform.Position + ImageMargin);
+		this->playerAnime.GetCurrentImage().img->Draw(info.hdc, framework->GetCameraTransform(this->transform.Position - this->ImageMargin));
+		this->playerAnime.GetCurrentCollisionData().Draw(info, framework->GetCameraTransform(this->transform.Position));
 	}
 }

@@ -126,7 +126,7 @@ bool Animation::isEnd(CharacterNormalState state) const
 float Animation::GetTotalTime(CharacterNormalState state) const
 {
 	if (state == CharacterNormalState::THISMOTION) { state = this->thisState; }
-	return motionData->at(state).subImageSize* motionData->at(state).scale * Animation::frameTime;
+	return motionData->at(state).subImageSize * Animation::frameTime / motionData->at(state).scale;
 }
 
 int Animation::GetCurrentFrame() const
