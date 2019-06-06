@@ -27,7 +27,7 @@ void PlayerHPBar::Draw(PaintInfo info)
 	};
 	auto rt = RectF(Vec2DF{ 280,90 }, backImageSize.x, backImageSize.y);
 	backImg->Draw(info.hdc, rt);
-	auto percentRt = RectF((int)rt.left + 82, (int)rt.top + 30, (int)rt.left + 82 + (barImageSize.x * currnetPercent), (int)rt.top + 30 + barImageSize.y);
+	auto percentRt = RectF((int)rt.left + 83, (int)rt.top + 30, (int)rt.left + 83 + (barImageSize.x * currnetPercent), (int)rt.top + 30 + barImageSize.y);
 	hpbarImg->BitBlt(info.hdc, percentRt, POINT{ 0,0 });
 
 }
@@ -44,8 +44,8 @@ void EnemyHPBar::Draw(PaintInfo info)
 {
 	if (On)
 	{
-		auto& backImg = ResourceManager::GetImages("ui-enemeyhpbar")->at(0).img;
-		auto& hpbarImg = ResourceManager::GetImages("ui-enemyhpbar")->at(1).img;
+		auto& backImg = ResourceManager::GetImages("ui-playerhpbar")->at(2).img;
+		auto& hpbarImg = ResourceManager::GetImages("ui-playerhpbar")->at(1).img;
 		auto& markImg = ResourceManager::GetImages(this->markTag)->at(0).img;
 		auto backImageSize = Vec2DF
 		{
@@ -57,9 +57,10 @@ void EnemyHPBar::Draw(PaintInfo info)
 			static_cast<float>(hpbarImg->GetWidth()),
 			static_cast<float>(hpbarImg->GetHeight())
 		};
-		auto rt = RectF(Vec2DF{ 580,90 }, backImageSize.x, backImageSize.y);
+		auto rt = RectF(Vec2DF{1030,90 }, backImageSize.x, backImageSize.y);
 		backImg->Draw(info.hdc, rt);
-		auto percentRt = RectF((int)rt.left + 82, (int)rt.top + 30, (int)rt.left + 82 + (barImageSize.x * currnetPercent), (int)rt.top + 30 + barImageSize.y);
+		auto percentRt = RectF((int)rt.left + 6, (int)rt.top + 30, (int)rt.left + 6 + (barImageSize.x * currnetPercent), (int)rt.top + 30 + barImageSize.y);
 		hpbarImg->BitBlt(info.hdc, percentRt, POINT{ 0,0 });
+		markImg->Draw(info.hdc, rt);
 	}
 }

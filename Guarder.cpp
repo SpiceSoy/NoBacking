@@ -281,3 +281,14 @@ void Guarder::Draw(PaintInfo info)
 		this->playerAnime.GetCurrentCollisionData().Draw(info, framework->GetCameraTransform(this->transform.Position));
 	}
 }
+
+void Guarder::Damaged(int hp, bool off)
+{
+	auto thisState = this->playerState.GetCurrentState();
+	if (thisState == CharacterNormalState::MOTION23 || thisState == CharacterNormalState::MOTION24)
+	{
+		hp = 0;
+	}
+	GameStateObject::Damaged(hp, off);
+	this->framework->EnemyHPBar(this->hp / this->maxHP,this,"mark-def");
+}

@@ -23,6 +23,7 @@ ObjectContainer::ObjectContainer(GameFramework* framework)
 		this->Effects.emplace_back(std::make_unique<Effect>(framework, "Effects"));
 	}
 	this->playerHpBar = std::make_unique<PlayerHPBar>();
+	this->enemyHpBar = std::make_unique<EnemyHPBar>();
 }
 
 ObjectContainer::~ObjectContainer()
