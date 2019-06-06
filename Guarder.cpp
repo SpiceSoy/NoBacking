@@ -285,7 +285,7 @@ void Guarder::Draw(PaintInfo info)
 void Guarder::Damaged(int hp, bool off)
 {
 	auto thisState = this->playerState.GetCurrentState();
-	if (thisState == CharacterNormalState::MOTION23 || thisState == CharacterNormalState::MOTION24)
+	if (thisState == CharacterNormalState::MOTION6)
 	{
 		hp = 0;
 	}

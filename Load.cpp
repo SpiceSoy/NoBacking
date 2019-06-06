@@ -985,6 +985,173 @@ void GameFramework::Load()
 	}
 #pragma endregion
 
+#pragma region Giant
+	const std::wstring giantDir = L"Resources/giant/img/";
+	const std::string giantColDir = "Resources/giant/col/";
+	//이미지 정의
+	{
+		// 대기
+		ResourceManager::AddImages("giant", giantDir + L"0.png");
+		ResourceManager::AddImages("giant", giantDir + L"1.png");
+		ResourceManager::AddImages("giant", giantDir + L"2.png");
+		ResourceManager::AddImages("giant", giantDir + L"3.png");
+		ResourceManager::AddImages("giant", giantDir + L"4.png");
+		ResourceManager::AddImages("giant", giantDir + L"5.png");
+		// 이동
+		ResourceManager::AddImages("giant", giantDir + L"6.png");
+		ResourceManager::AddImages("giant", giantDir + L"7.png");
+		ResourceManager::AddImages("giant", giantDir + L"8.png");
+		ResourceManager::AddImages("giant", giantDir + L"9.png");
+		ResourceManager::AddImages("giant", giantDir + L"10.png");
+		ResourceManager::AddImages("giant", giantDir + L"11.png");
+		ResourceManager::AddImages("giant", giantDir + L"12.png");
+		ResourceManager::AddImages("giant", giantDir + L"13.png");
+		ResourceManager::AddImages("giant", giantDir + L"14.png");
+		ResourceManager::AddImages("giant", giantDir + L"15.png");
+		ResourceManager::AddImages("giant", giantDir + L"16.png");
+		ResourceManager::AddImages("giant", giantDir + L"17.png");
+		// 다운
+		ResourceManager::AddImages("giant", giantDir + L"18.png");
+		// 공격1
+		ResourceManager::AddImages("giant", giantDir + L"19.png");
+		ResourceManager::AddImages("giant", giantDir + L"20.png");
+		ResourceManager::AddImages("giant", giantDir + L"21.png");
+		ResourceManager::AddImages("giant", giantDir + L"22.png");
+		ResourceManager::AddImages("giant", giantDir + L"23.png");
+		ResourceManager::AddImages("giant", giantDir + L"24.png");
+		ResourceManager::AddImages("giant", giantDir + L"25.png");
+		ResourceManager::AddImages("giant", giantDir + L"26.png");
+		// 공격2
+		ResourceManager::AddImages("giant", giantDir + L"27.png");
+		ResourceManager::AddImages("giant", giantDir + L"28.png");
+		ResourceManager::AddImages("giant", giantDir + L"29.png");
+		ResourceManager::AddImages("giant", giantDir + L"30.png");
+		ResourceManager::AddImages("giant", giantDir + L"31.png");
+		ResourceManager::AddImages("giant", giantDir + L"32.png");
+		// 가드
+		ResourceManager::AddImages("giant", giantDir + L"33.png");
+		ResourceManager::AddImages("giant", giantDir + L"34.png");
+		ResourceManager::AddImages("giant", giantDir + L"35.png");
+		ResourceManager::AddImages("giant", giantDir + L"36.png");
+		ResourceManager::AddImages("giant", giantDir + L"37.png");
+		ResourceManager::AddImages("giant", giantDir + L"38.png");
+		// 공격3
+		ResourceManager::AddImages("giant", giantDir + L"39.png");
+		ResourceManager::AddImages("giant", giantDir + L"40.png");
+		ResourceManager::AddImages("giant", giantDir + L"41.png");
+		ResourceManager::AddImages("giant", giantDir + L"42.png");
+		ResourceManager::AddImages("giant", giantDir + L"43.png");
+		ResourceManager::AddImages("giant", giantDir + L"44.png");
+		ResourceManager::AddImages("giant", giantDir + L"45.png");
+		ResourceManager::AddImages("giant", giantDir + L"46.png");
+		ResourceManager::AddImages("giant", giantDir + L"47.png");
+		ResourceManager::AddImages("giant", giantDir + L"48.png");
+
+	}
+	//모션 정의
+	{
+		MotionContainer motionContainer;
+		subAnimation subAnim;
+		// 대기
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		// 이동
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 6;
+		subAnim.subImageSize = 12;
+		motionContainer[CharacterNormalState::MOTION1] = subAnim;
+		// 다운
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.25;
+		subAnim.subImageStartIndex = 18;
+		subAnim.subImageSize = 1;
+		motionContainer[CharacterNormalState::MOTION2] = subAnim;
+		// 공격1
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 19;
+		subAnim.subImageSize = 8;
+		motionContainer[CharacterNormalState::MOTION3] = subAnim;
+		// 공격2
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 27;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::MOTION4] = subAnim;
+		// 가드
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.2;
+		subAnim.subImageStartIndex = 33;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::MOTION5] = subAnim;
+		// 공격3(충격파)
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 39;
+		subAnim.subImageSize = 10;
+		motionContainer[CharacterNormalState::MOTION6] = subAnim;
+		ResourceManager::AddMotion("giant", std::move(motionContainer));
+	}
+
+	//물리 정의
+	{
+		// 대기
+		ResourceManager::AddCollision("giant", giantColDir + "0.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "1.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "2.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "3.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "4.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "5.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "6.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "7.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "8.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "9.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "10.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "11.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "12.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "13.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "14.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "15.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "16.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "17.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "18.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "19.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "20.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "21.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "22.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "23.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "24.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "25.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "26.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "27.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "28.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "29.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "30.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "31.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "32.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "33.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "34.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "35.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "36.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "37.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "38.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "39.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "40.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "41.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "42.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "43.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "44.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "45.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "46.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "47.txt");
+		ResourceManager::AddCollision("giant", giantColDir + "48.txt");
+	}
+#pragma endregion
+
 #pragma region Effects
 	{
 		const std::wstring effect1Dir = L"Resources/effect/effect1_1/img/";
