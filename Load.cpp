@@ -736,7 +736,6 @@ void GameFramework::Load()
 	const std::string guarderColDir = "Resources/guarder/col/";
 	//이미지 정의
 	{
-		//일반 모션
 		ResourceManager::AddImages("guarder", guarderDir + L"0.png");
 		ResourceManager::AddImages("guarder", guarderDir + L"1.png");
 		ResourceManager::AddImages("guarder", guarderDir + L"2.png");
@@ -755,7 +754,6 @@ void GameFramework::Load()
 		ResourceManager::AddImages("guarder", guarderDir + L"15.png");
 		ResourceManager::AddImages("guarder", guarderDir + L"16.png");
 		ResourceManager::AddImages("guarder", guarderDir + L"17.png");
-		//피격 1
 		ResourceManager::AddImages("guarder", guarderDir + L"18.png");
 		ResourceManager::AddImages("guarder", guarderDir + L"19.png");
 		ResourceManager::AddImages("guarder", guarderDir + L"20.png");
@@ -767,8 +765,16 @@ void GameFramework::Load()
 	//모션 정의
 	{
 		MotionContainer motionContainer;
-		//이동
 		subAnimation subAnim;
+		//대기
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 0.1;
+		subAnim.subImageStartIndex = 23;
+		subAnim.subImageSize = 2;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		subAnim.next = CharacterNormalState::None;
+		motionContainer[CharacterNormalState::MOTION6] = subAnim;
+		//이동
 		subAnim.next = CharacterNormalState::None;
 		subAnim.scale = 1;
 		subAnim.subImageStartIndex = 0;
@@ -776,13 +782,13 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION1] = subAnim;
 		//공격1
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 1;
+		subAnim.scale = 0.8;
 		subAnim.subImageStartIndex = 6;
 		subAnim.subImageSize = 5;
 		motionContainer[CharacterNormalState::MOTION2] = subAnim;
 		//공격2
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 1;
+		subAnim.scale = 0.8;
 		subAnim.subImageStartIndex = 11;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION3] = subAnim;
@@ -798,12 +804,7 @@ void GameFramework::Load()
 		subAnim.subImageStartIndex = 19;
 		subAnim.subImageSize = 4;
 		motionContainer[CharacterNormalState::MOTION5] = subAnim;
-		//가드(대기)
-		subAnim.next = CharacterNormalState::LOOP;
-		subAnim.scale = 1;
-		subAnim.subImageStartIndex = 23;
-		subAnim.subImageSize = 2;
-		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		//가드
 		ResourceManager::AddMotion("guarder", std::move(motionContainer));
 	}
 

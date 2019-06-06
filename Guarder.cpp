@@ -22,16 +22,43 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 			},
 			[framework](GameStateObject & object, float deltaTime) -> void
 			{
-				if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 120)
+				if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 80)
 				{
-					object.playerState.ChangeState(CharacterNormalState::MOTION2);
+					object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
+					auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
+					object.transform.Translate(moveVec * -100.0f * deltaTime);
 				}
-				else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 700)
+				else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 80 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150) {
+					int r = rand() % 3;
+					if (r == 0) {
+						object.playerState.ChangeState(CharacterNormalState::MOTION6);
+					}
+					else if (r == 1) {
+						object.playerState.ChangeState(CharacterNormalState::MOTION3);
+					}
+					else {
+						object.playerState.ChangeState(CharacterNormalState::MOTION2);
+					}
+				}
+				else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150)
+				{
+					int r = rand() % 2;
+
+					if (r == 0) {
+						object.playerState.ChangeState(CharacterNormalState::MOTION6);
+					}
+					else if (r == 1) {
+						object.playerState.ChangeState(CharacterNormalState::MOTION3);
+					}
+				}
+				else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 700 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 150)
 				{
 					object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
 					auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
 					object.transform.Translate(moveVec * 100.0f * deltaTime);
-					//object.playerState.ChangeState(CharacterNormalState::MOTION2);
+				}
+				else {
+					object.playerAnime.ChangeState(CharacterNormalState::IDLE);
 				}
 			},
 				[](GameStateObject & object, CharacterNormalState state) -> bool
@@ -49,7 +76,7 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 						SoundSystem::PlaySound("hit-cut");
 						if (hp == 0)
 						{
-							object.playerState.ChangeState(CharacterNormalState::MOTION3);
+							object.playerState.ChangeState(CharacterNormalState::MOTION5);
 						}
 						else
 						{
@@ -58,105 +85,187 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 					}
 				}
 				return false;
-			}
-			);
-		this->playerState.SetStateFunctionSet
-		(
-			CharacterNormalState::MOTION4,
-			[](GameStateObject & object) -> void
-			{
-				object.playerAnime.ChangeState(CharacterNormalState::MOTION4);
-				object.ResetDamageCounter();
-			},
-			[](GameStateObject & object, float deltaTime) -> void
-			{
-				if (object.playerAnime.isEnd())
-				{
-					object.playerState.ChangeState(CharacterNormalState::IDLE);
-				}
-			},
-				[](GameStateObject & object, CharacterNormalState state) -> bool
-			{
-				return true;
 			}
 			);
 		this->playerState.SetStateFunctionSet
 		(
 			CharacterNormalState::MOTION2,
 			[](GameStateObject & object) -> void
-			{
-				object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
-			},
+		{
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
+		},
 			[framework](GameStateObject & object, float deltaTime) -> void
-			{
-				if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
-				{
-					framework->GetPlayer().ResetDamageCounter();
-				}
-				if (object.playerAnime.isEnd())
-				{
-					object.playerState.ChangeState(CharacterNormalState::IDLE);
-				}
-				framework->CheckCollision(object);
-			},
-				[framework](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
 			{
 				framework->GetPlayer().ResetDamageCounter();
-				return true;
-			},
-				[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
+			}
+			if (object.playerAnime.isEnd())
 			{
-				for (auto& res : result)
+				object.playerState.ChangeState(CharacterNormalState::IDLE);
+			}
+			framework->CheckCollision(object);
+		},
+			[framework](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			framework->GetPlayer().ResetDamageCounter();
+			return true;
+		},
+			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
+		{
+			for (auto& res : result)
+			{
+				if (res.second == "weapon" && this->isCanDamaged)
 				{
-					if (res.second == "weapon" && this->isCanDamaged)
+					this->Damaged(5);
+					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+					SoundSystem::PlaySound("hit-cut");
+					if (hp == 0)
 					{
-						this->Damaged(5);
-						framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
-						SoundSystem::PlaySound("hit-cut");
-						if (hp == 0)
-						{
-							object.playerState.ChangeState(CharacterNormalState::MOTION3);
-						}
-						else
-						{
-							object.playerState.ChangeState(CharacterNormalState::MOTION4);
-						}
+						object.playerState.ChangeState(CharacterNormalState::MOTION5);
 					}
-					if (res.first == "weapon" && res.second == "body")
+					else
 					{
-						other.Damaged(0);
+						object.playerState.ChangeState(CharacterNormalState::MOTION4);
 					}
 				}
-				return false;
+				if (res.first == "weapon" && res.second == "body")
+				{
+					other.Damaged(0);
+				}
 			}
-			);
+			return false;
+		}
+		);
 		this->playerState.SetStateFunctionSet
 		(
 			CharacterNormalState::MOTION3,
 			[](GameStateObject & object) -> void
+		{
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION3);
+		},
+			[framework](GameStateObject & object, float deltaTime) -> void
+		{
+			if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
 			{
-				object.playerAnime.ChangeState(CharacterNormalState::MOTION3);
-			},
-			[this](GameStateObject & object, float deltaTime) -> void
-			{
-				if (object.playerAnime.isEnd())
-				{
-					this->Deactive();
-					//object.playerState.ChangeState(CharacterNormalState::IDLE);
-				}
-			},
-				[](GameStateObject & object, CharacterNormalState state) -> bool
-			{
-				return true;
+				framework->GetPlayer().ResetDamageCounter();
 			}
-			);
+			if (object.playerAnime.isEnd())
+			{
+				object.playerState.ChangeState(CharacterNormalState::IDLE);
+			}
+			framework->CheckCollision(object);
+		},
+			[framework](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			framework->GetPlayer().ResetDamageCounter();
+			return true;
+		},
+			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
+		{
+			for (auto& res : result)
+			{
+				if (res.second == "weapon" && this->isCanDamaged)
+				{
+					this->Damaged(5);
+					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+					SoundSystem::PlaySound("hit-cut");
+					if (hp == 0)
+					{
+						object.playerState.ChangeState(CharacterNormalState::MOTION5);
+					}
+					else
+					{
+						object.playerState.ChangeState(CharacterNormalState::MOTION4);
+					}
+				}
+				if (res.first == "weapon" && res.second == "body")
+				{
+					other.Damaged(0);
+				}
+			}
+			return false;
+		}
+		);
+		this->playerState.SetStateFunctionSet
+		(
+			CharacterNormalState::MOTION4,
+			[](GameStateObject & object) -> void
+		{
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION4);
+			object.ResetDamageCounter();
+		},
+			[](GameStateObject & object, float deltaTime) -> void
+		{
+			if (object.playerAnime.isEnd())
+			{
+				object.playerState.ChangeState(CharacterNormalState::IDLE);
+			}
+		},
+			[](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			return true;
+		}
+		);
+		
+		this->playerState.SetStateFunctionSet
+		(
+			CharacterNormalState::MOTION5,
+			[](GameStateObject & object) -> void
+		{
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION5);
+		},
+			[this](GameStateObject & object, float deltaTime) -> void
+		{
+			if (object.playerAnime.isEnd())
+			{
+				this->Deactive();
+				//object.playerState.ChangeState(CharacterNormalState::IDLE);
+			}
+		},
+			[](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			return true;
+		}
+		);
+		this->playerState.SetStateFunctionSet
+		(
+			CharacterNormalState::MOTION6,
+			[](GameStateObject & object) -> void
+		{
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION6);
+		},
+			[](GameStateObject & object, float deltaTime) -> void
+		{
+			if (object.playerAnime.isEnd())
+			{
+				object.playerState.ChangeState(CharacterNormalState::IDLE);
+			}
+		},
+			[](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			return true;
+		},
+			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
+		{
+			for (auto& res : result)
+			{
+				if (res.second == "weapon" && this->isCanDamaged)
+				{
+					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+					SoundSystem::PlaySound("hit-steel");
+				}
+			}
+			return false;
+		}
+		);
 	}
 #pragma endregion
 
 	this->playerState.ChangeState(CharacterNormalState::IDLE);
 	this->hp = 100;
 	this->transform.Translate(Vec2DF::Down() * 600, false, 1);
-	this->transform.Translate(Vec2DF::Right() * 1200, false, 1);
+	this->transform.Translate(Vec2DF::Right() * 600, false, 1);
 }
 
 void Guarder::Update(float deltaTime)
