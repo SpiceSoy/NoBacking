@@ -937,51 +937,51 @@ void GameFramework::Load()
 	//물리 정의
 	{
 		// 대기
-		ResourceManager::AddCollision("archer", archerColDir + "0.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "1.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "2.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "3.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "4.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "5.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "0.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "1.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "2.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "3.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "4.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "5.txt", 0.65f);
 		//이동
-		ResourceManager::AddCollision("archer", archerColDir + "13.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "12.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "11.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "10.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "9.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "8.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "7.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "6.txt");
-		// 피격
-		ResourceManager::AddCollision("archer", archerColDir + "14.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "15.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "13.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "12.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "11.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "10.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "9.txt", 0.65f), 
+		ResourceManager::AddCollision("archer", archerColDir + "8.txt", 0.65f), 
+		ResourceManager::AddCollision("archer", archerColDir + "7.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "6.txt", 0.65f);
+		// 피격													
+		ResourceManager::AddCollision("archer", archerColDir + "14.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "15.txt", 0.65f);
 		// 다운
-		ResourceManager::AddCollision("archer", archerColDir + "16.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "17.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "18.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "19.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "20.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "21.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "16.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "17.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "18.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "19.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "20.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "21.txt", 0.65f);
 		// 공격1(원거리)
-		ResourceManager::AddCollision("archer", archerColDir + "22.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "23.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "24.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "25.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "26.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "27.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "28.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "29.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "30.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "31.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "32.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "22.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "23.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "24.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "25.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "26.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "27.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "28.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "29.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "30.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "31.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "32.txt", 0.65f);
 		// 공격2(근거리)
-		ResourceManager::AddCollision("archer", archerColDir + "33.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "34.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "35.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "36.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "37.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "38.txt");
-		ResourceManager::AddCollision("archer", archerColDir + "39.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "33.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "34.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "35.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "36.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "37.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "38.txt", 0.65f);
+		ResourceManager::AddCollision("archer", archerColDir + "39.txt", 0.65f);
 	}
 #pragma endregion
 

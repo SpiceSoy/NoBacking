@@ -9,7 +9,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 	:GameStateObject(framework, tag)
 {
 	this->playerAnime.Set("archer");
-	ImageMargin = Vec2DF{ 110,167 };
+	ImageMargin = Vec2DF{ 65,105 };
 
 #pragma region StateDef
 	{
@@ -22,7 +22,11 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 300)
+			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 80)
+			{
+				object.playerAnime.ChangeState(CharacterNormalState::MOTION5);
+			}
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 300)
 			{
 				object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
 				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
@@ -63,17 +67,53 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 		);
 		this->playerState.SetStateFunctionSet
 		(
-			CharacterNormalState::MOTION2,
+			CharacterNormalState::MOTION2, // 피격
 			[](GameStateObject & object) -> void
 		{
 			object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
+			object.ResetDamageCounter();
+		},
+			[](GameStateObject & object, float deltaTime) -> void
+		{
+			if (object.playerAnime.isEnd())
+			{
+				object.playerState.ChangeState(CharacterNormalState::IDLE);
+			}
+		},
+			[](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			return true;
+		}
+		);
+
+		this->playerState.SetStateFunctionSet
+		(
+			CharacterNormalState::MOTION3, // 다운
+			[](GameStateObject & object) -> void
+		{
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION3);
+		},
+			[this](GameStateObject & object, float deltaTime) -> void
+		{
+			if (object.playerAnime.isEnd())
+			{
+				this->Deactive();
+			}
+		},
+			[](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			return true;
+		}
+		);
+		this->playerState.SetStateFunctionSet
+		(
+			CharacterNormalState::MOTION4, // 원거리공격
+			[](GameStateObject & object) -> void
+		{
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION4);
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
-			if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
-			{
-				framework->GetPlayer().ResetDamageCounter();
-			}
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
@@ -113,22 +153,18 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 		);
 		this->playerState.SetStateFunctionSet
 		(
-			CharacterNormalState::MOTION3,
+			CharacterNormalState::MOTION5, // 근거리 공격
 			[](GameStateObject & object) -> void
 		{
-			object.playerAnime.ChangeState(CharacterNormalState::MOTION3);
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION5);
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
-			//if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
-			//{
-			//	framework->GetPlayer().ResetDamageCounter();
-			//}
+			framework->CheckCollision(object);
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
 			}
-			framework->CheckCollision(object);
 		},
 			[framework](GameStateObject & object, CharacterNormalState state) -> bool
 		{
@@ -156,97 +192,6 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 				if (res.first == "weapon" && res.second == "body")
 				{
 					other.Damaged(3);
-				}
-			}
-			return false;
-		}
-		);
-		this->playerState.SetStateFunctionSet
-		(
-			CharacterNormalState::MOTION2,
-			[](GameStateObject & object) -> void
-		{
-			object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
-			object.ResetDamageCounter();
-		},
-			[](GameStateObject & object, float deltaTime) -> void
-		{
-			if (object.playerAnime.isEnd())
-			{
-				object.playerState.ChangeState(CharacterNormalState::IDLE);
-			}
-		},
-			[](GameStateObject & object, CharacterNormalState state) -> bool
-		{
-			return true;
-		}
-		);
-
-		this->playerState.SetStateFunctionSet
-		(
-			CharacterNormalState::MOTION3,
-			[](GameStateObject & object) -> void
-		{
-			object.playerAnime.ChangeState(CharacterNormalState::MOTION3);
-		},
-			[this](GameStateObject & object, float deltaTime) -> void
-		{
-			if (object.playerAnime.isEnd())
-			{
-				this->Deactive();
-				//object.playerState.ChangeState(CharacterNormalState::IDLE);
-			}
-		},
-			[](GameStateObject & object, CharacterNormalState state) -> bool
-		{
-			return true;
-		}
-		);
-		this->playerState.SetStateFunctionSet
-		(
-			CharacterNormalState::MOTION4,
-			[](GameStateObject & object) -> void
-		{
-			object.playerAnime.ChangeState(CharacterNormalState::MOTION4);
-		},
-			[framework](GameStateObject & object, float deltaTime) -> void
-		{
-			if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
-			{
-				framework->GetPlayer().ResetDamageCounter();
-			}
-			if (object.playerAnime.isEnd())
-			{
-				object.playerState.ChangeState(CharacterNormalState::IDLE);
-			}
-			framework->CheckCollision(object);
-		},
-			[framework](GameStateObject & object, CharacterNormalState state) -> bool
-		{
-			framework->GetPlayer().ResetDamageCounter();
-			return true;
-		},
-			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
-		{
-			for (auto& res : result)
-			{
-				if (res.second == "weapon" && this->isCanDamaged)
-				{
-					this->Damaged(5);
-					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
-					SoundSystem::PlaySound("hit-cut");
-					if (hp == 0)
-					{
-						object.playerState.ChangeState(CharacterNormalState::MOTION3);
-					}
-					else
-					{
-						object.playerState.ChangeState(CharacterNormalState::MOTION2);
-					}
-				}
-				if (res.first == "weapon" && res.second == "body")
-				{
-					other.Damaged(0);
 				}
 			}
 			return false;
