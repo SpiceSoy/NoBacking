@@ -1,0 +1,4 @@
+D:\리소스\윈플텀프리소스\png\monster\guard_light\21.png -158 -147
+0 -60 300 1
+bound 0 0 0 1
+1 0 0 60 500
