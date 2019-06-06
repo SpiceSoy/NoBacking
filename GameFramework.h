@@ -32,4 +32,6 @@ public:
 	ObjectContainer& operator()() { return *container; }
 	Camera& GetCamera() const;
 	Vec2DF GetCameraTransform(const Vec2DF& transform) const;
+	void PlayerHPBar(float destPercent);
+	void EnemyHPBar(float destPercent, void* enemyPtr, const std::string& markTag);
 };

@@ -25,6 +25,7 @@ public:
 		this->destPercent = destPercent; 
 		if (this->enemyPtr != enemyPtr)
 		{
+			this->enemyPtr = enemyPtr;
 			this->On = true;
 			this->currnetPercent = 1.0f;
 			this->reset = true;

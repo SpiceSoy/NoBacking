@@ -3,6 +3,7 @@
 #include <memory>
 class Camera;
 class PlayerHPBar;
+class EnemyHPBar;
 class GameStateObject;
 class GameFramework;
 struct ObjectContainer
@@ -16,5 +17,6 @@ struct ObjectContainer
 	//UI
 	std::unique_ptr<Camera> camera;
 	std::unique_ptr<PlayerHPBar> playerHpBar;
+	std::unique_ptr<EnemyHPBar> enemyHpBar;
 
 };

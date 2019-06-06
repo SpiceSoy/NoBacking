@@ -989,6 +989,11 @@ void GameFramework::Load()
 		ResourceManager::AddImages("ui-playerhpbar", playerHpDir + L"0.png");
 		ResourceManager::AddImages("ui-playerhpbar", playerHpDir + L"1.png");
 		ResourceManager::AddImages("ui-playerhpbar", playerHpDir + L"2.png");
+		const std::wstring markDir = L"Resources/ui/mark/";
+		ResourceManager::AddImages("mark-def", markDir + L"def.png");
+		ResourceManager::AddImages("mark-ach", markDir + L"ach.png");
+		ResourceManager::AddImages("mark-pist", markDir + L"pist.png");
+
 	}
 #pragma endregion
 

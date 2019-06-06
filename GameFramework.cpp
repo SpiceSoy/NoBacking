@@ -57,6 +57,7 @@ void GameFramework::Update(float deltaTime)
 	}
 	//UI
 	this->container->playerHpBar->Update(deltaTime);
+	this->container->enemyHpBar->Update(deltaTime);
 
 	//this->GetCamera().Teleport(this->GetPlayer().transform.Position - Vec2DF{ 500,500 });
 	this->GetCamera().Lerp(this->GetPlayer().transform.Position - Vec2DF{ 500,550 },3 * deltaTime);
@@ -79,6 +80,7 @@ void GameFramework::Draw(PaintInfo info)
 	//UI
 	this->GetCamera().Draw(info);
 	this->container->playerHpBar->Draw(info);
+	this->container->enemyHpBar->Draw(info);
 }
 
 bool GameFramework::CheckCollision(GameStateObject& obj)
@@ -128,6 +130,16 @@ Camera& GameFramework::GetCamera() const
 Vec2DF GameFramework::GetCameraTransform(const Vec2DF& transform) const
 {
 	return container->camera->CameraTransform(transform);
+}
+
+void GameFramework::PlayerHPBar(float destPercent)
+{
+	this->container->playerHpBar->ChangeDest(destPercent);
+}
+
+void GameFramework::EnemyHPBar(float destPercent, void* enemyPtr, const std::string& markTag)
+{
+	this->container->enemyHpBar->ChangeDest(destPercent, enemyPtr, markTag);
 }
 
 
