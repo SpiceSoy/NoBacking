@@ -36,7 +36,7 @@ public:
 	static ImageSetContainer* GetImages(const std::string& tag);
 	static CollisionCollectionContainer* GetCollision(const std::string& tag);
 	static void AddImages(const std::string& tag, const std::wstring& dir);
-	static void AddCollision(const std::string& tag, const std::string& dir);
+	static void AddCollision(const std::string& tag, const std::string& dir,float scale = 0.0f);
 	static void AddMotion(const std::string& tag, MotionContainer&& motion);
 	static void Load(const std::string& tag);
 };

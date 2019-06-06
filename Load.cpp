@@ -1129,6 +1129,7 @@ void GameFramework::Load()
 		const std::wstring playerHpDir = L"Resources/ui/hpbar/";
 		ResourceManager::AddImages("ui-playerhpbar", playerHpDir + L"0.png");
 		ResourceManager::AddImages("ui-playerhpbar", playerHpDir + L"1.png");
+		ResourceManager::AddImages("ui-playerhpbar", playerHpDir + L"2.png");
 	}
 #pragma endregion
 
