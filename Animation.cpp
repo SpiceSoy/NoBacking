@@ -44,6 +44,10 @@ void Animation::Update(float deltaTime)
 
 bool Animation::isChangeFrame()
 {
+	if (this->frameImageData->size() == 1)
+	{
+		return true;
+	}
 	if (motionData->empty())
 	{
 		if (lastIndex != 0)

@@ -1241,6 +1241,45 @@ void GameFramework::Load()
 		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
 		Effect::AddEffect("perfect", std::move(subEffect));
 	}
+	//È­»ì
+	{
+		const std::wstring arrowDir = L"Resources/effect/arrow/";
+		const std::string arrowColDir = "Resources/effect/arrow/";
+		ResourceManager::AddImages("arrow", arrowDir + L"0.png");
+		ResourceManager::AddCollision("arrow", arrowColDir + "0.txt");
+
+		MotionContainer motionContainer;
+
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 1;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("arrow", std::move(motionContainer));
+
+		subEffect subEffect;
+		subEffect.ImageTag = "arrow";
+		subEffect.MotionTag = "arrow";
+		subEffect.CollisionTag = "arrow";
+		subEffect.ImageMargin = Vec2DF{ 30,5 };
+		subEffect.func = CommonEffectFunctionSet::GetMoveingEffectSet(Vec2DF{ -1000.0f,0 },
+			[](GameStateObject& object, GameStateObject& other, const CollisionResult::ResultVector& result)->bool
+			{
+				for (auto& res : result)
+				{
+					if (res.second == "body")
+					{
+						other.Damaged(10);
+						other.ResetDamageCounter();
+						object.Deactive();
+					}
+				}
+				return false;
+			},this
+			);
+		Effect::AddEffect("arrow", std::move(subEffect));
+	}
 #pragma endregion
 
 #pragma region BackGround

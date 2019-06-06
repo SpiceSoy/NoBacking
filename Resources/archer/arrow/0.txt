@@ -1,4 +1,0 @@
-C:\Users\김현진\source\repos\SpiceSoy\NoBacking\Resources\archer\arrow\0.png -30 -5
-0 0 100 1
-Collision 0 0 100 1
-1 0 0 60 10
