@@ -111,8 +111,9 @@ CollisionCollection& CollisionCollection::Null()
 	return nullObj;
 }
 
-void CollisionCollection::Load(const std::string& dir)
+void CollisionCollection::Load(const std::string& dir, float scale)
 {
+	auto scaler = [scale](float& a) {if (scale != 0.0f) { a *= scale; }};
 	std::ifstream ifs(dir);
 	std::string imgdir;
 	float imgPivotX;
@@ -122,6 +123,9 @@ void CollisionCollection::Load(const std::string& dir)
 		ifs >> imgdir >> imgPivotX >> imgPivoty;
 		int CollisionCount = 0;
 		ifs >> this->center.x >> this->center.y >> this->radius >> CollisionCount;
+		scaler(this->center.x);
+		scaler(this->center.y);
+		scaler(this->radius);
 		for (int i = 0; i < CollisionCount; i++)
 		{
 			CollisionTag tag;
@@ -130,13 +134,20 @@ void CollisionCollection::Load(const std::string& dir)
 			int subCollisionCount = 0;
 			ifs >> tag >> colPos.x >> colPos.y >> colRadius >> subCollisionCount;
 			std::transform(tag.begin(), tag.end(), tag.begin(), tolower);
-
+			scaler(colPos.x);
+			scaler(colPos.y);
+			scaler(colRadius);
 			std::vector<SubCollisionData> subColldata;
 			for (size_t i = 0; i < subCollisionCount; i++)
 			{
 				SubCollisionData subData;
 				int type;
 				ifs >> type >> subData.pos.x >> subData.pos.y >> subData.size.x >> subData.size.y;
+				scaler(subData.pos.x);
+				scaler(subData.pos.y);
+				scaler(subData.size.x);
+				scaler(subData.size.y);
+
 				subData.shape = static_cast<CollisionShapeType>(type);
 				subColldata.push_back(subData);
 			}

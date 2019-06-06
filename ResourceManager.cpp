@@ -56,13 +56,13 @@ void ResourceManager::AddImages(const std::string& tag, const std::wstring& dir)
 	ResourceManager::ImageSet[tag].emplace_back(dir);
 }
 
-void ResourceManager::AddCollision(const std::string& tag, const std::string& dir)
+void ResourceManager::AddCollision(const std::string& tag, const std::string& dir, float scale)
 {
 	if (CollisionSet.size() == 0 || CollisionSet.count(tag) == 0)
 	{
 		ResourceManager::CollisionSet.emplace(tag, std::vector<CollisionCollection>());
 	}
-	ResourceManager::CollisionSet[tag].emplace_back(dir);
+	ResourceManager::CollisionSet[tag].emplace_back(dir, scale);
 }
 void ResourceManager::AddMotion(const std::string& tag, MotionContainer&& motion)
 {

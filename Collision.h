@@ -85,13 +85,13 @@ class CollisionCollection
 	CollisionCollection(bool isNull) :isNull(true), center(0, 0), radius(0) {};
 public:
 	CollisionCollection(Vec2DF center, float radius) : center(center), radius(radius) {};
-	CollisionCollection(const std::string dir) { this->Load(dir); };
+	CollisionCollection(const std::string dir, float scale = 0.0f) { this->Load(dir,scale); };
 	void AddCollision(Collision& col);
 	void AddCollision(Collision&& col);
 	void Draw(PaintInfo info , const Vec2DF& parentPos) const;
 	static bool CheckIntersect(const CollisionCollection& A, const Vec2DF& APos, const  GameStateObject* Aptr, const CollisionCollection& B, const Vec2DF& BPos, const  GameStateObject* Bptr);
 	static CollisionCollection& Null();
-	void Load(const std::string& dir);
+	void Load(const std::string& dir,float scale = 0.0f);
 };
 //콜리전 요약
 // UPDATE -> 애니메이트 프레임 계산 -> 해당 오브젝트 ANIMATE에서 해당 프레임의 콜리젼 데이터 가져와서 갱신
