@@ -2,11 +2,14 @@
 #include "Player.h"
 #include "Collision.h"
 #include "GameFramework.h"
+#include "PlayerHPBar.h"
+#include "ObjectContainer.h"
 #include <atlimage.h>
 Player::Player(GameFramework* framework, const std::string& tag)
 	:GameStateObject(framework, tag)
 {
 	this->playerAnime.Set("character1", "character", "character");
+	this->hp = this->maxHP;
 	ImageMargin = Vec2DF{ 128,184 };
 
 	auto hittedFunc = [this, framework,tag](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
@@ -21,7 +24,8 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					SoundSystem::PlaySound("hit-bite");
 					if (hp == 0)
 					{
-						this->transform.KnockBack((Vec2DF::Left() * 0.1f) + (Vec2DF::Up() * 0.5f));
+						//this->transform.KnockBack((Vec2DF::Left() * 0.8f) + (Vec2DF::Up() * 0.8f));
+						this->transform.KnockBack((Vec2DF::Left() * 5) + (Vec2DF::Up() * 8.0f));
 						object.playerState.ChangeState(CharacterNormalState::MOTION14);
 					}
 					else
@@ -674,4 +678,15 @@ void Player::Draw(PaintInfo info)
 		this->playerAnime.GetCurrentImage().img->Draw(info.hdc, framework->GetCameraTransform(this->transform.Position - this->ImageMargin));
 		this->playerAnime.GetCurrentCollisionData().Draw(info, framework->GetCameraTransform(this->transform.Position));
 	}
+}
+
+void Player::Damaged(int hp, bool off)
+{
+	auto thisState = this->playerState.GetCurrentState();
+	if (thisState == static_cast<CharacterNormalState>(PlayerState::GUARDUP) || thisState == static_cast<CharacterNormalState>(PlayerState::GUARDMOVE) || thisState == static_cast<CharacterNormalState>(PlayerState::GUARDON))
+	{
+		hp = 0;
+	}
+	GameStateObject::Damaged(hp, off);
+	this->framework->container->playerHpBar->ChangeDest(this->hp / this->maxHP);
 }

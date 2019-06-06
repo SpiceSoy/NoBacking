@@ -982,6 +982,14 @@ void GameFramework::Load()
 
 #pragma endregion
 
+#pragma region UIIMage
+	{
+		const std::wstring playerHpDir = L"Resources/ui/hpbar/";
+		ResourceManager::AddImages("ui-playerhpbar", playerHpDir + L"0.png");
+		ResourceManager::AddImages("ui-playerhpbar", playerHpDir + L"1.png");
+	}
+#pragma endregion
+
 
 
 #pragma region Sound
