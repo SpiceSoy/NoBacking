@@ -5,6 +5,7 @@
 #include "Effect.h"
 #include "Camera.h"
 #include "Guarder.h"
+#include "Archer.h"
 #include "PlayerHPBar.h"
 
 ObjectContainer::ObjectContainer(GameFramework* framework)
@@ -15,6 +16,7 @@ ObjectContainer::ObjectContainer(GameFramework* framework)
 	{
 		//몬스터 추가
 		this->Monsters.emplace_back(std::make_unique<Guarder>(framework, "Guarder"));
+		this->Monsters.emplace_back(std::make_unique<Archer>(framework, "Archer"));
 	}
 	for (size_t i = 0; i < 20; i++)
 	{
