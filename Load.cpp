@@ -844,6 +844,147 @@ void GameFramework::Load()
 	}
 #pragma endregion
 
+#pragma region Archer
+	const std::wstring archerDir = L"Resources/archer/img/";
+	const std::string archerColDir = "Resources/archer/col/";
+	//이미지 정의
+	{
+		ResourceManager::AddImages("archer", archerDir + L"0.png");
+		ResourceManager::AddImages("archer", archerDir + L"1.png");
+		ResourceManager::AddImages("archer", archerDir + L"2.png");
+		ResourceManager::AddImages("archer", archerDir + L"3.png");
+		ResourceManager::AddImages("archer", archerDir + L"4.png");
+		ResourceManager::AddImages("archer", archerDir + L"5.png");
+		ResourceManager::AddImages("archer", archerDir + L"13.png");
+		ResourceManager::AddImages("archer", archerDir + L"12.png");
+		ResourceManager::AddImages("archer", archerDir + L"11.png");
+		ResourceManager::AddImages("archer", archerDir + L"10.png");
+		ResourceManager::AddImages("archer", archerDir + L"9.png");
+		ResourceManager::AddImages("archer", archerDir + L"8.png");
+		ResourceManager::AddImages("archer", archerDir + L"7.png");
+		ResourceManager::AddImages("archer", archerDir + L"6.png");
+		ResourceManager::AddImages("archer", archerDir + L"14.png");
+		ResourceManager::AddImages("archer", archerDir + L"15.png");
+		ResourceManager::AddImages("archer", archerDir + L"16.png");
+		ResourceManager::AddImages("archer", archerDir + L"17.png");
+		ResourceManager::AddImages("archer", archerDir + L"18.png");
+		ResourceManager::AddImages("archer", archerDir + L"19.png");
+		ResourceManager::AddImages("archer", archerDir + L"20.png");
+		ResourceManager::AddImages("archer", archerDir + L"21.png");
+		ResourceManager::AddImages("archer", archerDir + L"22.png");
+		ResourceManager::AddImages("archer", archerDir + L"23.png");
+		ResourceManager::AddImages("archer", archerDir + L"24.png");
+		ResourceManager::AddImages("archer", archerDir + L"25.png");
+		ResourceManager::AddImages("archer", archerDir + L"26.png");
+		ResourceManager::AddImages("archer", archerDir + L"27.png");
+		ResourceManager::AddImages("archer", archerDir + L"28.png");
+		ResourceManager::AddImages("archer", archerDir + L"29.png");
+		ResourceManager::AddImages("archer", archerDir + L"30.png");
+		ResourceManager::AddImages("archer", archerDir + L"31.png");
+		ResourceManager::AddImages("archer", archerDir + L"32.png");
+		ResourceManager::AddImages("archer", archerDir + L"33.png");
+		ResourceManager::AddImages("archer", archerDir + L"34.png");
+		ResourceManager::AddImages("archer", archerDir + L"35.png");
+		ResourceManager::AddImages("archer", archerDir + L"36.png");
+		ResourceManager::AddImages("archer", archerDir + L"37.png");
+		ResourceManager::AddImages("archer", archerDir + L"38.png");
+		ResourceManager::AddImages("archer", archerDir + L"39.png");
+
+	}
+	//모션 정의
+	{
+		MotionContainer motionContainer;
+		subAnimation subAnim;
+		//대기
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		//이동
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 6;
+		subAnim.subImageSize = 8;
+		motionContainer[CharacterNormalState::MOTION1] = subAnim;
+		//피격
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.25;
+		subAnim.subImageStartIndex = 14;
+		subAnim.subImageSize = 2;
+		motionContainer[CharacterNormalState::MOTION2] = subAnim;
+		//다운
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 16;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::MOTION3] = subAnim;
+		//공격1(원거리)
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.5;
+		subAnim.subImageStartIndex = 22;
+		subAnim.subImageSize = 11;
+		motionContainer[CharacterNormalState::MOTION4] = subAnim;
+		//공격2(근거리)
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 33;
+		subAnim.subImageSize = 7;
+		motionContainer[CharacterNormalState::MOTION5] = subAnim;
+		ResourceManager::AddMotion("archer", std::move(motionContainer));
+	}
+
+	//물리 정의
+	{
+		// 대기
+		ResourceManager::AddCollision("archer", archerColDir + "0.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "1.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "2.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "3.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "4.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "5.txt");
+		//이동
+		ResourceManager::AddCollision("archer", archerColDir + "13.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "12.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "11.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "10.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "9.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "8.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "7.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "6.txt");
+		// 피격
+		ResourceManager::AddCollision("archer", archerColDir + "14.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "15.txt");
+		// 다운
+		ResourceManager::AddCollision("archer", archerColDir + "16.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "17.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "18.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "19.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "20.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "21.txt");
+		// 공격1(원거리)
+		ResourceManager::AddCollision("archer", archerColDir + "22.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "23.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "24.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "25.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "26.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "27.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "28.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "29.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "30.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "31.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "32.txt");
+		// 공격2(근거리)
+		ResourceManager::AddCollision("archer", archerColDir + "33.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "34.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "35.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "36.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "37.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "38.txt");
+		ResourceManager::AddCollision("archer", archerColDir + "39.txt");
+	}
+#pragma endregion
+
 #pragma region Effects
 	{
 		const std::wstring effect1Dir = L"Resources/effect/effect1_1/img/";
