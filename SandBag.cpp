@@ -129,7 +129,7 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 					}
 					if (res.first == "attack1" && res.second == "body")
 					{
-						other.Damaged(0);
+						other.Damaged(3);
 					}
 				}
 				return false;

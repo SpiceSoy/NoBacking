@@ -5,6 +5,7 @@
 #include "Effect.h"
 #include "Camera.h"
 #include "Guarder.h"
+#include "PlayerHPBar.h"
 
 ObjectContainer::ObjectContainer(GameFramework* framework)
 {
@@ -19,6 +20,7 @@ ObjectContainer::ObjectContainer(GameFramework* framework)
 	{
 		this->Effects.emplace_back(std::make_unique<Effect>(framework, "Effects"));
 	}
+	this->playerHpBar = std::make_unique<PlayerHPBar>();
 }
 
 ObjectContainer::~ObjectContainer()

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Camera.h"
 #include "SoundSystem.h"
+#include "PlayerHPBar.h"
 
 GameFramework::GameFramework()
 {
@@ -54,6 +55,9 @@ void GameFramework::Update(float deltaTime)
 	{
 		ptr->Update(deltaTime);
 	}
+	//UI
+	this->container->playerHpBar->Update(deltaTime);
+
 	//this->GetCamera().Teleport(this->GetPlayer().transform.Position - Vec2DF{ 500,500 });
 	this->GetCamera().Lerp(this->GetPlayer().transform.Position - Vec2DF{ 500,550 },3 * deltaTime);
 }
@@ -72,7 +76,9 @@ void GameFramework::Draw(PaintInfo info)
 	{
 		ptr->Draw(info);
 	}
+	//UI
 	this->GetCamera().Draw(info);
+	this->container->playerHpBar->Draw(info);
 }
 
 bool GameFramework::CheckCollision(GameStateObject& obj)
