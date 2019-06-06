@@ -100,7 +100,7 @@ bool SubCollisionData::IntersectCircleToCircle(const SubCollisionData& C1, const
 	assert(C1.shape == CollisionShapeType::Circle && C2.shape == CollisionShapeType::Circle);
 	auto dist = ((C2.pos + C2Pos) - (C1.pos + C1Pos)).GetScaleSq();
 	auto r1 = abs(C1.size.x/2);
-	auto r2 = abs(C1.size.x/2);
+	auto r2 = abs(C2.size.x/2);
 	return dist <= pow(r1+r2,2);
 }
 bool SubCollisionData::IntersectCircleToRect(const SubCollisionData& C1, const Vec2DF& C1Pos, const SubCollisionData& R2, const Vec2DF& R2Pos)

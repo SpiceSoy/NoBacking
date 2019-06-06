@@ -9,23 +9,26 @@ Player::Player(GameFramework* framework, const std::string& tag)
 	this->playerAnime.Set("character1", "character", "character");
 	ImageMargin = Vec2DF{ 128,184 };
 
-	auto hittedFunc = [this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
+	auto hittedFunc = [this, framework,tag](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
 	{
-		for (auto& res : result)
+		if (other.tag != object.tag)
 		{
-			if (res.first == "body" && res.second == "attack1" && this->isCanDamaged)
+			for (auto& res : result)
 			{
-				framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
-				SoundSystem::PlaySound("hit-bite");
-				if (hp == 0)
+				if (res.first == "body" && (res.second == "attack1" || res.second == "weapon") && this->isCanDamaged)
 				{
-					this->transform.KnockBack((Vec2DF::Left() * 0.1f) + (Vec2DF::Up() * 0.5f));
-					object.playerState.ChangeState(CharacterNormalState::MOTION14);
-				}
-				else
-				{
-					this->transform.KnockBack(Vec2DF::Left() * 1);
-					object.playerState.ChangeState(CharacterNormalState::MOTION13);
+					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+					SoundSystem::PlaySound("hit-bite");
+					if (hp == 0)
+					{
+						this->transform.KnockBack((Vec2DF::Left() * 0.1f) + (Vec2DF::Up() * 0.5f));
+						object.playerState.ChangeState(CharacterNormalState::MOTION14);
+					}
+					else
+					{
+						this->transform.KnockBack(Vec2DF::Left() * 1);
+						object.playerState.ChangeState(CharacterNormalState::MOTION13);
+					}
 				}
 			}
 		}
@@ -33,9 +36,11 @@ Player::Player(GameFramework* framework, const std::string& tag)
 	};
 	auto jumphittedFunc = [this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
 	{
+		if (other.tag != object.tag)
+		{
 		for (auto& res : result)
 		{
-			if (res.first == "body" && res.second == "attack1"&& this->isCanDamaged)
+			if (res.first == "body" && (res.second == "attack1" || res.second == "weapon") && this->isCanDamaged)
 			{
 				SoundSystem::PlaySound("hit-bite");
 				framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
@@ -44,13 +49,16 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				object.playerState.ChangeState(CharacterNormalState::MOTION14);
 			}
 		}
+		}
 		return false;
 	};
 	auto guardFunc = [this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
 	{
+		if (other.tag != object.tag)
+		{
 		for (auto& res : result)
 		{
-			if (res.second == "attack1" && this->isCanDamaged)
+			if ((res.second == "attack1" || res.second == "weapon") && this->isCanDamaged)
 			{
 					SoundSystem::PlaySound("hit-steel");
 					if (object.playerState.GetCurrentState() == static_cast<CharacterNormalState>(PlayerState::GUARDUP)&& object.playerAnime.GetCurrentFrame() <= 2)
@@ -65,6 +73,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					this->delayCounter = 0;
 					this->transform.KnockBack(Vec2DF::Left() * 0.5f);
 			}
+		}
 		}
 		return false;
 	};
@@ -149,8 +158,8 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				[framework, this](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
-					framework->CheckCollision(object);
-					static bool snd = true;
+					//framework->CheckCollision(object);
+					static bool snd = true; 
 					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 					{
 						SoundSystem::PlaySound("atk-slash");
@@ -200,7 +209,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				[framework, this](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
-					framework->CheckCollision(object);
+					//framework->CheckCollision(object);
 					static bool snd = true;
 					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 					{

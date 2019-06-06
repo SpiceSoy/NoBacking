@@ -731,6 +731,118 @@ void GameFramework::Load()
 	}
 #pragma endregion
 
+#pragma region Guarder
+	const std::wstring guarderDir = L"Resources/guarder/img/";
+	const std::string guarderColDir = "Resources/guarder/col/";
+	//이미지 정의
+	{
+		//일반 모션
+		ResourceManager::AddImages("guarder", guarderDir + L"0.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"1.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"2.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"3.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"4.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"5.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"6.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"7.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"8.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"9.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"10.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"11.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"12.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"13.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"14.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"15.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"16.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"17.png");
+		//피격 1
+		ResourceManager::AddImages("guarder", guarderDir + L"18.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"19.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"20.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"21.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"22.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"23.png");
+		ResourceManager::AddImages("guarder", guarderDir + L"24.png");
+	}
+	//모션 정의
+	{
+		MotionContainer motionContainer;
+		//이동
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::MOTION1] = subAnim;
+		//공격1
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 6;
+		subAnim.subImageSize = 5;
+		motionContainer[CharacterNormalState::MOTION2] = subAnim;
+		//공격2
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 11;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::MOTION3] = subAnim;
+		//피격
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.25;
+		subAnim.subImageStartIndex = 17;
+		subAnim.subImageSize = 2;
+		motionContainer[CharacterNormalState::MOTION4] = subAnim;
+		//사망
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 19;
+		subAnim.subImageSize = 4;
+		motionContainer[CharacterNormalState::MOTION5] = subAnim;
+		//가드(대기)
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 23;
+		subAnim.subImageSize = 2;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("guarder", std::move(motionContainer));
+	}
+
+	//물리 정의
+	{
+		//이동
+		ResourceManager::AddCollision("guarder", guarderColDir + "0.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "1.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "2.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "3.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "4.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "5.txt");
+		//공격1
+		ResourceManager::AddCollision("guarder", guarderColDir + "6.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "7.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "8.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "9.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "10.txt");
+		//공격2
+		ResourceManager::AddCollision("guarder", guarderColDir + "11.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "12.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "13.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "14.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "15.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "16.txt");
+		//피격 1
+		ResourceManager::AddCollision("guarder", guarderColDir + "17.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "18.txt");
+		//사망
+		ResourceManager::AddCollision("guarder", guarderColDir + "19.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "20.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "21.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "22.txt");
+		//가드
+		ResourceManager::AddCollision("guarder", guarderColDir + "23.txt");
+		ResourceManager::AddCollision("guarder", guarderColDir + "24.txt");
+	}
+#pragma endregion
+
 #pragma region Effects
 	{
 		const std::wstring effect1Dir = L"Resources/effect/effect1_1/img/";

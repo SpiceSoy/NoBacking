@@ -1,4 +1,4 @@
-D:\리소스\윈플텀프리소스\png\collision\wait\9.png -128 -184
+﻿C:\Users\Soy\OneDrive\NoBacking\NoBacking\Resources\character\c1\9.png -128 -184
 0 -50 300 2
 Body 0 -42 100 12
 2 7 -80 20 20

@@ -46,6 +46,10 @@ void GameFramework::Update(float deltaTime)
 	SoundSystem::Update();
 	this->container->sandBag->Update(deltaTime);
 	this->container->player->Update(deltaTime);
+	for (auto& ptr : container->Monsters)
+	{
+		ptr->Update(deltaTime);
+	}
 	for (auto& ptr : container->Effects)
 	{
 		ptr->Update(deltaTime);
@@ -60,6 +64,10 @@ void GameFramework::Draw(PaintInfo info)
 	this->GetCamera().BackDraw(info);
 	this->container->sandBag->Draw(info);
 	this->container->player->Draw(info);
+	for (auto& ptr : container->Monsters)
+	{
+		ptr->Draw(info);
+	}
 	for (auto& ptr : container->Effects)
 	{
 		ptr->Draw(info);
@@ -71,7 +79,8 @@ bool GameFramework::CheckCollision(GameStateObject& obj)
 {
 	if (this->container != nullptr)
 	{
-		return this->container->player->CheckCollision(*this->container->sandBag);
+		//return this->container->player->CheckCollision(*this->container->sandBag);
+		return this->container->player->CheckCollision(obj);
 	}
 }
 
