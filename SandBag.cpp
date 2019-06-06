@@ -182,3 +182,10 @@ void SandBag::Draw(PaintInfo info)
 		this->playerAnime.GetCurrentCollisionData().Draw(info, framework->GetCameraTransform(this->transform.Position));
 	}
 }
+
+void SandBag::Damaged(int hp, bool off)
+{
+	GameStateObject::Damaged(hp, off);
+	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-pist");
+}
+
