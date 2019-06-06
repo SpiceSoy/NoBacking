@@ -51,10 +51,15 @@ void GameFramework::Update(float deltaTime)
 	{
 		ptr->Update(deltaTime);
 	}
-	for (auto& ptr : container->Effects)
+
+	for (size_t i = 0; i < container->Effects.size(); i++)
 	{
-		ptr->Update(deltaTime);
+		container->Effects[i]->Update(deltaTime);
 	}
+	//for (auto& ptr : container->Effects)
+	//{
+	//	ptr->Update(deltaTime);
+	//}
 	//UI
 	this->container->playerHpBar->Update(deltaTime);
 	this->container->enemyHpBar->Update(deltaTime);

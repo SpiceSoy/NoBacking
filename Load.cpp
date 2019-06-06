@@ -1103,7 +1103,7 @@ void GameFramework::Load()
 				{
 					if (res.second == "body")
 					{
-						other.Damaged(10);
+						other.Damaged(100);
 						other.ResetDamageCounter();
 						object.Deactive();
 					}

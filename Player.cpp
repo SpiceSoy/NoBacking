@@ -25,7 +25,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					if (hp == 0)
 					{
 						//this->transform.KnockBack((Vec2DF::Left() * 0.8f) + (Vec2DF::Up() * 0.8f));
-						this->transform.KnockBack((Vec2DF::Left() * 5) + (Vec2DF::Up() * 8.0f));
+						//this->transform.KnockBack((Vec2DF::Left() * 5) + (Vec2DF::Up() * 20.0f));
 						object.playerState.ChangeState(CharacterNormalState::MOTION14);
 					}
 					else
@@ -689,4 +689,12 @@ void Player::Damaged(int hp, bool off)
 	}
 	GameStateObject::Damaged(hp, off);
 	this->framework->container->playerHpBar->ChangeDest(this->hp / this->maxHP);
+	if (this->hp == 0)
+	{
+		if (this->playerState.GetCurrentState() != CharacterNormalState::MOTION14)
+		{
+			this->transform.KnockBack((Vec2DF::Left() * hp * 1/2) + (Vec2DF::Up() * 300.0f));
+			this->playerState.ChangeState(CharacterNormalState::MOTION14);
+		}
+	}
 }

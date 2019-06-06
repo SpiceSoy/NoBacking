@@ -88,11 +88,11 @@ void Transform::KnockBack(const Vec2DF vector)
 	{
 		if (this->GetJumpState())
 		{
-			JumpPower += vector.y;
+			JumpPower += -vector.y;
 		}
 		else 
 		{
-			this->Jump(vector.y);
+			this->Jump(-vector.y);
 		}
 	}
 }

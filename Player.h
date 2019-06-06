@@ -12,7 +12,7 @@ public:
 	float delayCounter = 0.0f;
 	int Costume = 0;
 	float ground = 600;
-	float maxHP = 100;
+	float maxHP = 20;
 	bool isPerfect = false;
 	virtual void Update(float deltaTime) override;
 	virtual void Draw(PaintInfo info) override;
