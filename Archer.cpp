@@ -24,7 +24,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 		{
 			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 80)
 			{
-				object.playerAnime.ChangeState(CharacterNormalState::MOTION5);
+				object.playerState.ChangeState(CharacterNormalState::MOTION5);
 			}
 			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 300)
 			{
@@ -122,7 +122,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, CharacterNormalState state) -> bool
 		{
-			framework->GetPlayer().ResetDamageCounter();
+			//framework->GetPlayer().ResetDamageCounter();
 			return true;
 		},
 			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
@@ -145,7 +145,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(0);
+					//other.Damaged(0);
 				}
 			}
 			return false;
@@ -223,4 +223,10 @@ void Archer::Draw(PaintInfo info)
 		this->playerAnime.GetCurrentImage().img->Draw(info.hdc, framework->GetCameraTransform(this->transform.Position - this->ImageMargin));
 		this->playerAnime.GetCurrentCollisionData().Draw(info, framework->GetCameraTransform(this->transform.Position));
 	}
+}
+
+void Archer::Damaged(int hp, bool off)
+{
+	GameStateObject::Damaged(hp, off);
+	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-ach");
 }
