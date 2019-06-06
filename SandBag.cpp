@@ -94,10 +94,10 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 			},
 			[framework](GameStateObject& object, float deltaTime) -> void
 			{
-				if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
-				{
-					framework->GetPlayer().ResetDamageCounter();
-				}
+				//if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
+				//{
+				//	framework->GetPlayer().ResetDamageCounter();
+				//}
 				if (object.playerAnime.isEnd())
 				{
 					object.playerState.ChangeState(CharacterNormalState::IDLE);

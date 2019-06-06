@@ -146,10 +146,10 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
-			if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
-			{
-				framework->GetPlayer().ResetDamageCounter();
-			}
+			//if (!(object.playerAnime.GetCurrentFrame() >= 1 && object.playerAnime.GetCurrentFrame() <= 3))
+			//{
+			//	framework->GetPlayer().ResetDamageCounter();
+			//}
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
@@ -181,7 +181,7 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(0);
+					other.Damaged(3);
 				}
 			}
 			return false;
@@ -235,8 +235,9 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 		{
 			object.playerAnime.ChangeState(CharacterNormalState::MOTION6);
 		},
-			[](GameStateObject & object, float deltaTime) -> void
+			[framework](GameStateObject & object, float deltaTime) -> void
 		{
+			framework->CheckCollision(object);
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
@@ -252,7 +253,9 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 			{
 				if (res.second == "weapon" && this->isCanDamaged)
 				{
-					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+					framework->OnEffect("perfect", this->transform.Position + Vec2DF::Up() * 50 + Vec2DF::Left() * 30);
+					framework->OnEffect("shield", this->transform.Position + Vec2DF::Up() * 50 + Vec2DF::Left() * 30);
+					//framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-steel");
 				}
 			}
