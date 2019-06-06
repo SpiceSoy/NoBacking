@@ -3,6 +3,6 @@
 namespace CommonEffectFunctionSet
 {
 	StateFunction GetOnceAnimeSet();
-	StateFunction GetMoveingEffectSet(const Vec2DF& moveVector, StateFunction::CollisionFuncType colFunc = nullptr);
+	StateFunction GetMoveingEffectSet(const Vec2DF& moveVector, StateFunction::CollisionFuncType colFunc = nullptr, GameFramework * framework = nullptr);
 
 };

@@ -28,15 +28,19 @@ StateFunction CommonEffectFunctionSet::GetOnceAnimeSet()
 	));
 }
 
-StateFunction CommonEffectFunctionSet::GetMoveingEffectSet(const Vec2DF& moveVector , StateFunction::CollisionFuncType colFunc)
+StateFunction CommonEffectFunctionSet::GetMoveingEffectSet(const Vec2DF& moveVector , StateFunction::CollisionFuncType colFunc,GameFramework* framework)
 {
 	return std::move(StateFunction(
 		[](GameStateObject & object) -> void
 		{
 			object.playerAnime.ChangeState(CharacterNormalState::IDLE);
 		},
-		[moveVector](GameStateObject & object, float deltaTime) -> void
+		[moveVector, framework](GameStateObject & object, float deltaTime) -> void
 		{
+			if (framework != nullptr)
+			{
+				framework->CheckCollision(object);
+			}
 			object.transform.Translate(moveVector * deltaTime);
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool

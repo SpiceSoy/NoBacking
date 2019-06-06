@@ -114,6 +114,19 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
+			static bool cnt = false;
+			if (object.playerAnime.GetCurrentFrame() == 8)
+			{
+				if (!cnt)
+				{
+					framework->OnEffect("arrow", object.transform.Position + Vec2DF::Up() * 50);
+				}
+				cnt = true;
+			}
+			else
+			{
+				cnt = false;
+			}
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
