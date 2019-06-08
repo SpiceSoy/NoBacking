@@ -66,11 +66,10 @@ void GameFramework::Update(float deltaTime)
 	if (GameStart)
 	{
 		this->container->player->Update(deltaTime);
-		/*for (auto& ptr : container->Monsters)
+		for (auto& ptr : container->Monsters)
 		{
 			ptr->Update(deltaTime);
-		}*/
-		this->container->Monsters[2]->Update(deltaTime);
+		}
 		for (size_t i = 0; i < container->Effects.size(); i++)
 		{
 			container->Effects[i]->Update(deltaTime);
