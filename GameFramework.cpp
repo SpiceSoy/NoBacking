@@ -65,7 +65,6 @@ void GameFramework::Update(float deltaTime)
 	}
 	if (GameStart)
 	{
-		this->container->sandBag->Update(deltaTime);
 		this->container->player->Update(deltaTime);
 		for (auto& ptr : container->Monsters)
 		{
@@ -91,7 +90,6 @@ void GameFramework::Draw(PaintInfo info)
 	{
 		info.DrawCollision = isDrawCollision;
 		this->GetCamera().BackDraw(info);
-		this->container->sandBag->Draw(info);
 		this->container->player->Draw(info);
 		for (auto& ptr : container->Monsters)
 		{

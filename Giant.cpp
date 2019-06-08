@@ -65,6 +65,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
 		{
+			object.ResetDamageCounter();
 			return true;
 		},
 			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
@@ -121,6 +122,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			[framework](GameStateObject & object, CharacterNormalState state) -> bool
 		{
 			framework->GetPlayer().ResetDamageCounter();
+			object.ResetDamageCounter();
 			return true;
 		},
 			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
@@ -163,6 +165,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			[framework](GameStateObject & object, CharacterNormalState state) -> bool
 		{
 			framework->GetPlayer().ResetDamageCounter();
+			object.ResetDamageCounter();
 			return true;
 		},
 			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
@@ -204,6 +207,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
 		{
+			object.ResetDamageCounter();
 			return true;
 		}
 		);
@@ -237,6 +241,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
 		{
+			object.ResetDamageCounter();
 			return true;
 		},
 			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
@@ -312,6 +317,7 @@ void Giant::Update(float deltaTime)
 		this->playerAnime.Update(deltaTime);
 		this->playerState.Update(deltaTime);
 		this->transform.Update(deltaTime);
+		//framework->CheckCollision(*this);
 	}
 }
 
