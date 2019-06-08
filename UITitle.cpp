@@ -7,7 +7,7 @@ void UITitle::Update(float deltaTime)
 {
 	if (framework->GetGameState() == true)
 	{
-		alpha = Utill::clamp(alpha - deltaTime, 0.0f, 1.0f);
+		alpha = Utill::clamp(alpha - 0.5f *deltaTime, 0.0f, 1.0f);
 	}
 	else 
 	{

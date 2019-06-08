@@ -25,7 +25,7 @@ void PlayerHPBar::Draw(PaintInfo info)
 		static_cast<float>(hpbarImg->GetWidth()),
 		static_cast<float>(hpbarImg->GetHeight())
 	};
-	auto rt = RectF(Vec2DF{ 280,90 }, backImageSize.x, backImageSize.y);
+	auto rt = RectF(Vec2DF{ 280.f - info.margin/4,90 }, backImageSize.x, backImageSize.y);
 	backImg->Draw(info.hdc, rt);
 	auto percentRt = RectF((int)rt.left + 83, (int)rt.top + 30, (int)rt.left + 83 + (barImageSize.x * currnetPercent), (int)rt.top + 30 + barImageSize.y);
 	hpbarImg->BitBlt(info.hdc, percentRt, POINT{ 0,0 });
@@ -57,7 +57,7 @@ void EnemyHPBar::Draw(PaintInfo info)
 			static_cast<float>(hpbarImg->GetWidth()),
 			static_cast<float>(hpbarImg->GetHeight())
 		};
-		auto rt = RectF(Vec2DF{1030,90 }, backImageSize.x, backImageSize.y);
+		auto rt = RectF(Vec2DF{1030.f - info.margin / 2,90 }, backImageSize.x, backImageSize.y);
 		backImg->Draw(info.hdc, rt);
 		auto percentRt = RectF((int)rt.left + 6, (int)rt.top + 30, (int)rt.left + 6 + (barImageSize.x * currnetPercent), (int)rt.top + 30 + barImageSize.y);
 		hpbarImg->BitBlt(info.hdc, percentRt, POINT{ 0,0 });

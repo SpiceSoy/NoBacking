@@ -28,6 +28,7 @@ void GameFramework::Start()
 		delete this->container;
 	}
 	this->container = new ObjectContainer(this);
+	this->GetCamera().Teleport(this->GetPlayer().transform.Position - Vec2DF{ 500,550 });
 }
 
 void GameFramework::End()
