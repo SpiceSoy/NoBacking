@@ -31,7 +31,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 100 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 200) {
 				int r = rand() % 3;
 				if (r == 0) {
-					object.playerState.ChangeState(CharacterNormalState::MOTION5); // 가드
+					object.playerState.ChangeState(CharacterNormalState::MOTION5); // 공격3
 				}
 				else if (r == 1) {
 					object.playerState.ChangeState(CharacterNormalState::MOTION3); // 공격1
