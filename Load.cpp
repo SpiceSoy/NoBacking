@@ -1028,14 +1028,14 @@ void GameFramework::Load()
 		ResourceManager::AddImages("giant", giantDir + L"30.png", true);
 		ResourceManager::AddImages("giant", giantDir + L"31.png", true);
 		ResourceManager::AddImages("giant", giantDir + L"32.png", true);
-		// 가드
+		// 공격3
 		ResourceManager::AddImages("giant", giantDir + L"33.png", true);
 		ResourceManager::AddImages("giant", giantDir + L"34.png", true);
 		ResourceManager::AddImages("giant", giantDir + L"35.png", true);
 		ResourceManager::AddImages("giant", giantDir + L"36.png", true);
 		ResourceManager::AddImages("giant", giantDir + L"37.png", true);
 		ResourceManager::AddImages("giant", giantDir + L"38.png", true);
-		// 공격3
+		// 공격4
 		ResourceManager::AddImages("giant", giantDir + L"39.png", true);
 		ResourceManager::AddImages("giant", giantDir + L"40.png", true);
 		ResourceManager::AddImages("giant", giantDir + L"41.png", true);
@@ -1060,7 +1060,7 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::IDLE] = subAnim;
 		// 이동
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 1;
+		subAnim.scale = 0.8;
 		subAnim.subImageStartIndex = 6;
 		subAnim.subImageSize = 12;
 		motionContainer[CharacterNormalState::MOTION1] = subAnim;
@@ -1072,25 +1072,25 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION2] = subAnim;
 		// 공격1
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 1;
+		subAnim.scale = 0.7;
 		subAnim.subImageStartIndex = 19;
 		subAnim.subImageSize = 8;
 		motionContainer[CharacterNormalState::MOTION3] = subAnim;
 		// 공격2
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 1;
+		subAnim.scale = 0.7;
 		subAnim.subImageStartIndex = 27;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION4] = subAnim;
-		// 가드
+		// 공격3
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.2;
+		subAnim.scale = 0.5;
 		subAnim.subImageStartIndex = 33;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION5] = subAnim;
-		// 공격3(충격파)
+		// 공격4
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 1;
+		subAnim.scale = 0.5;
 		subAnim.subImageStartIndex = 39;
 		subAnim.subImageSize = 10;
 		motionContainer[CharacterNormalState::MOTION6] = subAnim;
@@ -1279,6 +1279,69 @@ void GameFramework::Load()
 			},this
 			);
 		Effect::AddEffect("arrow", std::move(subEffect));
+	}
+	// Giant 충격파
+	{
+		const std::wstring giant_waveDir = L"Resources/effect/giant_wave/";
+		const std::string giant_waveColDir = "Resources/effect1/giant_wave/col/";
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"0.png");
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"1.png");
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"2.png");
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"3.png");
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"4.png");
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"5.png");
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"6.png");
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"7.png");
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"8.png");
+		ResourceManager::AddImages("giant_wave", giant_waveDir + L"9.png");
+		MotionContainer motionContainer;
+
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 10;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("giant_wave", std::move(motionContainer));
+
+		subEffect subEffect;
+		subEffect.ImageTag = "giant_wave";
+		subEffect.MotionTag = "giant_wave";
+		subEffect.CollisionTag = "giant_wave";
+		subEffect.ImageMargin = Vec2DF{ 400,50 };
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("giant_wave", std::move(subEffect));
+	}
+	// Giant 공격2(종휘두르기)
+	{
+		const std::wstring giant_smashDir = L"Resources/effect/giant_smash/";
+		const std::string giant_smashColDir = "Resources/effect1/giant_smash/col/";
+		ResourceManager::AddImages("giant_smash", giant_smashDir + L"0.png");
+		ResourceManager::AddImages("giant_smash", giant_smashDir + L"1.png");
+		ResourceManager::AddImages("giant_smash", giant_smashDir + L"2.png");
+		ResourceManager::AddImages("giant_smash", giant_smashDir + L"3.png");
+		ResourceManager::AddImages("giant_smash", giant_smashDir + L"4.png");
+		ResourceManager::AddImages("giant_smash", giant_smashDir + L"5.png");
+		ResourceManager::AddImages("giant_smash", giant_smashDir + L"6.png");
+		ResourceManager::AddImages("giant_smash", giant_smashDir + L"7.png");
+		ResourceManager::AddImages("giant_smash", giant_smashDir + L"8.png");
+		MotionContainer motionContainer;
+
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.7;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 9;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("giant_smash", std::move(motionContainer));
+
+		subEffect subEffect;
+		subEffect.ImageTag = "giant_smash";
+		subEffect.MotionTag = "giant_smash";
+		subEffect.CollisionTag = "giant_smash";
+		subEffect.ImageMargin = Vec2DF{ 450,350 };
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("giant_smash", std::move(subEffect));
 	}
 #pragma endregion
 
