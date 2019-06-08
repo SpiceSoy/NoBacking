@@ -76,10 +76,6 @@ void GameFramework::Update(float deltaTime)
 		{
 			container->Effects[i]->Update(deltaTime);
 		}
-		for (auto& ptr : container->Effects)
-		{
-			ptr->Update(deltaTime);
-		}
 		//UI
 		this->container->playerHpBar->Update(deltaTime);
 		this->container->enemyHpBar->Update(deltaTime);
