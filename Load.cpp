@@ -1072,19 +1072,19 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION2] = subAnim;
 		// 공격1
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.7;
+		subAnim.scale = 0.5;
 		subAnim.subImageStartIndex = 19;
 		subAnim.subImageSize = 8;
 		motionContainer[CharacterNormalState::MOTION3] = subAnim;
 		// 공격2
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.7;
+		subAnim.scale = 0.5;
 		subAnim.subImageStartIndex = 27;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION4] = subAnim;
 		// 공격3
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.5;
+		subAnim.scale = 0.3;
 		subAnim.subImageStartIndex = 33;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION5] = subAnim;
@@ -1270,7 +1270,7 @@ void GameFramework::Load()
 				{
 					if (res.second == "body")
 					{
-						other.Damaged(100);
+						other.Damaged(10);
 						other.ResetDamageCounter();
 						object.Deactive();
 					}

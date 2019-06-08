@@ -22,35 +22,36 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[this, framework](GameStateObject & object, float deltaTime) -> void
 		{
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 100)
+			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0)) { // 바운드 처리되면 삭제
+				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
+				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
+				object.transform.Translate(moveVec * 100.0f * deltaTime);
+			}
+			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 50)
 			{
 				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
 				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
 				object.transform.Translate(moveVec * -100.0f * deltaTime);
 			}
-			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 100 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 200) {
-				int r = rand() % 3;
-				if (r == 0) {
-					object.playerState.ChangeState(CharacterNormalState::MOTION5); // 공격3
-					
-				}
-				else if (r == 1) {
-					
+			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 50 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 200) {
+				int r = rand() % 2;
+				if (r == 1) {
 					object.playerState.ChangeState(CharacterNormalState::MOTION3); // 공격1
 				}
 				else {
 					object.playerState.ChangeState(CharacterNormalState::MOTION4); // 공격2
 				}
 			}
-			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 400)
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 400 && this->hit >3)
 			{
 				int r = rand() % 2;
-
 				if (r == 0) {
-					object.playerState.ChangeState(CharacterNormalState::MOTION5);
+					this->hit = 0;
+					object.playerState.ChangeState(CharacterNormalState::MOTION6);
 				}
 				else if (r == 1) {
-					object.playerState.ChangeState(CharacterNormalState::MOTION6);
+					this->hit = 0;
+					object.playerState.ChangeState(CharacterNormalState::MOTION5);
 				}
 			}
 			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 700 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 400)
@@ -111,11 +112,6 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
 			}
-			
-			if (object.playerAnime.isEnd())
-			{
-				object.playerState.ChangeState(CharacterNormalState::IDLE);
-			}
 			framework->CheckCollision(object);
 		},
 			[framework](GameStateObject & object, CharacterNormalState state) -> bool
@@ -156,7 +152,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		{
 			if (object.playerAnime.isEnd())
 			{
-				object.playerState.ChangeState(CharacterNormalState::IDLE);
+				object.playerState.ChangeState(CharacterNormalState::MOTION4);
 			}
 			framework->CheckCollision(object);
 		},
@@ -181,7 +177,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(3);
+					other.Damaged(0);
 				}
 			}
 			return false;
@@ -199,7 +195,6 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			if (object.playerAnime.isEnd())
 			{
 				this->Deactive();
-				//object.playerState.ChangeState(CharacterNormalState::IDLE);
 			}
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
@@ -216,7 +211,6 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
-			framework->CheckCollision(object);
 			static bool cnt = false;
 			if (object.playerAnime.GetCurrentFrame() == 3)
 			{
@@ -234,6 +228,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
 			}
+			framework->CheckCollision(object);
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
 		{
@@ -245,10 +240,17 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			{
 				if (res.second == "weapon" && this->isCanDamaged)
 				{
-					framework->OnEffect("perfect", this->transform.Position + Vec2DF::Up() * 50 + Vec2DF::Left() * 30);
-					framework->OnEffect("shield", this->transform.Position + Vec2DF::Up() * 50 + Vec2DF::Left() * 30);
-					//framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
-					SoundSystem::PlaySound("hit-steel");
+					this->Damaged(5);
+					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+					SoundSystem::PlaySound("hit-cut");
+					if (hp == 0)
+					{
+						object.playerState.ChangeState(CharacterNormalState::MOTION5);
+					}
+				}
+				if (res.first == "weapon" && res.second == "body")
+				{
+					other.Damaged(3);
 				}
 			}
 			return false;
@@ -256,10 +258,10 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		);
 		this->playerState.SetStateFunctionSet
 		(
-			CharacterNormalState::MOTION3,
+			CharacterNormalState::MOTION6,
 			[](GameStateObject & object) -> void
 		{
-			object.playerAnime.ChangeState(CharacterNormalState::MOTION3);
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION6);
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
@@ -327,7 +329,9 @@ void Giant::Draw(PaintInfo info)
 
 void Giant::Damaged(int hp, bool off)
 {
+	
 	auto thisState = this->playerState.GetCurrentState();
+	this->hit++;
 	if (thisState == CharacterNormalState::MOTION5)
 	{
 		hp = 0;
