@@ -40,4 +40,5 @@ public:
 	void EnemyHPBar(float destPercent, void* enemyPtr, const std::string& markTag);
 	bool GetGameState() const { return this->GameStart; }
 	void SetGameState(bool gameState) { (gameState) ? (Start()): (End()); }
+	void OnGameover();
 };

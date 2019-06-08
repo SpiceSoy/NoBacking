@@ -162,6 +162,9 @@
     <ClInclude Include="UITItle.h">
       <Filter>헤더 파일\GameFramework\UI</Filter>
     </ClInclude>
+    <ClInclude Include="UIDie.h">
+      <Filter>헤더 파일\GameFramework\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -238,6 +241,9 @@
     </ClCompile>
     <ClCompile Include="PlayerHPBar.cpp">
       <Filter>소스 파일\GameFramework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIDie.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -596,7 +596,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						if (this->hp == 0)
 						{
 							object.Deactive();
-							framework->SetGameState(false);
+							framework->OnGameover();
 						}
 						else 
 						{
