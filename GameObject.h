@@ -18,6 +18,7 @@ protected:
 	bool isDestroy = false;
 	bool isActive = true;
 	int hp = 5;
+	int hit = 0;
 	bool isCanDamaged = true;
 public:
 	const Tag tag;
