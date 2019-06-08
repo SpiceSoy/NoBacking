@@ -153,6 +153,9 @@
     <ClInclude Include="Giant.h">
       <Filter>헤더 파일\GameFramework\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="UIObject.h">
+      <Filter>헤더 파일\GameFramework\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

@@ -8,7 +8,7 @@
 struct subImage
 {
 	CImage* img = nullptr;
-	subImage(const std::wstring& image);
+	subImage(const std::wstring& image,bool isAlphaCheck = false);
 	subImage(const subImage& other) = delete;
 	subImage(subImage&& other);
 	~subImage();
@@ -35,7 +35,7 @@ public:
 	static MotionContainer* GetMotion(const std::string& tag);
 	static ImageSetContainer* GetImages(const std::string& tag);
 	static CollisionCollectionContainer* GetCollision(const std::string& tag);
-	static void AddImages(const std::string& tag, const std::wstring& dir);
+	static void AddImages(const std::string& tag, const std::wstring& dir, bool isAlphaCheck = false);
 	static void AddCollision(const std::string& tag, const std::string& dir,float scale = 0.0f);
 	static void AddMotion(const std::string& tag, MotionContainer&& motion);
 	static void Load(const std::string& tag);

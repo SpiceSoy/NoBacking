@@ -6,10 +6,36 @@
 std::map<std::string, std::vector<subImage>> ResourceManager::ImageSet = std::map<std::string, std::vector<subImage>>();
 std::map<std::string, std::vector<CollisionCollection>> ResourceManager::CollisionSet = std::map<std::string, std::vector<CollisionCollection>>();
 std::map<std::string, std::unordered_map<CharacterNormalState, subAnimation>> ResourceManager::MotionSet = std::map<std::string, std::unordered_map<CharacterNormalState, subAnimation>>();
-subImage::subImage(const std::wstring& image)
+subImage::subImage(const std::wstring& image,bool isAlphaCheck)
 {
 	img = new CImage();
-	img->Load(image.c_str());
+	//img->Load(image.c_str());
+	if (SUCCEEDED(img->Load(image.c_str())) && isAlphaCheck)
+	{
+		if (img->GetBPP() == 32)
+		{
+			{
+				unsigned char * pCol = 0;
+				long w = img->GetWidth();
+				long h = img->GetHeight();
+				for (long y = 0; y < h; y++)
+				{
+					for (long x = 0; x < w; x++)
+					{
+						pCol = (unsigned char *)img->GetPixelAddress(x, y);
+						unsigned char alpha = pCol[3];
+						if (alpha != 255)
+						{
+							pCol[0] = ((pCol[0] * alpha) + 128) >> 8;
+							pCol[1] = ((pCol[1] * alpha) + 128) >> 8;
+							pCol[2] = ((pCol[2] * alpha) + 128) >> 8;
+						}
+					}
+				}
+			}
+			img->SetHasAlphaChannel(true);
+		}
+	}
 }
 
 subImage::subImage(subImage&& other)
@@ -47,13 +73,13 @@ MotionContainer* ResourceManager::GetMotion(const std::string& tag)
 	return &ResourceManager::MotionSet.at(tag);
 }
 
-void ResourceManager::AddImages(const std::string& tag, const std::wstring& dir)
+void ResourceManager::AddImages(const std::string& tag, const std::wstring& dir , bool isAlphaCheck)
 {
 	if (ImageSet.size() == 0 || ImageSet.count(tag) == 0)
 	{
 		ResourceManager::ImageSet.emplace(tag, std::vector<subImage>());
 	}
-	ResourceManager::ImageSet[tag].emplace_back(dir);
+	ResourceManager::ImageSet[tag].emplace_back(dir, isAlphaCheck);
 }
 
 void ResourceManager::AddCollision(const std::string& tag, const std::string& dir, float scale)

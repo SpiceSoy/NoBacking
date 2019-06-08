@@ -12,6 +12,7 @@
 
 using Tag = std::string;
 class GameStateObject;
+class UIObject;
 
 class Transform : public IFrameworkObject
 {
@@ -43,4 +44,18 @@ public:
 	float GetJumpPower() const { return this->JumpPower; }
 	//std::array<POINT, 3> GetRotatedRect();
 
+};
+
+
+class UITransform : public IFrameworkObject
+{
+	using Ty = float;
+	//태그간의 충돌 관계 지정
+	UIObject& obj;
+public:
+	UITransform(UIObject& obj, GameFramework* framework) : obj(obj), IFrameworkObject(framework) {};
+	Vec2D<Ty> Position = Vec2D<Ty>{ 0, 0 };
+	Vec2D<Ty> Size = Vec2D<Ty>{ 0,0 };
+	Vec2D<Ty> Scale = Vec2D<Ty>{ 1,1 };
+	Ty Roation = 0.0f;
 };

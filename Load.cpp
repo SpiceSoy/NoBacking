@@ -991,61 +991,61 @@ void GameFramework::Load()
 	//이미지 정의
 	{
 		// 대기
-		ResourceManager::AddImages("giant", giantDir + L"0.png");
-		ResourceManager::AddImages("giant", giantDir + L"1.png");
-		ResourceManager::AddImages("giant", giantDir + L"2.png");
-		ResourceManager::AddImages("giant", giantDir + L"3.png");
-		ResourceManager::AddImages("giant", giantDir + L"4.png");
-		ResourceManager::AddImages("giant", giantDir + L"5.png");
+		ResourceManager::AddImages("giant", giantDir + L"0.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"1.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"2.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"3.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"4.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"5.png",true);
 		// 이동
-		ResourceManager::AddImages("giant", giantDir + L"6.png");
-		ResourceManager::AddImages("giant", giantDir + L"7.png");
-		ResourceManager::AddImages("giant", giantDir + L"8.png");
-		ResourceManager::AddImages("giant", giantDir + L"9.png");
-		ResourceManager::AddImages("giant", giantDir + L"10.png");
-		ResourceManager::AddImages("giant", giantDir + L"11.png");
-		ResourceManager::AddImages("giant", giantDir + L"12.png");
-		ResourceManager::AddImages("giant", giantDir + L"13.png");
-		ResourceManager::AddImages("giant", giantDir + L"14.png");
-		ResourceManager::AddImages("giant", giantDir + L"15.png");
-		ResourceManager::AddImages("giant", giantDir + L"16.png");
-		ResourceManager::AddImages("giant", giantDir + L"17.png");
+		ResourceManager::AddImages("giant", giantDir + L"6.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"7.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"8.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"9.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"10.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"11.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"12.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"13.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"14.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"15.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"16.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"17.png",true);
 		// 다운
-		ResourceManager::AddImages("giant", giantDir + L"18.png");
+		ResourceManager::AddImages("giant", giantDir + L"18.png",true);
 		// 공격1
-		ResourceManager::AddImages("giant", giantDir + L"19.png");
-		ResourceManager::AddImages("giant", giantDir + L"20.png");
-		ResourceManager::AddImages("giant", giantDir + L"21.png");
-		ResourceManager::AddImages("giant", giantDir + L"22.png");
-		ResourceManager::AddImages("giant", giantDir + L"23.png");
-		ResourceManager::AddImages("giant", giantDir + L"24.png");
-		ResourceManager::AddImages("giant", giantDir + L"25.png");
-		ResourceManager::AddImages("giant", giantDir + L"26.png");
+		ResourceManager::AddImages("giant", giantDir + L"19.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"20.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"21.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"22.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"23.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"24.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"25.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"26.png",true);
 		// 공격2
-		ResourceManager::AddImages("giant", giantDir + L"27.png");
-		ResourceManager::AddImages("giant", giantDir + L"28.png");
-		ResourceManager::AddImages("giant", giantDir + L"29.png");
-		ResourceManager::AddImages("giant", giantDir + L"30.png");
-		ResourceManager::AddImages("giant", giantDir + L"31.png");
-		ResourceManager::AddImages("giant", giantDir + L"32.png");
+		ResourceManager::AddImages("giant", giantDir + L"27.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"28.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"29.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"30.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"31.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"32.png", true);
 		// 가드
-		ResourceManager::AddImages("giant", giantDir + L"33.png");
-		ResourceManager::AddImages("giant", giantDir + L"34.png");
-		ResourceManager::AddImages("giant", giantDir + L"35.png");
-		ResourceManager::AddImages("giant", giantDir + L"36.png");
-		ResourceManager::AddImages("giant", giantDir + L"37.png");
-		ResourceManager::AddImages("giant", giantDir + L"38.png");
+		ResourceManager::AddImages("giant", giantDir + L"33.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"34.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"35.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"36.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"37.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"38.png", true);
 		// 공격3
-		ResourceManager::AddImages("giant", giantDir + L"39.png");
-		ResourceManager::AddImages("giant", giantDir + L"40.png");
-		ResourceManager::AddImages("giant", giantDir + L"41.png");
-		ResourceManager::AddImages("giant", giantDir + L"42.png");
-		ResourceManager::AddImages("giant", giantDir + L"43.png");
-		ResourceManager::AddImages("giant", giantDir + L"44.png");
-		ResourceManager::AddImages("giant", giantDir + L"45.png");
-		ResourceManager::AddImages("giant", giantDir + L"46.png");
-		ResourceManager::AddImages("giant", giantDir + L"47.png");
-		ResourceManager::AddImages("giant", giantDir + L"48.png");
+		ResourceManager::AddImages("giant", giantDir + L"39.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"40.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"41.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"42.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"43.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"44.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"45.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"46.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"47.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"48.png", true);
 
 	}
 	//모션 정의
