@@ -242,8 +242,8 @@ LRESULT CALLBACK wProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		OldBufferBit = (HBITMAP)SelectObject(bufferDc, hBufferBit);
 		OldStretchBit = (HBITMAP)SelectObject(StretchDc, hStretchBit);
 		RECT BufferRect = { 0,0,(ClientRect.right + Margin),(ClientRect.bottom + Margin) };
-		FillRect(bufferDc, &BufferRect, (HBRUSH)GetStockObject(BLACK_BRUSH));
-		FillRect(StretchDc, &ClientRect, (HBRUSH)GetStockObject(BLACK_BRUSH));
+		FillRect(bufferDc, &BufferRect, (HBRUSH)GetStockObject(WHITE_BRUSH));
+		FillRect(StretchDc, &ClientRect, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
 		PaintInfo pInfo;
 		pInfo.hinst = g_hInst;
@@ -261,8 +261,11 @@ LRESULT CALLBACK wProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
 		SetStretchBltMode(StretchDc, COLORONCOLOR);
 
 
-		StretchBlt(hDc, 0, 0, ClientRect.right ,ClientRect.bottom,
-			bufferDc, pInfo.StartPoint().x, pInfo.StartPoint().y , pInfo.DrawSize.x, pInfo.DrawSize.y,
+		//StretchBlt(hDc, 0, 0, ClientRect.right ,ClientRect.bottom,
+		//	bufferDc, pInfo.StartPoint().x, pInfo.StartPoint().y , pInfo.DrawSize.x, pInfo.DrawSize.y,
+		//	SRCCOPY);
+		StretchBlt(hDc, 0, 0, ClientRect.right, ClientRect.bottom,
+			bufferDc,0,0, pInfo.DrawSize.x, pInfo.DrawSize.y,
 			SRCCOPY);
 		DeleteObject(pInfo.CollisionPen[0]);
 		DeleteObject(pInfo.CollisionPen[1]);

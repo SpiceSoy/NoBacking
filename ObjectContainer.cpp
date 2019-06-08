@@ -8,6 +8,8 @@
 #include "Archer.h"
 #include "Giant.h"
 #include "PlayerHPBar.h"
+#include "UIObject.h"
+#include "UITItle.h"
 
 ObjectContainer::ObjectContainer(GameFramework* framework)
 {
@@ -26,6 +28,7 @@ ObjectContainer::ObjectContainer(GameFramework* framework)
 	}
 	this->playerHpBar = std::make_unique<PlayerHPBar>();
 	this->enemyHpBar = std::make_unique<EnemyHPBar>();
+
 }
 
 ObjectContainer::~ObjectContainer()

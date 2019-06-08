@@ -64,6 +64,9 @@
     <Filter Include="헤더 파일\GameFramework\UI">
       <UniqueIdentifier>{95aeb308-542b-4fe4-b355-8ead9c170553}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\GameFramework\UI">
+      <UniqueIdentifier>{f0a602be-b8c7-4e15-b584-20bbd54c5fb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -156,6 +159,9 @@
     <ClInclude Include="UIObject.h">
       <Filter>헤더 파일\GameFramework\UI</Filter>
     </ClInclude>
+    <ClInclude Include="UITItle.h">
+      <Filter>헤더 파일\GameFramework\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -221,14 +227,17 @@
     <ClCompile Include="Guarder.cpp">
       <Filter>소스 파일\GameFramework\Object</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerHPBar.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Archer.cpp">
       <Filter>소스 파일\GameFramework\Object</Filter>
     </ClCompile>
     <ClCompile Include="Giant.cpp">
       <Filter>소스 파일\GameFramework\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="UITitle.cpp">
+      <Filter>소스 파일\GameFramework\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHPBar.cpp">
+      <Filter>소스 파일\GameFramework\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

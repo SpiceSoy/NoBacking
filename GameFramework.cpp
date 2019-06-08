@@ -2,12 +2,14 @@
 #include "GameFramework.h"
 #include "ObjectContainer.h"
 #include "GameObject.h"
+#include "UIObject.h"
 #include "Collision.h"
 #include "Effect.h"
 #include "Player.h"
 #include "Camera.h"
 #include "SoundSystem.h"
 #include "PlayerHPBar.h"
+#include "UITItle.h"
 
 GameFramework::GameFramework()
 {
@@ -20,10 +22,18 @@ GameFramework::~GameFramework()
 
 void GameFramework::Start()
 {
+	this->GameStart = true;
+	if (this->container != nullptr)
+	{
+		delete this->container;
+	}
+	this->container = new ObjectContainer(this);
 }
 
 void GameFramework::End()
 {
+	this->GameStart = false;
+	//delete this->container;
 }
 
 void GameFramework::Create()
@@ -31,7 +41,8 @@ void GameFramework::Create()
 	SoundSystem::OnInitalize();
 	CollisionResult::reserve(50);
 	this->Load();
-	this->container = new ObjectContainer(this);
+	//this->container = new ObjectContainer(this);
+	this->uiObjects.emplace_back(std::make_unique<UITitle>(this));
 	SoundSystem::PlaySound("zero");
 
 }
@@ -45,47 +56,61 @@ void GameFramework::Destory()
 void GameFramework::Update(float deltaTime)
 {
 	SoundSystem::Update();
-	this->container->sandBag->Update(deltaTime);
-	this->container->player->Update(deltaTime);
-	for (auto& ptr : container->Monsters)
+	for (auto& ui : this->uiObjects)
 	{
-		ptr->Update(deltaTime);
+		ui->Update(deltaTime);
 	}
-
-	for (size_t i = 0; i < container->Effects.size(); i++)
+	if (GameStart)
 	{
-		container->Effects[i]->Update(deltaTime);
-	}
-	//for (auto& ptr : container->Effects)
-	//{
-	//	ptr->Update(deltaTime);
-	//}
-	//UI
-	this->container->playerHpBar->Update(deltaTime);
-	this->container->enemyHpBar->Update(deltaTime);
+		this->container->sandBag->Update(deltaTime);
+		this->container->player->Update(deltaTime);
+		for (auto& ptr : container->Monsters)
+		{
+			ptr->Update(deltaTime);
+		}
 
-	//this->GetCamera().Teleport(this->GetPlayer().transform.Position - Vec2DF{ 500,500 });
-	this->GetCamera().Lerp(this->GetPlayer().transform.Position - Vec2DF{ 500,550 },3 * deltaTime);
+		for (size_t i = 0; i < container->Effects.size(); i++)
+		{
+			container->Effects[i]->Update(deltaTime);
+		}
+		for (auto& ptr : container->Effects)
+		{
+			ptr->Update(deltaTime);
+		}
+		//UI
+		this->container->playerHpBar->Update(deltaTime);
+		this->container->enemyHpBar->Update(deltaTime);
+
+		//this->GetCamera().Teleport(this->GetPlayer().transform.Position - Vec2DF{ 500,500 });
+		this->GetCamera().Lerp(this->GetPlayer().transform.Position - Vec2DF{ 500,550 },3 * deltaTime);
+	}
 }
 
 void GameFramework::Draw(PaintInfo info)
 {
-	info.DrawCollision = isDrawCollision;
-	this->GetCamera().BackDraw(info);
-	this->container->sandBag->Draw(info);
-	this->container->player->Draw(info);
-	for (auto& ptr : container->Monsters)
+	if (this->container != nullptr)
 	{
-		ptr->Draw(info);
+		info.DrawCollision = isDrawCollision;
+		this->GetCamera().BackDraw(info);
+		this->container->sandBag->Draw(info);
+		this->container->player->Draw(info);
+		for (auto& ptr : container->Monsters)
+		{
+			ptr->Draw(info);
+		}
+		for (auto& ptr : container->Effects)
+		{
+			ptr->Draw(info);
+		}
+		//UI
+		this->GetCamera().Draw(info);
+		this->container->playerHpBar->Draw(info);
+		this->container->enemyHpBar->Draw(info);
 	}
-	for (auto& ptr : container->Effects)
+	for (auto& ui : this->uiObjects)
 	{
-		ptr->Draw(info);
+		ui->Draw(info);
 	}
-	//UI
-	this->GetCamera().Draw(info);
-	this->container->playerHpBar->Draw(info);
-	this->container->enemyHpBar->Draw(info);
 }
 
 bool GameFramework::CheckCollision(GameStateObject& obj)

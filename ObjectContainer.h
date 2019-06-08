@@ -5,6 +5,7 @@ class Camera;
 class PlayerHPBar;
 class EnemyHPBar;
 class GameStateObject;
+class UIObject;
 class GameFramework;
 struct ObjectContainer
 {

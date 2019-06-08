@@ -587,7 +587,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					auto& player = static_cast<Player&>(object);
 					object.playerAnime.ChangeState(CharacterNormalState::MOTION14, true);
 				},
-				[this](GameStateObject & object, float deltaTime) -> void
+				[this, framework](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					if (object.playerAnime.isEnd(CharacterNormalState::MOTION14) && !object.transform.GetJumpState())
@@ -596,6 +596,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						if (this->hp == 0)
 						{
 							object.Deactive();
+							framework->SetGameState(false);
 						}
 						else 
 						{

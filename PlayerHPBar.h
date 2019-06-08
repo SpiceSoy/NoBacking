@@ -18,7 +18,7 @@ class EnemyHPBar
 	float destPercent = 1.0;
 	bool reset = true;
 	bool On = false;
-	std::string markTag;
+	std::string markTag = "";
 public:
 	void ChangeDest(float destPercent,void* enemyPtr, const std::string& markTag) 
 	{

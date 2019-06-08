@@ -1340,6 +1340,8 @@ void GameFramework::Load()
 		ResourceManager::AddImages("mark-def", markDir + L"def.png");
 		ResourceManager::AddImages("mark-ach", markDir + L"ach.png");
 		ResourceManager::AddImages("mark-pist", markDir + L"pist.png");
+		const std::wstring titleDir = L"Resources/ui/title/";
+		ResourceManager::AddImages("ui-title", titleDir + L"title.png");
 
 	}
 #pragma endregion

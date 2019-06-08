@@ -5,12 +5,16 @@
 class ObjectContainer;
 class Player;
 class Camera;
+class UIObject;
 class GameFramework
 {
 private:
 	int maxScore = 0;
 	bool isPause = false;
 	bool isDrawCollision = false;
+	bool GameStart = false;
+	bool tast = false;
+	std::vector<std::unique_ptr<UIObject>> uiObjects;
 public:
 	ObjectContainer* container = nullptr;
 	GameFramework();
@@ -34,4 +38,6 @@ public:
 	Vec2DF GetCameraTransform(const Vec2DF& transform) const;
 	void PlayerHPBar(float destPercent);
 	void EnemyHPBar(float destPercent, void* enemyPtr, const std::string& markTag);
+	bool GetGameState() const { return this->GameStart; }
+	void SetGameState(bool gameState) { (gameState) ? (Start()): (End()); }
 };
