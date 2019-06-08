@@ -4,11 +4,11 @@
 
 static auto TiledF = [](float& a, float imageSize, float count)
 {
-	if (a >= imageSize * (count / 2))
+	if (a > imageSize * (count / 2))
 	{
 		a -= imageSize * count;
 	}
-	else if (a <= -imageSize * (count / 2))
+	else if (a < -imageSize * (count / 2))
 	{
 		a += imageSize * count;
 	}
@@ -16,11 +16,11 @@ static auto TiledF = [](float& a, float imageSize, float count)
 
 static auto TiledI = [](int& a, int imageSize, int count)
 {
-	if (a >= imageSize * (count / 2))
+	if (a > imageSize * (count / 2))
 	{
 		a -= imageSize * count;
 	}
-	else if (a <= -imageSize * (count / 2))
+	else if (a < -imageSize * (count / 2))
 	{
 		a += imageSize * count;
 	}
@@ -98,7 +98,7 @@ void Camera::BackDraw(PaintInfo info) const
 		for (size_t i = 0; i < cnt; i++)
 		{
 			auto& backImg = ResourceManager::GetImages("bg-drago-n-tile")->at(idx[i]).img;
-			float firstX = -position.x * xNum + (imageSize.x - 0.9) * i; TiledF(firstX, (imageSize.x - 0.9), cnt);
+			float firstX = -position.x * xNum + (imageSize.x - 1) * i; TiledF(firstX, (imageSize.x - 1), cnt);
 			backImg->Draw(info.hdc, firstX, -position.y * yNum + 100, imageSize.x, imageSize.y);
 		}
 

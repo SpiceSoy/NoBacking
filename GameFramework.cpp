@@ -10,6 +10,7 @@
 #include "SoundSystem.h"
 #include "PlayerHPBar.h"
 #include "UITItle.h"
+#include "UIDie.h"
 
 GameFramework::GameFramework()
 {
@@ -43,6 +44,7 @@ void GameFramework::Create()
 	CollisionResult::reserve(50);
 	this->Load();
 	//this->container = new ObjectContainer(this);
+	this->uiObjects.emplace_back(std::make_unique<UIDied>(this));
 	this->uiObjects.emplace_back(std::make_unique<UITitle>(this));
 	SoundSystem::PlaySound("zero");
 
@@ -171,6 +173,11 @@ void GameFramework::PlayerHPBar(float destPercent)
 void GameFramework::EnemyHPBar(float destPercent, void* enemyPtr, const std::string& markTag)
 {
 	this->container->enemyHpBar->ChangeDest(destPercent, enemyPtr, markTag);
+}
+
+void GameFramework::OnGameover()
+{
+	static_cast<UIDied*>(this->uiObjects[0].get())->OnDied();
 }
 
 

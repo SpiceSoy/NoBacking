@@ -11,13 +11,28 @@ void UITitle::Update(float deltaTime)
 	}
 	else 
 	{
-		alpha = Utill::clamp(alpha + 0.3f * deltaTime, 0.0f, 1.0f);
+		alpha = Utill::clamp(alpha + 3.0f * deltaTime, 0.0f, 1.0f);
 	}
 	if (framework->GetGameState() == false)
 	{
+		if (GetAsyncKeyState(VK_UP) & 0x0001)
+		{
+			curSelect = Utill::clamp(curSelect - 1, 1, 2);
+		}
+		else if (GetAsyncKeyState(VK_DOWN) & 0x0001)
+		{
+			curSelect = Utill::clamp(curSelect + 1, 1, 2);
+		}
 		if ( GetAsyncKeyState(VK_RETURN))
 		{
-			framework->SetGameState(true);
+			if (curSelect == 1)
+			{
+				framework->SetGameState(true);
+			}
+			else 
+			{
+				PostQuitMessage(0);
+			}
 		}
 	}
 }
@@ -25,13 +40,18 @@ void UITitle::Update(float deltaTime)
 void UITitle::Draw(PaintInfo info)
 {
 	auto& img = ResourceManager::GetImages("ui-title")->at(0).img;
+	auto& csr = ResourceManager::GetImages("ui-title")->at(1).img;
 	if (alpha != 0.0f)
 	{
 		img->AlphaBlend(info.hdc, 0, 0, 255* alpha);
+		if (framework->GetGameState() == false)
+		{
+			Vec2DU pos[2] = { {500,464}, {566,537} };
+			csr->Draw(info.hdc, pos[curSelect - 1]);
+		}
 	}
 	else 
 	{
-		//img->Draw(info.hdc, 0,0,1280, 720);
 	}
 	//Rectangle(info.hdc, info.margin, info.margin, 1280, 720);
 }

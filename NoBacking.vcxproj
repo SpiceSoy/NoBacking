@@ -184,6 +184,7 @@
     <ClInclude Include="StateEnum.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="UIDie.h" />
     <ClInclude Include="UIObject.h" />
     <ClInclude Include="UITItle.h" />
     <ClInclude Include="UtillFunction.h" />
@@ -217,6 +218,7 @@
     <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateEnum.cpp" />
+    <ClCompile Include="UIDie.cpp" />
     <ClCompile Include="UITitle.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="UtillFunction.cpp" />
