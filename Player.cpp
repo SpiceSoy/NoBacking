@@ -130,12 +130,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 					{
 						object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
-						object.transform.Translate(Vec2DF::Left() * 350.0f * deltaTime, false);
+						object.transform.Translate(Vec2DF::Left() * 350.0f * deltaTime);
 					}
 					else if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
 					{
 						object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
-						object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime, false);
+						object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
 					}
 					else
 					{
@@ -283,6 +283,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				},
 					[](GameStateObject & object, CharacterNormalState state) -> bool
 				{
+					object.ResetDamageCounter();
 					return true;
 				},
 					guardFunc
@@ -513,6 +514,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				},
 					[](GameStateObject & object, CharacterNormalState state) -> bool
 				{
+					object.ResetDamageCounter();
 					return true;
 				},
 					guardFunc
@@ -550,6 +552,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				},
 					[](GameStateObject & object, CharacterNormalState state) -> bool
 				{
+					object.ResetDamageCounter();
 					return true;
 				},
 					guardFunc
@@ -574,6 +577,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				},
 					[](GameStateObject & object, CharacterNormalState state) -> bool
 				{
+					object.ResetDamageCounter();
 					return true;
 				}
 				);
@@ -606,6 +610,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				},
 					[](GameStateObject & object, CharacterNormalState state) -> bool
 				{
+					object.ResetDamageCounter();
 					return true;
 				}
 				);
@@ -647,6 +652,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					},
 						[](GameStateObject & object, CharacterNormalState state) -> bool
 					{
+						object.ResetDamageCounter();
 						return true;
 					},
 						guardFunc

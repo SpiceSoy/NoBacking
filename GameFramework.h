@@ -27,6 +27,7 @@ public:
 	void Draw(PaintInfo info);
 	void Load();
 	bool CheckCollision(GameStateObject& obj);
+	bool CheckBound(GameStateObject& obj);
 	void ToggleDebugCollision();
 	void OnEffect(const std::string& tag, const Vec2DF& Position, bool isCopy = false);
 	Vec2DF GetDisplaySize() const;

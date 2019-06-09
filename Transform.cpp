@@ -63,10 +63,11 @@ void Transform::Translate(Vec2D<Ty> vec , bool checkCol, int count)
 	int cnt = Utill::clamp(count, 1, 5);
 	for (size_t i = 0; i < cnt; i++)
 	{
+		auto temp = this->Position;
 		this->Position += vec / cnt;
-		if (checkCol && this->framework->CheckCollision(this->obj))
+		if (checkCol)
 		{
-			this->Position -= vec / cnt; break; 
+			this->framework->CheckBound(this->obj);
 		}
 	}
 }
