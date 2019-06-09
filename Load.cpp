@@ -1231,19 +1231,19 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION3] = subAnim;
 		// 공격1
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.5;
+		subAnim.scale = 0.4;
 		subAnim.subImageStartIndex = 17;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION4] = subAnim;
 		// 공격2
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.5;
+		subAnim.scale = 1;
 		subAnim.subImageStartIndex = 23;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION5] = subAnim;
 		// 공격3
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.5;
+		subAnim.scale = 0.3;
 		subAnim.subImageStartIndex = 29;
 		subAnim.subImageSize = 7;
 		motionContainer[CharacterNormalState::MOTION6] = subAnim;

@@ -31,20 +31,21 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 			{
 				object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
 				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
-				object.transform.Translate(moveVec * -100.0f * deltaTime);
+				object.transform.Translate(moveVec * -400.0f * deltaTime);
 			}
 			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 150 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 300) {
-				int r = rand() % 3;
-				if (r == 0) {
+				if (this->hit > 3) {
 					this->hit = 0;
 					object.playerState.ChangeState(CharacterNormalState::MOTION6);
 				}
-				else if (r == 1) {
-					this->hit = 0;
-					object.playerState.ChangeState(CharacterNormalState::MOTION5);
-				}
 				else {
-					object.playerState.ChangeState(CharacterNormalState::MOTION4); // 공격1
+					int r = rand() % 2;
+					if (r == 0) {
+						object.playerState.ChangeState(CharacterNormalState::MOTION4);
+					}
+					else if (r == 1) {
+						object.playerState.ChangeState(CharacterNormalState::MOTION5);
+					}
 				}
 			}
 			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 600 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 300)
@@ -76,12 +77,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 						object.playerState.ChangeState(CharacterNormalState::MOTION3); // 다운
 					}
 					else {
-						if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150) {
-							object.playerState.ChangeState(CharacterNormalState::MOTION6);
-						}
-						else {
-							object.playerState.ChangeState(CharacterNormalState::MOTION2); // 피격
-						}
+						object.playerState.ChangeState(CharacterNormalState::MOTION2); // 피격
 					}
 				}
 			}
@@ -128,7 +124,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(3);
+					other.Damaged(5);
 				}
 			}
 			return false;
@@ -174,7 +170,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(3);
+					other.Damaged(1);
 				}
 			}
 			return false;
@@ -213,6 +209,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
 			}
+			framework->GetPlayer().ResetDamageCounter();
 			framework->CheckCollision(object);
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
@@ -232,9 +229,6 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 					if (hp == 0)
 					{
 						object.playerState.ChangeState(CharacterNormalState::MOTION3);
-					}
-					else {
-						object.playerState.ChangeState(CharacterNormalState::MOTION2); // 피격
 					}
 				}
 				if (res.first == "weapon" && res.second == "body")
@@ -280,7 +274,6 @@ void Lancer::Update(float deltaTime)
 		this->playerAnime.Update(deltaTime);
 		this->playerState.Update(deltaTime);
 		this->transform.Update(deltaTime);
-		//framework->CheckCollision(*this);
 	}
 }
 
@@ -297,5 +290,6 @@ void Lancer::Damaged(int hp, bool off)
 {
 	auto thisState = this->playerState.GetCurrentState();
 	GameStateObject::Damaged(hp, off);
+	this->hit++;
 	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-def");
 }

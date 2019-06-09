@@ -346,7 +346,6 @@ void Giant::Draw(PaintInfo info)
 
 void Giant::Damaged(int hp, bool off)
 {
-	
 	auto thisState = this->playerState.GetCurrentState();
 	this->hit++;
 	if (thisState == CharacterNormalState::MOTION5)
