@@ -41,6 +41,8 @@ public:
 	virtual bool CheckCollision(GameStateObject& other);
 	virtual void Damaged(int hp, bool off = false);
 	virtual void ResetDamageCounter();
+	bool CheckBound(GameStateObject& other, bool justCheck = false);
 	bool GetisActive() const { return isActive; }
 	bool GetisDestory() const { return isDestroy; }
+	Vec2DF GetThisBoundingCenter() const { return this->playerAnime.GetCurrentCollisionData().GetBoundCenter(); }
 };

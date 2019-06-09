@@ -137,6 +137,7 @@ void CollisionCollection::Load(const std::string& dir, float scale)
 			scaler(colPos.x);
 			scaler(colPos.y);
 			scaler(colRadius);
+			if (tag == "bound") { colRadius = 1000.f;  this->boundIndex = i; }
 			std::vector<SubCollisionData> subColldata;
 			for (size_t i = 0; i < subCollisionCount; i++)
 			{

@@ -118,6 +118,28 @@ bool GameFramework::CheckCollision(GameStateObject& obj)
 	}
 }
 
+bool GameFramework::CheckBound(GameStateObject& obj)
+{
+	if (this->container != nullptr)
+	{
+		if (&obj == this->container->player.get())
+		{
+			for (auto& mon : this->container->Monsters)
+			{
+				if (obj.CheckBound(*mon))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		else 
+		{
+			return this->container->player->CheckBound(obj);
+		}
+	}
+}
+
 void GameFramework::ToggleDebugCollision()
 {
 	isDrawCollision = !isDrawCollision;

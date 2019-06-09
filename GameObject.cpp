@@ -52,3 +52,37 @@ void GameStateObject::ResetDamageCounter()
 {
 	this->isCanDamaged = true;
 }
+
+bool GameStateObject::CheckBound(GameStateObject& other, bool justCheck)
+{
+	if (isActive)
+	{
+		auto& thisCol = this->playerAnime.GetCurrentCollisionData();
+		auto thisPos = this->transform.Position;
+		auto& otherCol = other.playerAnime.GetCurrentCollisionData();
+		auto otherPos = other.transform.Position;
+		//if (this->playerAnime.isChangeFrame() || other.playerAnime.isChangeFrame())
+		{
+			if (CollisionCollection::CheckIntersect(thisCol, thisPos, this, otherCol, otherPos, &other))
+			{
+				auto& result = CollisionResult::GetResult(this);
+				for (auto& res : result)
+				{
+					if (res.first == res.second && res.first == "bound")
+					{
+						while (!justCheck && this->CheckBound(other,true))
+						{
+							this->transform.Position.x += (this->GetThisBoundingCenter() - other.GetThisBoundingCenter()).x * 0.05;
+						}
+						return true;
+					}
+				}
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
+	return false;
+}

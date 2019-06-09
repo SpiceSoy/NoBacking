@@ -74,6 +74,7 @@ public:
 	Collision(CollisionTag tag,Vec2DF center, float radius, std::vector<SubCollisionData>&& data) : tag(tag), center(center), radius(radius), subCollision(std::move(data)) {};
 	void Draw(PaintInfo info , const Vec2DF& parentPos) const;
 	static bool CheckIntersect(const Collision& A, const Vec2DF& APos, const Collision& B, const Vec2DF& BPos);
+	Vec2DF GetFirstCenter() const { return subCollision[0].pos; }
 };
 //1°èÃþ
 class CollisionCollection
@@ -82,6 +83,7 @@ class CollisionCollection
 	std::vector<Collision> collection;
 	Vec2DF center;
 	float radius;
+	int boundIndex = -1;
 	CollisionCollection(bool isNull) :isNull(true), center(0, 0), radius(0) {};
 public:
 	CollisionCollection(Vec2DF center, float radius) : center(center), radius(radius) {};
@@ -89,6 +91,10 @@ public:
 	void AddCollision(Collision& col);
 	void AddCollision(Collision&& col);
 	void Draw(PaintInfo info , const Vec2DF& parentPos) const;
+	Vec2DF GetBoundCenter() const 
+	{
+		return (boundIndex != -1) ? (this->collection[boundIndex].GetFirstCenter()) : (Vec2DF{0,0});
+	};
 	static bool CheckIntersect(const CollisionCollection& A, const Vec2DF& APos, const  GameStateObject* Aptr, const CollisionCollection& B, const Vec2DF& BPos, const  GameStateObject* Bptr);
 	static CollisionCollection& Null();
 	void Load(const std::string& dir,float scale = 0.0f);
