@@ -1090,7 +1090,7 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION5] = subAnim;
 		// АјАн4
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.5;
+		subAnim.scale = 0.3;
 		subAnim.subImageStartIndex = 39;
 		subAnim.subImageSize = 10;
 		motionContainer[CharacterNormalState::MOTION6] = subAnim;

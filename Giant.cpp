@@ -22,19 +22,13 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[this, framework](GameStateObject & object, float deltaTime) -> void
 		{
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0)) { // 바운드 처리되면 삭제
+			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0) || abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 80) { // 바운드 처리되면 삭제
 				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
-				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
+				auto moveVec = (Vec2DF::Right());
 				object.transform.Translate(moveVec * 100.0f * deltaTime);
 			}
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 50)
-			{
-				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
-				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
-				object.transform.Translate(moveVec * -100.0f * deltaTime);
-			}
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 50 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 200) {
-				int r = rand() % 2;
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 80 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 200) {
+				int r = rand() % 70;
 				if (this->hit > 3) {
 					if (r == 0) {
 						this->hit = 0;
@@ -49,8 +43,8 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 					if (r == 0) {
 						object.playerState.ChangeState(CharacterNormalState::MOTION3); // 공격1
 					}
-					else {
-						object.playerState.ChangeState(CharacterNormalState::MOTION4); // 공격2
+					else if(r == 1){
+						object.playerState.ChangeState(CharacterNormalState::MOTION4); //  공격2
 					}
 				}
 			}
@@ -228,19 +222,6 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
-			static bool cnt = false;
-			if (object.playerAnime.GetCurrentFrame() == 3)
-			{
-				if (!cnt)
-				{
-					framework->OnEffect("giant_wave", object.transform.Position + Vec2DF::Up() * 50);
-				}
-				cnt = true;
-			}
-			else
-			{
-				cnt = false;
-			}
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
@@ -283,6 +264,19 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
+			static bool cnt = false;
+			if (object.playerAnime.GetCurrentFrame() == 7)
+			{
+				if (!cnt)
+				{
+					framework->OnEffect("giant_wave", object.transform.Position + Vec2DF::Up() * 50);
+				}
+				cnt = true;
+			}
+			else
+			{
+				cnt = false;
+			}
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);

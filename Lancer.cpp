@@ -22,16 +22,10 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 		},
 			[this, framework](GameStateObject & object, float deltaTime) -> void
 		{
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0)) { // 바운드 처리되면 삭제
+			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0) || abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150) { // 바운드 처리되면 삭제
 				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
-				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
-				object.transform.Translate(moveVec * 100.0f * deltaTime);
-			}
-			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150)
-			{
-				object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
-				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
-				object.transform.Translate(moveVec * -400.0f * deltaTime);
+				auto moveVec = (Vec2DF::Right());
+				object.transform.Translate(moveVec * 450.0f * deltaTime);
 			}
 			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 150 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 300) {
 				if (this->hit > 3) {
