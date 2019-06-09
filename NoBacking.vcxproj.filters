@@ -165,6 +165,9 @@
     <ClInclude Include="UIDie.h">
       <Filter>헤더 파일\GameFramework\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Lancer.h">
+      <Filter>헤더 파일\GameFramework\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -244,6 +247,9 @@
     </ClCompile>
     <ClCompile Include="UIDie.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Lancer.cpp">
+      <Filter>소스 파일\GameFramework\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

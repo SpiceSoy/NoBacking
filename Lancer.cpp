@@ -1,15 +1,15 @@
 #include "pch.h"
-#include "Giant.h"
+#include "Lancer.h"
 #include "Collision.h"
 #include "GameFramework.h"
 #include "Player.h"
 #include <atlimage.h>
 
-Giant::Giant(GameFramework* framework, const std::string& tag)
+Lancer::Lancer(GameFramework* framework, const std::string& tag)
 	:GameStateObject(framework, tag)
 {
-	this->playerAnime.Set("giant");
-	ImageMargin = Vec2DF{ 280,375 };
+	this->playerAnime.Set("lancer");
+	ImageMargin = Vec2DF{ 290,250 };
 
 #pragma region StateDef
 	{
@@ -27,51 +27,31 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
 				object.transform.Translate(moveVec * 100.0f * deltaTime);
 			}
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 50)
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150)
 			{
-				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
+				object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
 				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
 				object.transform.Translate(moveVec * -100.0f * deltaTime);
 			}
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 50 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 200) {
-				int r = rand() % 2;
-				if (this->hit > 3) {
-					if (r == 0) {
-						this->hit = 0;
-						object.playerState.ChangeState(CharacterNormalState::MOTION6);
-					}
-					else if (r == 1) {
-						this->hit = 0;
-						object.playerState.ChangeState(CharacterNormalState::MOTION5);
-					}
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 150 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 300) {
+				int r = rand() % 3;
+				if (r == 0) {
+					this->hit = 0;
+					object.playerState.ChangeState(CharacterNormalState::MOTION6);
+				}
+				else if (r == 1) {
+					this->hit = 0;
+					object.playerState.ChangeState(CharacterNormalState::MOTION5);
 				}
 				else {
-					if (r == 0) {
-						object.playerState.ChangeState(CharacterNormalState::MOTION3); // 공격1
-					}
-					else {
-						object.playerState.ChangeState(CharacterNormalState::MOTION4); // 공격2
-					}
+					object.playerState.ChangeState(CharacterNormalState::MOTION4); // 공격1
 				}
 			}
-			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 600 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 200)
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 600 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 300)
 			{
-				if (this->hit > 3) {
-					int r = rand() % 2;
-					if (r == 0) {
-						this->hit = 0;
-						object.playerState.ChangeState(CharacterNormalState::MOTION6);
-					}
-					else if (r == 1) {
-						this->hit = 0;
-						object.playerState.ChangeState(CharacterNormalState::MOTION5);
-					}
-				}
-				else {
 					object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
 					auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
 					object.transform.Translate(moveVec * 100.0f * deltaTime);
-				}
 			}
 			else {
 				object.playerAnime.ChangeState(CharacterNormalState::IDLE);
@@ -93,7 +73,15 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
 					{
-						object.playerState.ChangeState(CharacterNormalState::MOTION2); // 다운
+						object.playerState.ChangeState(CharacterNormalState::MOTION3); // 다운
+					}
+					else {
+						if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150) {
+							object.playerState.ChangeState(CharacterNormalState::MOTION6);
+						}
+						else {
+							object.playerState.ChangeState(CharacterNormalState::MOTION2); // 피격
+						}
 					}
 				}
 			}
@@ -109,19 +97,6 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
-			static bool cnt = false;
-			if (object.playerAnime.GetCurrentFrame() == 4)
-			{
-				if (!cnt)
-				{
-					framework->OnEffect("giant_smash", object.transform.Position + Vec2DF::Up() * 50);
-				}
-				cnt = true;
-			}
-			else
-			{
-				cnt = false;
-			}
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
@@ -145,7 +120,10 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
 					{
-						object.playerState.ChangeState(CharacterNormalState::MOTION2);
+						object.playerState.ChangeState(CharacterNormalState::MOTION3);
+					}
+					else {
+						object.playerState.ChangeState(CharacterNormalState::MOTION2); // 피격
 					}
 				}
 				if (res.first == "weapon" && res.second == "body")
@@ -158,16 +136,16 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		);
 		this->playerState.SetStateFunctionSet
 		(
-			CharacterNormalState::MOTION3,
+			CharacterNormalState::MOTION5,
 			[](GameStateObject & object) -> void
 		{
-			object.playerAnime.ChangeState(CharacterNormalState::MOTION3);
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION5);
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
 			if (object.playerAnime.isEnd())
 			{
-				object.playerState.ChangeState(CharacterNormalState::MOTION4);
+				object.playerState.ChangeState(CharacterNormalState::IDLE);
 			}
 			framework->CheckCollision(object);
 		},
@@ -188,7 +166,10 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
 					{
-						object.playerState.ChangeState(CharacterNormalState::MOTION2);
+						object.playerState.ChangeState(CharacterNormalState::MOTION3);
+					}
+					else {
+						object.playerState.ChangeState(CharacterNormalState::MOTION2); // 피격
 					}
 				}
 				if (res.first == "weapon" && res.second == "body")
@@ -201,7 +182,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		);
 		this->playerState.SetStateFunctionSet
 		(
-			CharacterNormalState::MOTION2,
+			CharacterNormalState::MOTION3,
 			[](GameStateObject & object) -> void
 		{
 			object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
@@ -221,26 +202,13 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		);
 		this->playerState.SetStateFunctionSet
 		(
-			CharacterNormalState::MOTION5,
+			CharacterNormalState::MOTION6,
 			[](GameStateObject & object) -> void
 		{
-			object.playerAnime.ChangeState(CharacterNormalState::MOTION5);
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION6);
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
-			static bool cnt = false;
-			if (object.playerAnime.GetCurrentFrame() == 3)
-			{
-				if (!cnt)
-				{
-					framework->OnEffect("giant_wave", object.transform.Position + Vec2DF::Up() * 50);
-				}
-				cnt = true;
-			}
-			else
-			{
-				cnt = false;
-			}
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
@@ -263,12 +231,15 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
 					{
-						object.playerState.ChangeState(CharacterNormalState::MOTION5);
+						object.playerState.ChangeState(CharacterNormalState::MOTION3);
+					}
+					else {
+						object.playerState.ChangeState(CharacterNormalState::MOTION2); // 피격
 					}
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(10);
+					other.Damaged(2);
 				}
 			}
 			return false;
@@ -276,66 +247,44 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		);
 		this->playerState.SetStateFunctionSet
 		(
-			CharacterNormalState::MOTION6,
+			CharacterNormalState::MOTION2,
 			[](GameStateObject & object) -> void
 		{
-			object.playerAnime.ChangeState(CharacterNormalState::MOTION6);
+			object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
+			object.ResetDamageCounter();
 		},
-			[framework](GameStateObject & object, float deltaTime) -> void
+			[](GameStateObject & object, float deltaTime) -> void
 		{
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
 			}
-			framework->CheckCollision(object);
 		},
-			[framework](GameStateObject & object, CharacterNormalState state) -> bool
+			[](GameStateObject & object, CharacterNormalState state) -> bool
 		{
-			framework->GetPlayer().ResetDamageCounter();
 			return true;
-		},
-			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
-		{
-			for (auto& res : result)
-			{
-				if (res.second == "weapon" && this->isCanDamaged)
-				{
-					this->Damaged(5);
-					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
-					SoundSystem::PlaySound("hit-cut");
-					if (hp == 0)
-					{
-						object.playerState.ChangeState(CharacterNormalState::MOTION5);
-					}
-				}
-				if (res.first == "weapon" && res.second == "body")
-				{
-					other.Damaged(10);
-				}
-			}
-			return false;
 		}
 		);
 	}
 #pragma endregion
-
 	this->playerState.ChangeState(CharacterNormalState::IDLE);
 	this->hp = 100;
 	this->transform.Translate(Vec2DF::Down() * 600, false, 1);
 	this->transform.Translate(Vec2DF::Right() * 700, false, 1);
 }
 
-void Giant::Update(float deltaTime)
+void Lancer::Update(float deltaTime)
 {
 	if (isActive)
 	{
 		this->playerAnime.Update(deltaTime);
 		this->playerState.Update(deltaTime);
 		this->transform.Update(deltaTime);
+		//framework->CheckCollision(*this);
 	}
 }
 
-void Giant::Draw(PaintInfo info)
+void Lancer::Draw(PaintInfo info)
 {
 	if (isActive)
 	{
@@ -344,15 +293,9 @@ void Giant::Draw(PaintInfo info)
 	}
 }
 
-void Giant::Damaged(int hp, bool off)
+void Lancer::Damaged(int hp, bool off)
 {
-	
 	auto thisState = this->playerState.GetCurrentState();
-	this->hit++;
-	if (thisState == CharacterNormalState::MOTION5)
-	{
-		hp = 0;
-	}
 	GameStateObject::Damaged(hp, off);
 	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-def");
 }

@@ -1151,7 +1151,146 @@ void GameFramework::Load()
 		ResourceManager::AddCollision("giant", giantColDir + "48.txt");
 	}
 #pragma endregion
+#pragma region Lancer
+	const std::wstring lancerDir = L"Resources/lancer/img/";
+	const std::string lancerColDir = "Resources/lancer/col/";
+	//이미지 정의
+	{
+		// 대기
+		ResourceManager::AddImages("lancer", lancerDir + L"0.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"1.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"2.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"3.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"4.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"5.png", true);
+		// 이동
+		ResourceManager::AddImages("lancer", lancerDir + L"6.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"7.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"8.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"9.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"10.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"11.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"12.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"13.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"14.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"15.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"16.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"17.png", true);
+		// 다운
+		ResourceManager::AddImages("lancer", lancerDir + L"18.png", true);
+		// 공격1
+		ResourceManager::AddImages("lancer", lancerDir + L"19.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"20.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"21.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"22.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"23.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"24.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"25.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"26.png", true);
+		// 공격2
+		ResourceManager::AddImages("lancer",lancerDir + L"27.png", true);
+		ResourceManager::AddImages("lancer",lancerDir + L"28.png", true);
+		ResourceManager::AddImages("lancer",lancerDir + L"29.png", true);
+		ResourceManager::AddImages("lancer",lancerDir + L"30.png", true);
+		ResourceManager::AddImages("lancer",lancerDir + L"31.png", true);
+		ResourceManager::AddImages("lancer",lancerDir + L"32.png", true);
+		// 공격3
+		ResourceManager::AddImages("lancer", lancerDir + L"33.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"34.png", true);
+		ResourceManager::AddImages("lancer", lancerDir + L"35.png", true);
+		
 
+	}
+	//모션 정의
+	{
+		MotionContainer motionContainer;
+		subAnimation subAnim;
+		// 대기
+		subAnim.next = CharacterNormalState::LOOP;
+		subAnim.scale = 0.5;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 4;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		// 이동
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.8;
+		subAnim.subImageStartIndex = 4;
+		subAnim.subImageSize = 8;
+		motionContainer[CharacterNormalState::MOTION1] = subAnim;
+		// 피격
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.7;
+		subAnim.subImageStartIndex = 12;
+		subAnim.subImageSize = 2;
+		motionContainer[CharacterNormalState::MOTION2] = subAnim;
+		// 다운
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.5;
+		subAnim.subImageStartIndex = 14;
+		subAnim.subImageSize = 3;
+		motionContainer[CharacterNormalState::MOTION3] = subAnim;
+		// 공격1
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.5;
+		subAnim.subImageStartIndex = 17;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::MOTION4] = subAnim;
+		// 공격2
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.5;
+		subAnim.subImageStartIndex = 23;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::MOTION5] = subAnim;
+		// 공격3
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.5;
+		subAnim.subImageStartIndex = 29;
+		subAnim.subImageSize = 7;
+		motionContainer[CharacterNormalState::MOTION6] = subAnim;
+		ResourceManager::AddMotion("lancer", std::move(motionContainer));
+	}
+
+	//물리 정의
+	{
+		// 대기
+		ResourceManager::AddCollision("lancer", lancerColDir + "0.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "1.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "2.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "3.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "4.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "5.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "6.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "7.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "8.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "9.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "10.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "11.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "12.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "13.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "14.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "15.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "16.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "17.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "18.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "19.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "20.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "21.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "22.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "23.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "24.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "25.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "26.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "27.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "28.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "29.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "30.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "31.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "32.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "33.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "34.txt");
+		ResourceManager::AddCollision("lancer", lancerColDir + "35.txt");
+	}
+#pragma endregion
 #pragma region Effects
 	{
 		const std::wstring effect1Dir = L"Resources/effect/effect1_1/img/";

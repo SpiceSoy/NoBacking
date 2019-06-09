@@ -56,7 +56,7 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 						object.playerState.ChangeState(CharacterNormalState::MOTION3);
 					}
 				}
-				else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 700 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 150)
+				else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 600 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 150)
 				{
 					object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
 					auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());

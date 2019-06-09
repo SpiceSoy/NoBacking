@@ -169,6 +169,7 @@
     <ClInclude Include="Giant.h" />
     <ClInclude Include="Guarder.h" />
     <ClInclude Include="IFrameworkObject.h" />
+    <ClInclude Include="Lancer.h" />
     <ClInclude Include="NoBacking.h" />
     <ClInclude Include="ObjectContainer.h" />
     <ClInclude Include="PaintInfo.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Giant.cpp" />
     <ClCompile Include="Guarder.cpp" />
+    <ClCompile Include="Lancer.cpp" />
     <ClCompile Include="Load.cpp" />
     <ClCompile Include="NoBacking.cpp" />
     <ClCompile Include="ObjectContainer.cpp" />
