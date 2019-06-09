@@ -217,7 +217,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(3);
+					other.Damaged(15);
 				}
 			}
 			return false;

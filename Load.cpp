@@ -1002,11 +1002,11 @@ void GameFramework::Load()
 		ResourceManager::AddImages("giant", giantDir + L"7.png",true);
 		ResourceManager::AddImages("giant", giantDir + L"8.png",true);
 		ResourceManager::AddImages("giant", giantDir + L"9.png",true);
-		ResourceManager::AddImages("giant", giantDir + L"10.png", true);
-		ResourceManager::AddImages("giant", giantDir + L"11.png", true);
-		ResourceManager::AddImages("giant", giantDir + L"12.png", true);
-		ResourceManager::AddImages("giant", giantDir + L"13.png", true);
-		ResourceManager::AddImages("giant", giantDir + L"14.png", true);
+		ResourceManager::AddImages("giant", giantDir + L"10.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"11.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"12.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"13.png",true);
+		ResourceManager::AddImages("giant", giantDir + L"14.png",true);
 		ResourceManager::AddImages("giant", giantDir + L"15.png",true);
 		ResourceManager::AddImages("giant", giantDir + L"16.png",true);
 		ResourceManager::AddImages("giant", giantDir + L"17.png",true);
@@ -1409,7 +1409,7 @@ void GameFramework::Load()
 				{
 					if (res.second == "body")
 					{
-						other.Damaged(10);
+						other.Damaged(20);
 						other.ResetDamageCounter();
 						object.Deactive();
 					}

@@ -118,7 +118,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(5);
+					other.Damaged(10);
 				}
 			}
 			return false;
@@ -164,7 +164,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(1);
+					other.Damaged(10);
 				}
 			}
 			return false;
@@ -227,7 +227,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(2);
+					other.Damaged(15);
 				}
 			}
 			return false;

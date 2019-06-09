@@ -126,7 +126,7 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(0);
+					other.Damaged(8);
 				}
 			}
 			return false;
@@ -172,7 +172,7 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(3);
+					other.Damaged(8);
 				}
 			}
 			return false;

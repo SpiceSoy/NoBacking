@@ -22,6 +22,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[this, framework](GameStateObject & object, float deltaTime) -> void
 		{
+			framework->CheckCollision(object);
 			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0) || abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 80) { // 바운드 처리되면 삭제
 				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
 				auto moveVec = (Vec2DF::Right());
@@ -144,7 +145,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(3);
+					other.Damaged(10);
 				}
 			}
 			return false;
@@ -187,7 +188,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(3);
+					other.Damaged(10);
 				}
 			}
 			return false;
@@ -249,7 +250,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(10);
+					other.Damaged(50);
 				}
 			}
 			return false;
@@ -304,7 +305,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(10);
+					other.Damaged(50);
 				}
 			}
 			return false;
