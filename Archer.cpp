@@ -27,9 +27,17 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
 				object.transform.Translate(moveVec * 100.0f * deltaTime);
 			}
-			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 80)
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 100)
 			{
-				object.playerState.ChangeState(CharacterNormalState::MOTION5);
+				int r = rand() % 100;
+				if (r == 0) {
+					object.playerState.ChangeState(CharacterNormalState::MOTION5);
+				}
+				else {
+					object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
+					auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
+					object.transform.Translate(moveVec * -100.0f * deltaTime);
+				}
 			}
 			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 300)
 			{

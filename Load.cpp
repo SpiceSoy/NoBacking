@@ -927,7 +927,7 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION4] = subAnim;
 		//공격2(근거리)
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.5;
+		subAnim.scale = 1.0;
 		subAnim.subImageStartIndex = 33;
 		subAnim.subImageSize = 7;
 		motionContainer[CharacterNormalState::MOTION5] = subAnim;

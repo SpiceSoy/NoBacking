@@ -318,7 +318,6 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		);
 	}
 #pragma endregion
-
 	this->playerState.ChangeState(CharacterNormalState::IDLE);
 	this->hp = 100;
 	this->transform.Translate(Vec2DF::Down() * 600, false, 1);
