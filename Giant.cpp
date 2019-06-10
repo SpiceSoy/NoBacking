@@ -22,13 +22,9 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[this, framework](GameStateObject & object, float deltaTime) -> void
 		{
+
 			framework->CheckCollision(object);
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0) || abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 80) { // 바운드 처리되면 삭제
-				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
-				auto moveVec = (Vec2DF::Right());
-				object.transform.Translate(moveVec * 100.0f * deltaTime);
-			}
-			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 80 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 200) {
+			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 200) {
 				int r = rand() % 70;
 				if (this->hit > 3) {
 					if (r == 0) {
@@ -126,7 +122,6 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			[framework](GameStateObject & object, CharacterNormalState state) -> bool
 		{
 			framework->GetPlayer().ResetDamageCounter();
-			object.ResetDamageCounter();
 			return true;
 		},
 			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
@@ -135,7 +130,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			{
 				if (res.second == "weapon" && this->isCanDamaged)
 				{
-					this->Damaged(5);
+					this->Damaged(10);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
@@ -162,14 +157,13 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		{
 			if (object.playerAnime.isEnd())
 			{
-				object.playerState.ChangeState(CharacterNormalState::MOTION4);
+				object.playerState.ChangeState(CharacterNormalState::IDLE);
 			}
 			framework->CheckCollision(object);
 		},
 			[framework](GameStateObject & object, CharacterNormalState state) -> bool
 		{
 			framework->GetPlayer().ResetDamageCounter();
-			object.ResetDamageCounter();
 			return true;
 		},
 			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
@@ -229,9 +223,9 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			}
 			framework->CheckCollision(object);
 		},
-			[](GameStateObject & object, CharacterNormalState state) -> bool
+			[framework](GameStateObject & object, CharacterNormalState state) -> bool
 		{
-			object.ResetDamageCounter();
+			framework->GetPlayer().ResetDamageCounter();
 			return true;
 		},
 			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
@@ -250,7 +244,8 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(50);
+					other.Damaged(49);
+					other.transform.KnockBack(Vec2DF::Left() * 8);
 				}
 			}
 			return false;
@@ -305,7 +300,8 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 				}
 				if (res.first == "weapon" && res.second == "body")
 				{
-					other.Damaged(50);
+					other.Damaged(49);
+					other.transform.KnockBack(Vec2DF::Left() * 8);
 				}
 			}
 			return false;
@@ -342,10 +338,6 @@ void Giant::Damaged(int hp, bool off)
 {
 	auto thisState = this->playerState.GetCurrentState();
 	this->hit++;
-	if (thisState == CharacterNormalState::MOTION5)
-	{
-		hp = 0;
-	}
 	GameStateObject::Damaged(hp, off);
 	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-def");
 }

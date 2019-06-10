@@ -1054,7 +1054,7 @@ void GameFramework::Load()
 		subAnimation subAnim;
 		// 대기
 		subAnim.next = CharacterNormalState::LOOP;
-		subAnim.scale = 1;
+		subAnim.scale = 0.3;
 		subAnim.subImageStartIndex = 0;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::IDLE] = subAnim;
@@ -1084,13 +1084,13 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION4] = subAnim;
 		// 공격3
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.3;
+		subAnim.scale = 0.2;
 		subAnim.subImageStartIndex = 33;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION5] = subAnim;
 		// 공격4
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.3;
+		subAnim.scale = 0.40;
 		subAnim.subImageStartIndex = 39;
 		subAnim.subImageSize = 10;
 		motionContainer[CharacterNormalState::MOTION6] = subAnim;

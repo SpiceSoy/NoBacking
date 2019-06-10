@@ -690,7 +690,7 @@ void Player::Draw(PaintInfo info)
 void Player::Damaged(int hp, bool off)
 {
 	auto thisState = this->playerState.GetCurrentState();
-	if (thisState == static_cast<CharacterNormalState>(PlayerState::GUARDUP) || thisState == static_cast<CharacterNormalState>(PlayerState::GUARDMOVE) || thisState == static_cast<CharacterNormalState>(PlayerState::GUARDON))
+	if ((thisState == static_cast<CharacterNormalState>(PlayerState::GUARDUP) || thisState == static_cast<CharacterNormalState>(PlayerState::GUARDMOVE) || thisState == static_cast<CharacterNormalState>(PlayerState::GUARDON)) && hp < 40)
 	{
 		hp = 0;
 	}
