@@ -121,6 +121,17 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character1", C1Dir + L"124.png");
 		ResourceManager::AddImages("character1", C1Dir + L"125.png");
 		ResourceManager::AddImages("character1", C1Dir + L"126.png");
+		// 스킬1
+		ResourceManager::AddImages("character1", C1Dir + L"74.png");
+		ResourceManager::AddImages("character1", C1Dir + L"75.png");
+		ResourceManager::AddImages("character1", C1Dir + L"76.png");
+		ResourceManager::AddImages("character1", C1Dir + L"77.png");
+		ResourceManager::AddImages("character1", C1Dir + L"78.png");
+		ResourceManager::AddImages("character1", C1Dir + L"79.png");
+		ResourceManager::AddImages("character1", C1Dir + L"80.png");
+		ResourceManager::AddImages("character1", C1Dir + L"81.png");
+		ResourceManager::AddImages("character1", C1Dir + L"82.png");
+		ResourceManager::AddImages("character1", C1Dir + L"83.png");
 	}
 #pragma endregion
 #pragma region C2
@@ -233,6 +244,17 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character2", C2Dir + L"124.png");
 		ResourceManager::AddImages("character2", C2Dir + L"125.png");
 		ResourceManager::AddImages("character2", C2Dir + L"126.png");
+		// 스킬1
+		ResourceManager::AddImages("character2", C2Dir + L"74.png");
+		ResourceManager::AddImages("character2", C2Dir + L"75.png");
+		ResourceManager::AddImages("character2", C2Dir + L"76.png");
+		ResourceManager::AddImages("character2", C2Dir + L"77.png");
+		ResourceManager::AddImages("character2", C2Dir + L"78.png");
+		ResourceManager::AddImages("character2", C2Dir + L"79.png");
+		ResourceManager::AddImages("character2", C2Dir + L"80.png");
+		ResourceManager::AddImages("character2", C2Dir + L"81.png");
+		ResourceManager::AddImages("character2", C2Dir + L"82.png");
+		ResourceManager::AddImages("character2", C2Dir + L"83.png");
 	}
 #pragma endregion
 #pragma region C3
@@ -345,7 +367,17 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character3", C3Dir + L"124.png");
 		ResourceManager::AddImages("character3", C3Dir + L"125.png");
 		ResourceManager::AddImages("character3", C3Dir + L"126.png");
-
+		// 스킬1
+		ResourceManager::AddImages("character3", C3Dir + L"74.png");
+		ResourceManager::AddImages("character3", C3Dir + L"75.png");
+		ResourceManager::AddImages("character3", C3Dir + L"76.png");
+		ResourceManager::AddImages("character3", C3Dir + L"77.png");
+		ResourceManager::AddImages("character3", C3Dir + L"78.png");
+		ResourceManager::AddImages("character3", C3Dir + L"79.png");
+		ResourceManager::AddImages("character3", C3Dir + L"80.png");
+		ResourceManager::AddImages("character3", C3Dir + L"81.png");
+		ResourceManager::AddImages("character3", C3Dir + L"82.png");
+		ResourceManager::AddImages("character3", C3Dir + L"83.png");
 	}
 #pragma endregion
 #pragma region Motion
