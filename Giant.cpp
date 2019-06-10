@@ -217,6 +217,28 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
+			static bool cnt = false;
+			if (object.playerAnime.GetCurrentFrame() == 0)
+			{
+				if (!cnt)
+				{
+					SoundSystem::PlaySound("atk-charge");
+					framework->OnEffect("giant_energy", object.transform.Position + Vec2DF::Up() * 50);
+				}
+				cnt = true;
+			}
+			else if (object.playerAnime.GetCurrentFrame() == 4) {
+				if (!cnt)
+				{
+					SoundSystem::PlaySound("atk-boom");
+					framework->OnEffect("giant_lava", object.transform.Position + Vec2DF::Up() * 50);
+				}
+				cnt = true;
+			}
+			else
+			{
+				cnt = false;
+			}
 			if (object.playerAnime.isEnd())
 			{
 				object.playerState.ChangeState(CharacterNormalState::IDLE);
@@ -261,10 +283,19 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
 			static bool cnt = false;
-			if (object.playerAnime.GetCurrentFrame() == 7)
+			if (object.playerAnime.GetCurrentFrame() == 0)
 			{
 				if (!cnt)
 				{
+					SoundSystem::PlaySound("atk-charge");
+					framework->OnEffect("giant_energy", object.transform.Position + Vec2DF::Up() * 50);
+				}
+				cnt = true;
+			}
+			else if (object.playerAnime.GetCurrentFrame() == 7) {
+				if (!cnt)
+				{
+					SoundSystem::PlaySound("atk-boom");
 					framework->OnEffect("giant_wave", object.transform.Position + Vec2DF::Up() * 50);
 				}
 				cnt = true;
@@ -339,5 +370,5 @@ void Giant::Damaged(int hp, bool off)
 	auto thisState = this->playerState.GetCurrentState();
 	this->hit++;
 	GameStateObject::Damaged(hp, off);
-	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-def");
+	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-giant");
 }

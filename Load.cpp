@@ -1482,6 +1482,79 @@ void GameFramework::Load()
 		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
 		Effect::AddEffect("giant_smash", std::move(subEffect));
 	}
+	// Giant 용암
+	{
+		const std::wstring giant_lavaDir = L"Resources/effect/giant_lava/";
+		const std::string giant_lavaColDir = "Resources/effect1/giant_lava/col/";
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"0.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"1.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"2.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"3.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"4.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"5.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"6.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"7.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"8.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"9.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"10.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"11.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"12.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"13.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"14.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"15.png");
+		ResourceManager::AddImages("giant_lava", giant_lavaDir + L"16.png");
+		MotionContainer motionContainer;
+
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 17;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("giant_lava", std::move(motionContainer));
+
+		subEffect subEffect;
+		subEffect.ImageTag = "giant_lava";
+		subEffect.MotionTag = "giant_lava";
+		subEffect.CollisionTag = "giant_lava";
+		subEffect.ImageMargin = Vec2DF{ 300,150 };
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("giant_lava", std::move(subEffect));
+	}
+	// Giant 에너지
+	{
+		const std::wstring giant_energyDir = L"Resources/effect/giant_energy/";
+		const std::string giant_energyColDir = "Resources/effect1/giant_energy/col/";
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"0.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"1.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"2.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"3.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"4.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"5.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"6.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"7.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"8.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"9.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"10.png");
+		ResourceManager::AddImages("giant_energy", giant_energyDir + L"11.png");
+		MotionContainer motionContainer;
+
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 12;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("giant_energy", std::move(motionContainer));
+
+		subEffect subEffect;
+		subEffect.ImageTag = "giant_energy";
+		subEffect.MotionTag = "giant_energy";
+		subEffect.CollisionTag = "giant_energy";
+		subEffect.ImageMargin = Vec2DF{ 250,300 };
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("giant_energy", std::move(subEffect));
+	}
 #pragma endregion
 
 #pragma region BackGround
@@ -1561,6 +1634,8 @@ void GameFramework::Load()
 	const std::string bgmDir = "Resources/sound/bgm/";
 	//SoundSystem::Load("zero", bgmDir + "zero.mp3");
 	SoundSystem::Load("atk-slash", sndAttackDir + "blunt_01.wav");
+	SoundSystem::Load("atk-boom", sndAttackDir + "boom.wav");
+	SoundSystem::Load("atk-charge", sndAttackDir + "charge.wav");
 	SoundSystem::Load("hit-bite", sndHitDir + "bite.wav");
 	SoundSystem::Load("hit-steel", sndHitDir + "steel.wav");
 	SoundSystem::Load("hit-cut", sndHitDir + "cut.wav");
