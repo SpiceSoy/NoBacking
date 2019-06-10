@@ -44,5 +44,8 @@ public:
 	bool CheckBound(GameStateObject& other, bool justCheck = false);
 	bool GetisActive() const { return isActive; }
 	bool GetisDestory() const { return isDestroy; }
-	Vec2DF GetThisBoundingCenter() const { return this->playerAnime.GetCurrentCollisionData().GetBoundCenter(); }
+	Vec2DF GetThisBoundingCenter() const 
+	{
+		return this->playerAnime.GetCurrentCollisionData().GetBoundCenter(); 
+	}
 };

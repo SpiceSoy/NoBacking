@@ -343,12 +343,12 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 	this->playerState.ChangeState(CharacterNormalState::IDLE);
 	this->hp = 100;
 	this->transform.Translate(Vec2DF::Down() * 600, false, 1);
-	this->transform.Translate(Vec2DF::Right() * 700, false, 1);
+	this->transform.Translate(Vec2DF::Right() * (900 + 1380*4.3f), false, 1);
 }
 
 void Giant::Update(float deltaTime)
 {
-	if (isActive)
+	if (isActive && (this->transform.Position - this->framework->GetPlayer().transform.Position).GetScaleSq() < (1380 * 1380))
 	{
 		this->playerAnime.Update(deltaTime);
 		this->playerState.Update(deltaTime);

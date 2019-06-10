@@ -229,12 +229,12 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 	this->playerState.ChangeState(CharacterNormalState::IDLE);
 	this->hp = 100;
 	this->transform.Translate(Vec2DF::Down() * 600, false, 1);
-	this->transform.Translate(Vec2DF::Right() * 1000, false, 1);
+	this->transform.Translate(Vec2DF::Right() * (900 + 1380 * 2), false, 1);
 }
 
 void Archer::Update(float deltaTime)
 {
-	if (isActive)
+	if (isActive && (this->transform.Position - this->framework->GetPlayer().transform.Position).GetScaleSq() < (1380*1380))
 	{
 		this->playerAnime.Update(deltaTime);
 		this->playerState.Update(deltaTime);

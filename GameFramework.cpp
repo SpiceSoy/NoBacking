@@ -136,6 +136,7 @@ bool GameFramework::CheckBound(GameStateObject& obj)
 		else 
 		{
 			return this->container->player->CheckBound(obj);
+			//return obj.CheckBound(*this->container->player.get());
 		}
 	}
 }
