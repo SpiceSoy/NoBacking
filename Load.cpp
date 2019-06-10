@@ -1542,6 +1542,8 @@ void GameFramework::Load()
 		ResourceManager::AddImages("mark-def", markDir + L"def.png");
 		ResourceManager::AddImages("mark-ach", markDir + L"ach.png");
 		ResourceManager::AddImages("mark-pist", markDir + L"pist.png");
+		ResourceManager::AddImages("mark-lancer", markDir + L"lancer.png");
+		ResourceManager::AddImages("mark-giant", markDir + L"giant.png");
 		const std::wstring titleDir = L"Resources/ui/title/";
 		ResourceManager::AddImages("ui-title", titleDir + L"title.png");
 		ResourceManager::AddImages("ui-title", titleDir + L"csr.png", true);
