@@ -480,6 +480,12 @@ void GameFramework::Load()
 		subAnim.scale = 1.0;
 		subAnim.subImageSize = 9;
 		motionContainer[CharacterNormalState::MOTION15] = subAnim;
+		//skill
+		subAnim.next = CharacterNormalState::None;
+		subAnim.subImageStartIndex = 93;
+		subAnim.scale = 1.0;
+		subAnim.subImageSize = 10;
+		motionContainer[CharacterNormalState::MOTION16] = subAnim;
 		ResourceManager::AddMotion("character", std::move(motionContainer));
 	}
 #pragma endregion
@@ -1484,6 +1490,34 @@ void GameFramework::Load()
 		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
 		Effect::AddEffect("giant_wave", std::move(subEffect));
 	}
+	// Giant 공격1
+	{
+		const std::wstring giant_swingDir = L"Resources/effect/giant_swing/";
+		const std::string giant_swingColDir = "Resources/effect1/giant_swing/col/";
+		ResourceManager::AddImages("giant_swing", giant_swingDir + L"0.png");
+		ResourceManager::AddImages("giant_swing", giant_swingDir + L"1.png");
+		ResourceManager::AddImages("giant_swing", giant_swingDir + L"2.png");
+		ResourceManager::AddImages("giant_swing", giant_swingDir + L"3.png");
+		ResourceManager::AddImages("giant_swing", giant_swingDir + L"4.png");
+		ResourceManager::AddImages("giant_swing", giant_swingDir + L"5.png");
+		MotionContainer motionContainer;
+
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 6;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("giant_swing", std::move(motionContainer));
+
+		subEffect subEffect;
+		subEffect.ImageTag = "giant_swing";
+		subEffect.MotionTag = "giant_swing";
+		subEffect.CollisionTag = "giant_swing";
+		subEffect.ImageMargin = Vec2DF{ 250,200 };
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("giant_swing", std::move(subEffect));
+	}
 	// Giant 공격2(종휘두르기)
 	{
 		const std::wstring giant_smashDir = L"Resources/effect/giant_smash/";
@@ -1588,6 +1622,59 @@ void GameFramework::Load()
 		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
 		Effect::AddEffect("giant_energy", std::move(subEffect));
 	}
+	// Player Skill1
+	{
+		const std::wstring flashslashDir = L"Resources/effect/flashslash/";
+		const std::string flashslashColDir = "Resources/effect1/flashslash/col/";
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash0.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash1.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash2.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash3.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash4.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash5.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash6.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash7.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash8.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash9.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash10.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash11.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash12.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash13.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash14.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash15.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash16.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash17.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash18.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash19.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash20.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash21.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash22.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash23.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash24.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash25.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash26.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash27.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash28.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash29.png");
+		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash30.png");
+		MotionContainer motionContainer;
+
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 1.5;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 30;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("flashslash", std::move(motionContainer));
+
+		subEffect subEffect;
+		subEffect.ImageTag = "flashslash";
+		subEffect.MotionTag = "flashslash";
+		subEffect.CollisionTag = "flashslash";
+		subEffect.ImageMargin = Vec2DF{ 350,280 };
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("flashslash", std::move(subEffect));
+	}
 #pragma endregion
 
 #pragma region BackGround
@@ -1657,6 +1744,8 @@ void GameFramework::Load()
 		ResourceManager::AddImages("ui-died", titleDir + L"died-text.png", true);
 
 	}
+
+
 #pragma endregion
 
 
