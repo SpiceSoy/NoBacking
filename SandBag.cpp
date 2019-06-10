@@ -166,7 +166,7 @@ SandBag::SandBag(GameFramework* framework, const std::string& tag)
 
 void SandBag::Update(float deltaTime)
 {
-	if (isActive)
+	if (isActive && (this->transform.Position - this->framework->GetPlayer().transform.Position).GetScaleSq() < (1380 * 1380))
 	{
 		this->playerAnime.Update(deltaTime);
 		this->playerState.Update(deltaTime);

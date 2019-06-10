@@ -72,7 +72,7 @@ bool GameStateObject::CheckBound(GameStateObject& other, bool justCheck)
 					{
 						while (!justCheck && this->CheckBound(other,true))
 						{
-							this->transform.Position.x += (this->GetThisBoundingCenter() - other.GetThisBoundingCenter()).x * 0.05;
+							this->transform.Position.x += ((this->transform.Position + this->GetThisBoundingCenter()) - (other.transform.Position + other.GetThisBoundingCenter())).x * 0.05;
 						}
 						return true;
 					}

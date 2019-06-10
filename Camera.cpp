@@ -121,7 +121,7 @@ void Camera::Draw(PaintInfo info) const
 			};
 			float xNum = 1;
 			float yNum = 1;
-			float cnt = 5;
+			float cnt = 6;
 			for (size_t i = 0; i < cnt; i++)
 			{
 				float firstX = -position.x * xNum + (imageSize.x - 0.9) * i; TiledF(firstX, (imageSize.x - 0.9), cnt);
@@ -139,7 +139,7 @@ void Camera::Draw(PaintInfo info) const
 			};
 			float xNum = 1;
 			float yNum = 1;
-			float cnt = 5;
+			float cnt = 6;
 			for (size_t i = 0; i < cnt; i++)
 			{
 				float firstX = -position.x * xNum + (imageSize.x - 0.9) * i; TiledF(firstX, (imageSize.x - 0.9), cnt);

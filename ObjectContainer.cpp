@@ -18,11 +18,11 @@ ObjectContainer::ObjectContainer(GameFramework* framework)
 	this->player = std::make_unique<Player>(framework, "Player");
 	{
 		//몬스터 추가
-		//this->Monsters.emplace_back(std::make_unique<SandBag>(framework, "SandBag"));
-		//this->Monsters.emplace_back(std::make_unique<Guarder>(framework, "Guarder"));
-		//this->Monsters.emplace_back(std::make_unique<Archer>(framework, "Archer"));
+		this->Monsters.emplace_back(std::make_unique<SandBag>(framework, "SandBag"));
+		this->Monsters.emplace_back(std::make_unique<Guarder>(framework, "Guarder"));
+		this->Monsters.emplace_back(std::make_unique<Archer>(framework, "Archer"));
 		this->Monsters.emplace_back(std::make_unique<Giant>(framework, "Giant"));
-		//this->Monsters.emplace_back(std::make_unique<Lancer>(framework, "Lancer"));
+		this->Monsters.emplace_back(std::make_unique<Lancer>(framework, "Lancer"));
 	}
 	for (size_t i = 0; i < 20; i++)
 	{

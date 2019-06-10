@@ -3,7 +3,7 @@
 class Camera
 {
 	Vec2DF minPosition = Vec2DF{-1000,0};
-	Vec2DF maxPosition = Vec2DF{3200,800};
+	Vec2DF maxPosition = Vec2DF{7300,800};
 	Vec2DF position = Vec2DF{ 0.0f,0.0f };
 	float Scale = 1.0f;
 public:
