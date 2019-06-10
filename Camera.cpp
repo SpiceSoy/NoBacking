@@ -37,6 +37,7 @@ Vec2DF Camera::CameraTransform(const Vec2DF& transform) const
 
 void Camera::Lerp(Vec2DF other, float t)
 {
+	this->minPosition.x = this->position.x;
 	this->position = this->position.Lerp(other, t);
 	clamp();
 }

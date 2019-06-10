@@ -55,7 +55,7 @@ void GameStateObject::ResetDamageCounter()
 
 bool GameStateObject::CheckBound(GameStateObject& other, bool justCheck)
 {
-	if (isActive)
+	if (isActive && other.GetActiveState())
 	{
 		auto& thisCol = this->playerAnime.GetCurrentCollisionData();
 		auto thisPos = this->transform.Position;

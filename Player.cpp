@@ -629,7 +629,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						auto& player = static_cast<Player&>(object);
 						if (this->delayCounter > object.playerAnime.GetTotalTime(CharacterNormalState::MOTION15) * 0.6)
 						{
-							if ((GetAsyncKeyState('X') & 0x8000)|| (GetAsyncKeyState('Z') & 0x8000)|| (GetAsyncKeyState(VK_DOWN) & 0x8000))
+							if ((GetAsyncKeyState('X') & 0x8000)|| (GetAsyncKeyState('Z') & 0x8000) )
 							{
 								object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
 								//object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));

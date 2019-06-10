@@ -14,4 +14,6 @@ public:
 	void clamp();
 	void BackDraw(PaintInfo info) const;
 	void Draw(PaintInfo info) const;
+	Vec2DF GetMaxPosition() const { return maxPosition; };
+	Vec2DF GetMinPosition() const { return minPosition; };
 };

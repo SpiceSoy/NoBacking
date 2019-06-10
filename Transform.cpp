@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Transform.h"
 #include "GameFramework.h"
+#include "Camera.h"
 
 
 constexpr int TranslationCount = 10;
@@ -68,6 +69,10 @@ void Transform::Translate(Vec2D<Ty> vec , bool checkCol, int count)
 		if (checkCol)
 		{
 			this->framework->CheckBound(this->obj);
+			if (this->Position.x < this->framework->GetCamera().GetMinPosition().x)
+			{
+				this->Position.x = temp.x;
+			}
 		}
 	}
 }
