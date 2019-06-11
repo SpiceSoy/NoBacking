@@ -441,7 +441,7 @@ void GameFramework::Load()
 		//베기
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 51;
-		subAnim.scale = 1.15;
+		subAnim.scale = 1.0;
 		subAnim.subImageSize = 9;
 		motionContainer[CharacterNormalState::MOTION9] = subAnim;
 		//점공2
@@ -827,7 +827,7 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION2] = subAnim;
 		//공격2
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.8;
+		subAnim.scale = 0.7;
 		subAnim.subImageStartIndex = 11;
 		subAnim.subImageSize = 6;
 		motionContainer[CharacterNormalState::MOTION3] = subAnim;
