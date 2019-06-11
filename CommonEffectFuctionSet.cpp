@@ -41,7 +41,7 @@ StateFunction CommonEffectFunctionSet::GetMoveingEffectSet(const Vec2DF& moveVec
 			{
 				framework->CheckCollision(object);
 			}
-			object.transform.Translate(moveVector * deltaTime);
+			object.transform.Translate(moveVector * deltaTime,false);
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
 		{
