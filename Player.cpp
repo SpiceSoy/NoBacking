@@ -12,7 +12,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 	this->hp = this->maxHP;
 	ImageMargin = Vec2DF{ 128,184 };
 
-	auto hittedFunc = [this, framework,tag](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
+	auto hittedFunc = [this, framework, tag](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
 	{
 		if (other.tag != object.tag)
 		{
@@ -42,17 +42,17 @@ Player::Player(GameFramework* framework, const std::string& tag)
 	{
 		if (other.tag != object.tag)
 		{
-		for (auto& res : result)
-		{
-			if (res.first == "body" && (res.second == "attack1" || res.second == "weapon") && this->isCanDamaged)
+			for (auto& res : result)
 			{
-				SoundSystem::PlaySound("hit-bite");
-				framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
-				this->transform.KnockBack((Vec2DF::Left() * 5) + (Vec2DF::Up() * 3.5f));
-				//this->transform.KnockBack((Vec2DF::Left() * 1.5f) + (Vec2DF::Up() * 1.5f));
-				object.playerState.ChangeState(CharacterNormalState::MOTION14);
+				if (res.first == "body" && (res.second == "attack1" || res.second == "weapon") && this->isCanDamaged)
+				{
+					SoundSystem::PlaySound("hit-bite");
+					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+					this->transform.KnockBack((Vec2DF::Left() * 5) + (Vec2DF::Up() * 3.5f));
+					//this->transform.KnockBack((Vec2DF::Left() * 1.5f) + (Vec2DF::Up() * 1.5f));
+					object.playerState.ChangeState(CharacterNormalState::MOTION14);
+				}
 			}
-		}
 		}
 		return false;
 	};
@@ -60,24 +60,24 @@ Player::Player(GameFramework* framework, const std::string& tag)
 	{
 		if (other.tag != object.tag)
 		{
-		for (auto& res : result)
-		{
-			if ((res.second == "attack1" || res.second == "weapon") && this->isCanDamaged)
+			for (auto& res : result)
 			{
+				if ((res.second == "attack1" || res.second == "weapon") && this->isCanDamaged)
+				{
 					SoundSystem::PlaySound("hit-steel");
-					if (object.playerState.GetCurrentState() == static_cast<CharacterNormalState>(PlayerState::GUARDUP)&& object.playerAnime.GetCurrentFrame() <= 2)
+					if (object.playerState.GetCurrentState() == static_cast<CharacterNormalState>(PlayerState::GUARDUP) && object.playerAnime.GetCurrentFrame() <= 2)
 					{
 						framework->OnEffect("perfect", this->transform.Position + Vec2DF::Up() * 55 + Vec2DF::Right() * 30);
 						framework->OnEffect("shield", this->transform.Position + Vec2DF::Up() * 55 + Vec2DF::Right() * 30);
 					}
-					else 
+					else
 					{
 						framework->OnEffect("shield", this->transform.Position + Vec2DF::Up() * 55 + Vec2DF::Right() * 30);
 					}
 					this->delayCounter = 0;
 					this->transform.KnockBack(Vec2DF::Left() * 0.5f);
+				}
 			}
-		}
 		}
 		return false;
 	};
@@ -89,10 +89,10 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				CharacterNormalState::IDLE,
 				[](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(CharacterNormalState::IDLE);
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(CharacterNormalState::IDLE);
+			},
 				[framework, &Costume = (this->Costume)](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
@@ -158,49 +158,49 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::SLASH),
 				[this](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH), true);
-					this->delayCounter = 0.0f;
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH), true);
+				this->delayCounter = 0.0f;
+			},
 				[framework, this](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				//framework->CheckCollision(object);
+				static bool snd = true;
+				if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 				{
-					auto& player = static_cast<Player&>(object);
-					//framework->CheckCollision(object);
-					static bool snd = true; 
-					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
-					{
-						SoundSystem::PlaySound("atk-slash");
-						snd = false;
-					}
-					if (this->playerAnime.GetCurrentFrame() > 2)
-					{
-						snd = true;
-					}
-					if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::SLASH)) * 0.7)
-					{
-						if (GetAsyncKeyState('Z') & 0x8000)
-						{
-							object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
-						}
-						else if (GetAsyncKeyState('X') & 0x8000)
-						{
-							object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
-						}
-						else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
-						{
-							object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
-						}
-					}
-					if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::SLASH)))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
+					SoundSystem::PlaySound("atk-slash");
+					snd = false;
+				}
+				if (this->playerAnime.GetCurrentFrame() > 2)
 				{
-					return true;
-				},
+					snd = true;
+				}
+				if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::SLASH)) * 0.7)
+				{
+					if (GetAsyncKeyState('Z') & 0x8000)
+					{
+						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
+					}
+					else if (GetAsyncKeyState('X') & 0x8000)
+					{
+						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
+					}
+					else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+					{
+						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
+					}
+				}
+				if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::SLASH)))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				return true;
+			},
 				hittedFunc
 				);
 		}
@@ -209,50 +209,50 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::STING),
 				[this](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING), true);
-					this->delayCounter = 0.0f;
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING), true);
+				this->delayCounter = 0.0f;
+			},
 				[framework, this](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				//framework->CheckCollision(object);
+				static bool snd = true;
+				if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 				{
-					auto& player = static_cast<Player&>(object);
-					//framework->CheckCollision(object);
-					static bool snd = true;
-					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
-					{
-						SoundSystem::PlaySound("atk-slash");
-						snd = false;
-					}
-					if (this->playerAnime.GetCurrentFrame() > 2)
-					{
-						snd = true;
-					}
-					if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::STING)) * 0.9)
-					{
-						if (GetAsyncKeyState('X') & 0x8000)
-						{
-							object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
-						}
-						else if (GetAsyncKeyState('Z') & 0x8000)
-						{
-							object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
-						}
-						else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
-						{
-							object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
-						}
-					}
-					if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::STING)))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
+					SoundSystem::PlaySound("atk-slash");
+					snd = false;
+				}
+				if (this->playerAnime.GetCurrentFrame() > 2)
 				{
-					return true;
-				},
-					hittedFunc
+					snd = true;
+				}
+				if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::STING)) * 0.9)
+				{
+					if (GetAsyncKeyState('X') & 0x8000)
+					{
+						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
+					}
+					else if (GetAsyncKeyState('Z') & 0x8000)
+					{
+						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
+					}
+					else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
+					{
+						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
+					}
+				}
+				if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::STING)))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				return true;
+			},
+				hittedFunc
 				);
 		}
 		//가드
@@ -260,37 +260,37 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::GUARDUP),
 				[this](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP), true);
-					this->isPerfect = false;
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP), true);
+				this->isPerfect = false;
+			},
 				[this](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				if (object.playerAnime.GetCurrentFrame() <= 2 && !this->isCanDamaged)
 				{
-					auto& player = static_cast<Player&>(object);
-					if (object.playerAnime.GetCurrentFrame() <= 2 && !this->isCanDamaged)
-					{
-						this->isPerfect = true;
-					}
-					if (this->isPerfect && (GetAsyncKeyState('Z') & 0x8000))
-					{
-						object.playerState.ChangeState(CharacterNormalState::MOTION15);
-					}
-					if (this->isPerfect && (GetAsyncKeyState('X') & 0x8000))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
-					}
-					if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::GUARDUP)))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
+					this->isPerfect = true;
+				}
+				if (this->isPerfect && (GetAsyncKeyState('Z') & 0x8000))
 				{
-					object.ResetDamageCounter();
-					return true;
-				},
-					guardFunc
+					object.playerState.ChangeState(CharacterNormalState::MOTION15);
+				}
+				if (this->isPerfect && (GetAsyncKeyState('X') & 0x8000))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
+				}
+				if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::GUARDUP)))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				object.ResetDamageCounter();
+				return true;
+			},
+				guardFunc
 				);
 		}
 		//점프업
@@ -298,35 +298,35 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::JUMPUP),
 				[](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPUP), true);
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPUP), true);
+			},
 				[](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				if (GetAsyncKeyState(VK_LEFT))
 				{
-					auto& player = static_cast<Player&>(object);
-					if (GetAsyncKeyState(VK_LEFT))
-					{
-						object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
-					}
-					else if (GetAsyncKeyState(VK_RIGHT))
-					{
-						object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
-					}
-					if (((GetAsyncKeyState('Z') & 0x8000) || (GetAsyncKeyState('X') & 0x8000)))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1));
-					}
-					if (object.transform.GetJumpPower() < 0)
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPDOWN));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
+					object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+				}
+				else if (GetAsyncKeyState(VK_RIGHT))
 				{
-					return true;
-				},
-					jumphittedFunc
+					object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+				}
+				if (((GetAsyncKeyState('Z') & 0x8000) || (GetAsyncKeyState('X') & 0x8000)))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1));
+				}
+				if (object.transform.GetJumpPower() < 0)
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPDOWN));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				return true;
+			},
+				jumphittedFunc
 				);
 		}
 		//점프다운
@@ -334,35 +334,35 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::JUMPDOWN),
 				[](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPDOWN), true);
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPDOWN), true);
+			},
 				[](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				if (GetAsyncKeyState(VK_LEFT))
 				{
-					auto& player = static_cast<Player&>(object);
-					if (GetAsyncKeyState(VK_LEFT))
-					{
-						object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
-					}
-					else if (GetAsyncKeyState(VK_RIGHT))
-					{
-						object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
-					}
-					if (((GetAsyncKeyState('X')) || (GetAsyncKeyState('Z'))))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1));
-					}
-					if (!object.transform.GetJumpState())
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::LANDING));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
+					object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+				}
+				else if (GetAsyncKeyState(VK_RIGHT))
 				{
-					return true;
-				},
-					jumphittedFunc
+					object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+				}
+				if (((GetAsyncKeyState('X')) || (GetAsyncKeyState('Z'))))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1));
+				}
+				if (!object.transform.GetJumpState())
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::LANDING));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				return true;
+			},
+				jumphittedFunc
 				);
 		}
 		//착지
@@ -370,24 +370,24 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::LANDING),
 				[](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::LANDING), true);
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::LANDING), true);
+			},
 				[](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::LANDING)))
 				{
-					auto& player = static_cast<Player&>(object);
-					if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::LANDING)))
-					{
-						object.transform.SetY(600);
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
-				{
-					return true;
-				},
-					hittedFunc
+					object.transform.SetY(600);
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				return true;
+			},
+				hittedFunc
 				);
 		}
 		//점프공격 1
@@ -395,51 +395,51 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1),
 				[this](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1), true);
-					this->delayCounter = 0.0f;
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1), true);
+				this->delayCounter = 0.0f;
+			},
 				[this](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				static bool snd = true;
+				if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 				{
-					auto& player = static_cast<Player&>(object);
-					static bool snd = true;
-					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
-					{
-						SoundSystem::PlaySound("atk-slash");
-						snd = false;
-					}
-					if (this->playerAnime.GetCurrentFrame() > 2)
-					{
-						snd = true;
-					}
-					if (GetAsyncKeyState(VK_LEFT))
-					{
-						object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
-					}
-					else if (GetAsyncKeyState(VK_RIGHT))
-					{
-						object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
-					}
-					if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1)) * 0.75 && ((GetAsyncKeyState('X') & 0x8000) || (GetAsyncKeyState('Z') & 0x8000)))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2));
-					}
-					if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1)))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPUP));
-					}
-					if (!object.transform.GetJumpState())
-					{
-						object.transform.SetY(600);
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
+					SoundSystem::PlaySound("atk-slash");
+					snd = false;
+				}
+				if (this->playerAnime.GetCurrentFrame() > 2)
 				{
-					return true;
-				},
-					jumphittedFunc
+					snd = true;
+				}
+				if (GetAsyncKeyState(VK_LEFT))
+				{
+					object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+				}
+				else if (GetAsyncKeyState(VK_RIGHT))
+				{
+					object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+				}
+				if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1)) * 0.75 && ((GetAsyncKeyState('X') & 0x8000) || (GetAsyncKeyState('Z') & 0x8000)))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2));
+				}
+				if (object.playerAnime.isEnd(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1)))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPUP));
+				}
+				if (!object.transform.GetJumpState())
+				{
+					object.transform.SetY(600);
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				return true;
+			},
+				jumphittedFunc
 				);
 		}
 		//점프공격 2
@@ -447,47 +447,47 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2),
 				[this](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2), true);
-					this->delayCounter = 0.0f;
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2), true);
+				this->delayCounter = 0.0f;
+			},
 				[this](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				static bool snd = true;
+				if (this->playerAnime.GetCurrentFrame() == 2 && snd)
 				{
-					auto& player = static_cast<Player&>(object);
-					static bool snd = true;
-					if (this->playerAnime.GetCurrentFrame() == 2 && snd)
-					{
-						SoundSystem::PlaySound("atk-slash");
-						snd = false;
-					}
-					if (this->playerAnime.GetCurrentFrame() > 2)
-					{
-						snd = true;
-					}
-					if (GetAsyncKeyState(VK_LEFT))
-					{
-						object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
-					}
-					else if (GetAsyncKeyState(VK_RIGHT))
-					{
-						object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
-					}
-					if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2)) * 0.7 && ((GetAsyncKeyState('Z') & 0x8000) || (GetAsyncKeyState('X') & 0x8000)))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1));
-					}
-					if (!object.transform.GetJumpState())
-					{
-						object.transform.SetY(600);
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
+					SoundSystem::PlaySound("atk-slash");
+					snd = false;
+				}
+				if (this->playerAnime.GetCurrentFrame() > 2)
 				{
-					return true;
-				},
-					jumphittedFunc
+					snd = true;
+				}
+				if (GetAsyncKeyState(VK_LEFT))
+				{
+					object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+				}
+				else if (GetAsyncKeyState(VK_RIGHT))
+				{
+					object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);
+				}
+				if (this->delayCounter > object.playerAnime.GetTotalTime(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK2)) * 0.7 && ((GetAsyncKeyState('Z') & 0x8000) || (GetAsyncKeyState('X') & 0x8000)))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::JUMPATTACK1));
+				}
+				if (!object.transform.GetJumpState())
+				{
+					object.transform.SetY(600);
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				return true;
+			},
+				jumphittedFunc
 				);
 		}
 
@@ -496,32 +496,32 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::GUARDON),
 				[](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON), true);
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON), true);
+			},
 				[this](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				if (this->isPerfect && (GetAsyncKeyState('X') & 0x8000))
 				{
-					auto& player = static_cast<Player&>(object);
-					if (this->isPerfect && (GetAsyncKeyState('X') & 0x8000))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
-					}
-					if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(VK_RIGHT))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDMOVE));
-					}
-					else if (!GetAsyncKeyState(VK_DOWN))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDUP));
+				}
+				if (GetAsyncKeyState(VK_LEFT) || GetAsyncKeyState(VK_RIGHT))
 				{
-					object.ResetDamageCounter();
-					return true;
-				},
-					guardFunc
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDMOVE));
+				}
+				else if (!GetAsyncKeyState(VK_DOWN))
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				object.ResetDamageCounter();
+				return true;
+			},
+				guardFunc
 				);
 		}
 
@@ -530,36 +530,36 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				static_cast<CharacterNormalState>(PlayerState::GUARDMOVE),
 				[](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDMOVE), true);
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDMOVE), true);
+			},
 				[](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				if (!GetAsyncKeyState(VK_DOWN))
 				{
-					auto& player = static_cast<Player&>(object);
-					if (!GetAsyncKeyState(VK_DOWN))
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
-					}
-					else if (GetAsyncKeyState(VK_LEFT))
-					{
-						object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
-					}
-					else if (GetAsyncKeyState(VK_RIGHT))
-					{
-						object.transform.Translate(Vec2DF::Right() * 150.0f * deltaTime);
-					}
-					else
-					{
-						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON));
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+				}
+				else if (GetAsyncKeyState(VK_LEFT))
 				{
-					object.ResetDamageCounter();
-					return true;
-				},
-					guardFunc
+					object.transform.Translate(Vec2DF::Left() * 150.0f * deltaTime);
+				}
+				else if (GetAsyncKeyState(VK_RIGHT))
+				{
+					object.transform.Translate(Vec2DF::Right() * 150.0f * deltaTime);
+				}
+				else
+				{
+					object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::GUARDON));
+				}
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				object.ResetDamageCounter();
+				return true;
+			},
+				guardFunc
 				);
 		}
 		//피격
@@ -567,67 +567,67 @@ Player::Player(GameFramework* framework, const std::string& tag)
 			this->playerState.SetStateFunctionSet(
 				CharacterNormalState::MOTION13,
 				[](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(CharacterNormalState::MOTION13, true);
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(CharacterNormalState::MOTION13, true);
+			},
 				[](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				if (object.playerAnime.isEnd(CharacterNormalState::MOTION13))
 				{
-					auto& player = static_cast<Player&>(object);
-					if (object.playerAnime.isEnd(CharacterNormalState::MOTION13))
-					{
-						object.playerState.ChangeState(CharacterNormalState::IDLE);
-					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
-				{
-					object.ResetDamageCounter();
-					return true;
+					object.playerState.ChangeState(CharacterNormalState::IDLE);
 				}
-				);
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				object.ResetDamageCounter();
+				return true;
+			}
+			);
 		}
 		//다운
 		{
 			this->playerState.SetStateFunctionSet(
 				CharacterNormalState::MOTION14,
 				[](GameStateObject & object) -> void
-				{
-					auto& player = static_cast<Player&>(object);
-					object.playerAnime.ChangeState(CharacterNormalState::MOTION14, true);
-				},
+			{
+				auto& player = static_cast<Player&>(object);
+				object.playerAnime.ChangeState(CharacterNormalState::MOTION14, true);
+			},
 				[this, framework](GameStateObject & object, float deltaTime) -> void
+			{
+				auto& player = static_cast<Player&>(object);
+				if (object.playerAnime.isEnd(CharacterNormalState::MOTION14) && !object.transform.GetJumpState())
 				{
-					auto& player = static_cast<Player&>(object);
-					if (object.playerAnime.isEnd(CharacterNormalState::MOTION14) && !object.transform.GetJumpState())
+					object.transform.SetY(600);
+					if (this->hp == 0)
 					{
-						object.transform.SetY(600);
-						if (this->hp == 0)
-						{
-							object.Deactive();
-							framework->OnGameover();
-						}
-						else 
-						{
-							object.playerState.ChangeState(CharacterNormalState::IDLE);
-						}
+						object.Deactive();
+						framework->OnGameover();
 					}
-				},
-					[](GameStateObject & object, CharacterNormalState state) -> bool
-				{
-					object.ResetDamageCounter();
-					return true;
+					else
+					{
+						object.playerState.ChangeState(CharacterNormalState::IDLE);
+					}
 				}
-				);
+			},
+				[](GameStateObject & object, CharacterNormalState state) -> bool
+			{
+				object.ResetDamageCounter();
+				return true;
+			}
+			);
 			//카운터
 			{
 				this->playerState.SetStateFunctionSet(
 					CharacterNormalState::MOTION15,
 					[this](GameStateObject & object) -> void
-					{
-						auto& player = static_cast<Player&>(object);
-						object.playerAnime.ChangeState(CharacterNormalState::MOTION15, true);
-						this->delayCounter = 0;
-					},
+				{
+					auto& player = static_cast<Player&>(object);
+					object.playerAnime.ChangeState(CharacterNormalState::MOTION15, true);
+					this->delayCounter = 0;
+				},
 					[this](GameStateObject & object, float deltaTime) -> void
 					{
 						auto& player = static_cast<Player&>(object);
@@ -660,6 +660,32 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						return true;
 					}
 						);
+			}
+			// skill
+			{
+				this->playerState.SetStateFunctionSet(
+					CharacterNormalState::MOTION16,
+					[this](GameStateObject & object) -> void
+				{
+					auto& player = static_cast<Player&>(object);
+					object.playerAnime.ChangeState(CharacterNormalState::MOTION16, true);
+					this->delayCounter = 0;
+				},
+					[this](GameStateObject & object, float deltaTime) -> void
+				{
+					if (object.playerAnime.isEnd())
+					{
+						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));
+					}
+				},
+					[](GameStateObject & object, CharacterNormalState state) -> bool
+				{
+					
+					object.ResetDamageCounter();
+					return true;
+				},
+					hittedFunc
+					);
 			}
 		}
 
@@ -713,7 +739,7 @@ void Player::Damaged(int hp, bool off)
 	{
 		if (this->playerState.GetCurrentState() != CharacterNormalState::MOTION14)
 		{
-			this->transform.KnockBack((Vec2DF::Left() * hp * 1/2) + (Vec2DF::Up() * 300.0f));
+			this->transform.KnockBack((Vec2DF::Left() * hp * 1 / 2) + (Vec2DF::Up() * 300.0f));
 			this->playerState.ChangeState(CharacterNormalState::MOTION14);
 		}
 	}

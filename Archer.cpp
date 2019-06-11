@@ -22,6 +22,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
+			framework->CheckCollision(object);
 			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0)) { // 바운드 처리되면 삭제
 				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
 				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
