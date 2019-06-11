@@ -285,5 +285,5 @@ void Lancer::Damaged(int hp, bool off)
 	auto thisState = this->playerState.GetCurrentState();
 	GameStateObject::Damaged(hp, off);
 	this->hit++;
-	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-def");
+	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-lancer");
 }

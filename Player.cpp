@@ -127,6 +127,10 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					{
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
 					}
+					else if (GetAsyncKeyState('U') & 0x8000)
+					{
+						framework->ToggleOnePunchMan();
+					}
 					else if (GetAsyncKeyState(VK_LEFT) & 0x8000)
 					{
 						object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
@@ -654,8 +658,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					{
 						object.ResetDamageCounter();
 						return true;
-					},
-						guardFunc
+					}
 						);
 			}
 		}
@@ -675,6 +678,12 @@ void Player::Update(float deltaTime)
 		this->transform.Update(deltaTime);
 		this->playerAnime.Update(deltaTime);
 		this->playerState.Update(deltaTime);
+		if (this->framework->GetOnePunchMan())
+		{
+			static float time = 0;
+			time += deltaTime;
+			this->framework->container->playerHpBar->ChangeDest((sin(time)+1)/2);
+		}
 	}
 }
 
@@ -691,6 +700,10 @@ void Player::Damaged(int hp, bool off)
 {
 	auto thisState = this->playerState.GetCurrentState();
 	if ((thisState == static_cast<CharacterNormalState>(PlayerState::GUARDUP) || thisState == static_cast<CharacterNormalState>(PlayerState::GUARDMOVE) || thisState == static_cast<CharacterNormalState>(PlayerState::GUARDON)) && hp < 40)
+	{
+		hp = 0;
+	}
+	if (this->framework->GetOnePunchMan())
 	{
 		hp = 0;
 	}

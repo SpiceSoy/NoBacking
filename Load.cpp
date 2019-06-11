@@ -1655,6 +1655,8 @@ void GameFramework::Load()
 		ResourceManager::AddImages("ui-title", titleDir + L"csr.png", true);
 		ResourceManager::AddImages("ui-died", titleDir + L"dark.png", true);
 		ResourceManager::AddImages("ui-died", titleDir + L"died-text.png", true);
+		ResourceManager::AddImages("ui-died", titleDir + L"clear.png", true);
+		ResourceManager::AddImages("ui-help", titleDir + L"help.png", true);
 
 	}
 #pragma endregion

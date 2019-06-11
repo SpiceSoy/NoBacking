@@ -24,6 +24,7 @@ GameFramework::~GameFramework()
 void GameFramework::Start()
 {
 	this->GameStart = true;
+	this->isCleared = false;
 	if (this->container != nullptr)
 	{
 		delete this->container;
@@ -196,9 +197,19 @@ void GameFramework::OnGameover()
 	static_cast<UIDied*>(this->uiObjects[0].get())->OnDied();
 }
 
+void GameFramework::OnGameClear()
+{
+	static_cast<UIDied*>(this->uiObjects[0].get())->OnClear();
+	this->isCleared = true;
+}
+
 
 void GameFramework::MouseInput(Vec2DU MousePos, UINT iMessage)
 {
+	for (auto& ui : this->uiObjects)
+	{
+		ui->GetMouseInput(MousePos, iMessage);
+	}
 }
 
 Player& GameFramework::GetPlayer() const

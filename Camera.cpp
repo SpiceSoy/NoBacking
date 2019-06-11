@@ -6,11 +6,17 @@ static auto TiledF = [](float& a, float imageSize, float count)
 {
 	if (a > imageSize * (count / 2))
 	{
-		a -= imageSize * count;
+		while (a > imageSize* (count / 2))
+		{
+			a -= imageSize * count;
+		}
 	}
 	else if (a < -imageSize * (count / 2))
 	{
-		a += imageSize * count;
+		while (a < -imageSize * (count / 2))
+		{
+			a += imageSize * count;
+		}
 	}
 };
 
@@ -18,11 +24,17 @@ static auto TiledI = [](int& a, int imageSize, int count)
 {
 	if (a > imageSize * (count / 2))
 	{
-		a -= imageSize * count;
+		while (a > imageSize * (count / 2))
+		{
+			a -= imageSize * count;
+		}
 	}
 	else if (a < -imageSize * (count / 2))
 	{
-		a += imageSize * count;
+		while (a < -imageSize * (count / 2))
+		{
+			a += imageSize * count;
+		}
 	}
 };
 

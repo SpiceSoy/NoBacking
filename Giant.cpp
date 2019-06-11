@@ -195,11 +195,12 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		{
 			object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
 		},
-			[this](GameStateObject & object, float deltaTime) -> void
+			[this,framework](GameStateObject & object, float deltaTime) -> void
 		{
 			if (object.playerAnime.isEnd())
 			{
 				this->Deactive();
+				framework->OnGameClear();
 			}
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool

@@ -14,6 +14,8 @@ private:
 	bool isDrawCollision = false;
 	bool GameStart = false;
 	bool tast = false;
+	bool isCheat = false;
+	bool isCleared = false;
 	std::vector<std::unique_ptr<UIObject>> uiObjects;
 public:
 	ObjectContainer* container = nullptr;
@@ -41,5 +43,9 @@ public:
 	void EnemyHPBar(float destPercent, void* enemyPtr, const std::string& markTag);
 	bool GetGameState() const { return this->GameStart; }
 	void SetGameState(bool gameState) { (gameState) ? (Start()): (End()); }
+	void SetOnePunchMan(bool On) { this->isCheat = On; }
+	void ToggleOnePunchMan() { this->isCheat = ! this->isCheat; }
+	bool GetOnePunchMan() const { return this->isCheat; }
 	void OnGameover();
+	void OnGameClear();
 };

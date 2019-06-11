@@ -35,7 +35,7 @@ void UIDied::Update(float deltaTime)
 void UIDied::Draw(PaintInfo info)
 {
 	auto& died = ResourceManager::GetImages("ui-died")->at(0).img;
-	auto& text = ResourceManager::GetImages("ui-died")->at(1).img;
+	auto& text = (!isClear) ? (ResourceManager::GetImages("ui-died")->at(1).img) : (ResourceManager::GetImages("ui-died")->at(2).img);
 	if (On)
 	{
 		if (alpha == 1.0f || isOffed)
@@ -52,7 +52,14 @@ void UIDied::Draw(PaintInfo info)
 		}
 		else 
 		{
-			text->Draw(info.hdc, 0, 0);
+			if (isClear)
+			{
+				text->AlphaBlend(info.hdc, 0, 0, 255 * alpha);
+			}
+			else 
+			{
+				text->Draw(info.hdc, 0, 0);
+			}
 		}
 	}
 }
