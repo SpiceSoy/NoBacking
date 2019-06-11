@@ -18,5 +18,6 @@ public:
 	virtual void Deactive() { this->isActive = false; };
 	virtual bool GetActiveState() const { return this->isActive; }
 	virtual void Reset() {};
+	virtual void GetMouseInput(Vec2DU MousePos, UINT iMessage) {};
 	bool GetisActive() const { return isActive; }
 };

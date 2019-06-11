@@ -77,7 +77,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		{
 			for (auto& res : result)
 			{
-				if (res.second == "weapon")
+				if (res.second == "weapon" && res.first != "bound")
 				{
 					this->Damaged(5);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
@@ -183,7 +183,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		{
 			for (auto& res : result)
 			{
-				if (res.second == "weapon" && this->isCanDamaged)
+				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
 					this->Damaged(5);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
@@ -208,11 +208,12 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		{
 			object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
 		},
-			[this](GameStateObject & object, float deltaTime) -> void
+			[this,framework](GameStateObject & object, float deltaTime) -> void
 		{
 			if (object.playerAnime.isEnd())
 			{
 				this->Deactive();
+				framework->OnGameClear();
 			}
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
@@ -267,7 +268,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		{
 			for (auto& res : result)
 			{
-				if (res.second == "weapon" && this->isCanDamaged)
+				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
 					this->Damaged(5);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
@@ -332,7 +333,7 @@ Giant::Giant(GameFramework* framework, const std::string& tag)
 		{
 			for (auto& res : result)
 			{
-				if (res.second == "weapon" && this->isCanDamaged)
+				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
 					this->Damaged(5);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);

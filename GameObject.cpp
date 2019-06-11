@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GameObject.h"
+#include "GameFramework.h"
 
 bool GameStateObject::isCollision(GameStateObject& other)
 {
@@ -43,6 +44,10 @@ void GameStateObject::Damaged(int hp , bool off)
 {
 	if (isCanDamaged)
 	{
+		if (this->framework->GetOnePunchMan())
+		{
+			hp *= 10000;
+		}
 		this->hp = Utill::clamp(this->hp - hp, 0, INT_MAX);
 		if (!off) { this->isCanDamaged = false; }
 	}

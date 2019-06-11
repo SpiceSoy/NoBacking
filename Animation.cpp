@@ -84,7 +84,7 @@ const subImage& Animation::GetCurrentImage() const
 	else 
 	{
 		auto ani = this->GetCurrentAnimation();
-		return this->frameImageData->at(ani.subImageStartIndex + thisTime / (frameTime));
+		return this->frameImageData->at(ani.subImageStartIndex + (int)(thisTime / (frameTime)));
 	}
 }
 
