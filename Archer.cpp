@@ -22,13 +22,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 		},
 			[framework](GameStateObject & object, float deltaTime) -> void
 		{
-			framework->CheckCollision(object);
-			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0)) { // 바운드 처리되면 삭제
-				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
-				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
-				object.transform.Translate(moveVec * 100.0f * deltaTime);
-			}
-			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 100)
+			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 100)
 			{
 				int r = rand() % 50;
 				if (r == 0) {
@@ -37,7 +31,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 				else {
 					object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
 					auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
-					object.transform.Translate(moveVec * -350.0f * deltaTime);
+					object.transform.Translate(moveVec * -330.0f * deltaTime);
 				}
 			}
 			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 300)
@@ -52,6 +46,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 			else {
 				object.playerAnime.ChangeState(CharacterNormalState::IDLE);
 			}
+			framework->CheckCollision(object);
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
 		{
@@ -61,7 +56,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 		{
 			for (auto& res : result)
 			{
-				if (res.second == "weapon" && res.first !="bound")
+				if (res.second == "weapon" && res.first != "bound")
 				{
 					this->Damaged(5);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
@@ -99,7 +94,6 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 			return true;
 		}
 		);
-
 		this->playerState.SetStateFunctionSet
 		(
 			CharacterNormalState::MOTION3, // 다운
@@ -235,7 +229,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 
 void Archer::Update(float deltaTime)
 {
-	if (isActive && (this->transform.Position - this->framework->GetPlayer().transform.Position).GetScaleSq() < (1380*1380))
+	if (isActive && (this->transform.Position - this->framework->GetPlayer().transform.Position).GetScaleSq() < (1380 * 1380))
 	{
 		this->playerAnime.Update(deltaTime);
 		this->playerState.Update(deltaTime);

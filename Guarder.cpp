@@ -17,75 +17,75 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 		(
 			CharacterNormalState::IDLE,
 			[](GameStateObject & object) -> void
-			{
-				object.playerAnime.ChangeState(CharacterNormalState::IDLE);
-			},
+		{
+			object.playerAnime.ChangeState(CharacterNormalState::IDLE);
+		},
 			[framework](GameStateObject & object, float deltaTime) -> void
-			{
-				if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0) || abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 80) { // 바운드 처리되면 삭제
-					object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
-					auto moveVec = (Vec2DF::Right());
-					object.transform.Translate(moveVec * 100.0f * deltaTime);
+		{
+			if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x > 0) || abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 80) { // 바운드 처리되면 삭제
+				object.playerAnime.ChangeState(CharacterNormalState::MOTION1); // 이동
+				auto moveVec = (Vec2DF::Right());
+				object.transform.Translate(moveVec * 100.0f * deltaTime);
+			}
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 80 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150) {
+				int r = rand() % 3;
+				if (r == 0) {
+					object.playerState.ChangeState(CharacterNormalState::MOTION6);
 				}
-				else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 80 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150) {
-					int r = rand() % 3;
-					if (r == 0) {
-						object.playerState.ChangeState(CharacterNormalState::MOTION6);
-					}
-					else if (r == 1) {
-						object.playerState.ChangeState(CharacterNormalState::MOTION3);
-					}
-					else {
-						object.playerState.ChangeState(CharacterNormalState::MOTION2);
-					}
-				}
-				else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150)
-				{
-					int r = rand() % 2;
-
-					if (r == 0) {
-						object.playerState.ChangeState(CharacterNormalState::MOTION6);
-					}
-					else if (r == 1) {
-						object.playerState.ChangeState(CharacterNormalState::MOTION3);
-					}
-				}
-				else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 600 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 150)
-				{
-					object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
-					auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
-					object.transform.Translate(moveVec * 100.0f * deltaTime);
+				else if (r == 1) {
+					object.playerState.ChangeState(CharacterNormalState::MOTION3);
 				}
 				else {
-					object.playerAnime.ChangeState(CharacterNormalState::IDLE);
+					object.playerState.ChangeState(CharacterNormalState::MOTION2);
 				}
-			},
-				[](GameStateObject & object, CharacterNormalState state) -> bool
+			}
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 150)
 			{
-				return true;
-			},
-				[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
+				int r = rand() % 2;
+
+				if (r == 0) {
+					object.playerState.ChangeState(CharacterNormalState::MOTION6);
+				}
+				else if (r == 1) {
+					object.playerState.ChangeState(CharacterNormalState::MOTION3);
+				}
+			}
+			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 600 && abs((framework->GetPlayer().transform.Position - object.transform.Position).x) > 150)
 			{
-				for (auto& res : result)
+				object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
+				auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
+				object.transform.Translate(moveVec * 100.0f * deltaTime);
+			}
+			else {
+				object.playerAnime.ChangeState(CharacterNormalState::IDLE);
+			}
+		},
+			[](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			return true;
+		},
+			[this, framework](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
+		{
+			for (auto& res : result)
+			{
+				if (res.second == "weapon" && res.first != "bound")
 				{
-					if (res.second == "weapon" && res.first != "bound")
+					this->Damaged(5);
+					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
+					SoundSystem::PlaySound("hit-cut");
+					if (hp == 0)
 					{
-						this->Damaged(5);
-						framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
-						SoundSystem::PlaySound("hit-cut");
-						if (hp == 0)
-						{
-							object.playerState.ChangeState(CharacterNormalState::MOTION5);
-						}
-						else
-						{
-							object.playerState.ChangeState(CharacterNormalState::MOTION4);
-						}
+						object.playerState.ChangeState(CharacterNormalState::MOTION5);
+					}
+					else
+					{
+						object.playerState.ChangeState(CharacterNormalState::MOTION4);
 					}
 				}
-				return false;
 			}
-			);
+			return false;
+		}
+		);
 		this->playerState.SetStateFunctionSet
 		(
 			CharacterNormalState::MOTION2,
@@ -198,7 +198,7 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 			return true;
 		}
 		);
-		
+
 		this->playerState.SetStateFunctionSet
 		(
 			CharacterNormalState::MOTION5,
@@ -289,5 +289,5 @@ void Guarder::Damaged(int hp, bool off)
 		hp = 0;
 	}
 	GameStateObject::Damaged(hp, off);
-	this->framework->EnemyHPBar(this->hp / this->maxHP,this,"mark-def");
+	this->framework->EnemyHPBar(this->hp / this->maxHP, this, "mark-def");
 }
