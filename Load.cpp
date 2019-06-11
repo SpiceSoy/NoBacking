@@ -948,8 +948,8 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION1] = subAnim;
 		//피격
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.25;
-		subAnim.subImageStartIndex = 14;
+		subAnim.scale = 0.5;
+		subAnim.subImageStartIndex = 15;
 		subAnim.subImageSize = 2;
 		motionContainer[CharacterNormalState::MOTION2] = subAnim;
 		//다운
@@ -960,14 +960,14 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION3] = subAnim;
 		//공격1(원거리)
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.5;
-		subAnim.subImageStartIndex = 22;
+		subAnim.scale = 0.6;
+		subAnim.subImageStartIndex = 21;
 		subAnim.subImageSize = 11;
 		motionContainer[CharacterNormalState::MOTION4] = subAnim;
 		//공격2(근거리)
 		subAnim.next = CharacterNormalState::None;
 		subAnim.scale = 1.0;
-		subAnim.subImageStartIndex = 33;
+		subAnim.subImageStartIndex = 32;
 		subAnim.subImageSize = 7;
 		motionContainer[CharacterNormalState::MOTION5] = subAnim;
 		ResourceManager::AddMotion("archer", std::move(motionContainer));

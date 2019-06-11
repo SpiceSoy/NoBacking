@@ -61,7 +61,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 		{
 			for (auto& res : result)
 			{
-				if (res.second == "weapon")
+				if (res.second == "weapon" && res.first != "bound")
 				{
 					this->Damaged(5);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
@@ -103,7 +103,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 		{
 			for (auto& res : result)
 			{
-				if (res.second == "weapon" && this->isCanDamaged)
+				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
 					this->Damaged(5);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
@@ -149,7 +149,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 		{
 			for (auto& res : result)
 			{
-				if (res.second == "weapon" && this->isCanDamaged)
+				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
 					this->Damaged(5);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
@@ -215,7 +215,7 @@ Lancer::Lancer(GameFramework* framework, const std::string& tag)
 		{
 			for (auto& res : result)
 			{
-				if (res.second == "weapon" && this->isCanDamaged)
+				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
 					this->Damaged(5);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
