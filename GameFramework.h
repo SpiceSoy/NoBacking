@@ -15,9 +15,9 @@ private:
 	bool GameStart = false;
 	bool tast = false;
 	bool isCheat = false;
-	bool isCleared = false;
 	std::vector<std::unique_ptr<UIObject>> uiObjects;
 public:
+	bool isCleared = false;
 	ObjectContainer* container = nullptr;
 	GameFramework();
 	~GameFramework();

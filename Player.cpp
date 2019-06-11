@@ -123,9 +123,14 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					{
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::SLASH));
 					}
+
 					else if (GetAsyncKeyState('X') & 0x8000)
 					{
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
+					}
+					else if (GetAsyncKeyState('C') & 0x8000)
+					{
+						object.playerState.ChangeState(CharacterNormalState::MOTION16);
 					}
 					else if (GetAsyncKeyState('U') & 0x8000)
 					{
@@ -136,7 +141,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
 						object.transform.Translate(Vec2DF::Left() * 350.0f * deltaTime);
 					}
-					else if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+					else if (GetAsyncKeyState(VK_RIGHT) & 0x8000 || framework->isCleared)
 					{
 						object.playerAnime.ChangeState(CharacterNormalState::MOTION2);
 						object.transform.Translate(Vec2DF::Right() * 350.0f * deltaTime);

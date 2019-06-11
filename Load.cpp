@@ -599,6 +599,17 @@ void GameFramework::Load()
 		ResourceManager::AddCollision("character", ChaColDir + "124.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "125.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "126.txt");
+		//½ºÅ³
+		ResourceManager::AddCollision("character", ChaColDir + "74.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "75.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "76.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "77.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "78.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "79.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "80.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "81.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "82.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "83.txt");
 	}
 #pragma endregion
 
