@@ -110,12 +110,22 @@ void GameFramework::Draw(PaintInfo info)
 	}
 }
 
-bool GameFramework::CheckCollision(GameStateObject& obj)
+bool GameFramework::CheckCollision(GameStateObject& obj, bool isMonsters)
 {
 	if (this->container != nullptr)
 	{
-		//return this->container->player->CheckCollision(*this->container->sandBag);
-		return this->container->player->CheckCollision(obj);
+		if (isMonsters)
+		{
+			return this->container->player->CheckCollision(obj);
+		}
+		else 
+		{
+			bool ret = false;
+			for (auto& mon : this->container->Monsters)
+			{
+				ret |= mon->CheckCollision(obj);
+			}
+		}
 	}
 }
 
