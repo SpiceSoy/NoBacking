@@ -80,7 +80,7 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 				}
 				if (res.second == "weapon" && res.first != "bound")
 				{
-					this->Damaged(5);
+					this->Damaged(10);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
@@ -134,7 +134,7 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 				}
 				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
-					this->Damaged(5);
+					this->Damaged(10);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
@@ -191,7 +191,7 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 				}
 				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
-					this->Damaged(5);
+					this->Damaged(10);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
