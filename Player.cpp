@@ -676,8 +676,21 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					object.playerAnime.ChangeState(CharacterNormalState::MOTION16, true);
 					this->delayCounter = 0;
 				},
-					[this](GameStateObject & object, float deltaTime) -> void
+					[this, framework](GameStateObject & object, float deltaTime) -> void
 				{
+					static bool cnt = false;
+					if (object.playerAnime.GetCurrentFrame() == 7)
+					{
+						if (!cnt)
+						{
+							framework->OnEffect("flashslash1", object.transform.Position + Vec2DF::Up() * 50);
+						}
+						cnt = true;
+					}
+					else
+					{
+						cnt = false;
+					}
 					if (object.playerAnime.isEnd())
 					{
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::IDLE));

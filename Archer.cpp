@@ -31,7 +31,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 				else {
 					object.playerAnime.ChangeState(CharacterNormalState::MOTION1);
 					auto moveVec = ((framework->GetPlayer().transform.Position - object.transform.Position).x < 0) ? (Vec2DF::Left()) : (Vec2DF::Right());
-					object.transform.Translate(moveVec * -330.0f * deltaTime);
+					object.transform.Translate(moveVec * -200.0f * deltaTime);
 				}
 			}
 			else if (abs((framework->GetPlayer().transform.Position - object.transform.Position).x) < 300)
@@ -58,7 +58,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 			{
 				if (res.second == "weapon" && res.first != "bound")
 				{
-					this->Damaged(5);
+					this->Damaged(19);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
@@ -152,7 +152,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 			{
 				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
-					this->Damaged(5);
+					this->Damaged(19);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
@@ -198,7 +198,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 			{
 				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
-					this->Damaged(5);
+					this->Damaged(19);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)

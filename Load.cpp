@@ -959,7 +959,7 @@ void GameFramework::Load()
 		motionContainer[CharacterNormalState::MOTION1] = subAnim;
 		//ÇÇ°Ý
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 0.7;
+		subAnim.scale = 0.4;
 		subAnim.subImageStartIndex = 14;
 		subAnim.subImageSize = 2;
 		motionContainer[CharacterNormalState::MOTION2] = subAnim;
@@ -1635,39 +1635,69 @@ void GameFramework::Load()
 	}
 	// Player Skill1
 	{
-		const std::wstring flashslashDir = L"Resources/effect/flashslash/";
-		const std::string flashslashColDir = "Resources/effect1/flashslash/col/";
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash0.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash1.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash2.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash3.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash4.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash5.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash6.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash7.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash8.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash9.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash10.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash11.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash12.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash13.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash14.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash15.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash16.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash17.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash18.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash19.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash20.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash21.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash22.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash23.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash24.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash25.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash26.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash27.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash28.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash29.png");
-		ResourceManager::AddImages("flashslash", flashslashDir + L"FlashSlash30.png");
+		const std::wstring flashslash1Dir = L"Resources/effect/flashslash1/";
+		const std::string flashslash1ColDir = "Resources/effect1/flashslash1/col/";
+		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"8.png", true);
+		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"9.png", true);
+		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"10.png", true);
+		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"11.png", true);
+		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"12.png", true);
+		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"13.png", true);
+		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"14.png", true);
+		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"15.png", true);
+		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"16.png", true);
+		MotionContainer motionContainer;
+
+		subAnimation subAnim;
+		subAnim.next = CharacterNormalState::None;
+		subAnim.scale = 0.8;
+		subAnim.subImageStartIndex = 0;
+		subAnim.subImageSize = 9;
+		motionContainer[CharacterNormalState::IDLE] = subAnim;
+		ResourceManager::AddMotion("flashslash1", std::move(motionContainer));
+
+		subEffect subEffect;
+		subEffect.ImageTag = "flashslash1";
+		subEffect.MotionTag = "flashslash1";
+		subEffect.CollisionTag = "flashslash1";
+		subEffect.ImageMargin = Vec2DF{ 500,60 };
+		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		Effect::AddEffect("flashslash1", std::move(subEffect));
+	}
+	{
+		const std::wstring flashslash2Dir = L"Resources/effect/flashslash2/";
+		const std::string flashslash2ColDir = "Resources/effect1/flashslash2/col/";
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash0.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash1.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash2.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash3.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash4.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash5.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash6.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash7.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash8.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash9.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash10.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash11.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash12.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash13.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash14.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash15.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash16.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash17.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash18.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash19.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash20.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash21.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash22.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash23.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash24.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash25.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash26.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash27.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash28.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash29.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash30.png");
 		MotionContainer motionContainer;
 
 		subAnimation subAnim;
@@ -1676,16 +1706,17 @@ void GameFramework::Load()
 		subAnim.subImageStartIndex = 0;
 		subAnim.subImageSize = 30;
 		motionContainer[CharacterNormalState::IDLE] = subAnim;
-		ResourceManager::AddMotion("flashslash", std::move(motionContainer));
+		ResourceManager::AddMotion("flashslash2", std::move(motionContainer));
 
 		subEffect subEffect;
-		subEffect.ImageTag = "flashslash";
-		subEffect.MotionTag = "flashslash";
-		subEffect.CollisionTag = "flashslash";
+		subEffect.ImageTag = "flashslash2";
+		subEffect.MotionTag = "flashslash2";
+		subEffect.CollisionTag = "flashslash2";
 		subEffect.ImageMargin = Vec2DF{ 350,280 };
 		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
-		Effect::AddEffect("flashslash", std::move(subEffect));
+		Effect::AddEffect("flashslash2", std::move(subEffect));
 	}
+	
 #pragma endregion
 
 #pragma region BackGround
