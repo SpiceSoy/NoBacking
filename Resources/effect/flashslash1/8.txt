@@ -1,4 +1,4 @@
 C:\Users\Soy\OneDrive\NoBacking\NoBacking\Resources\effect\flashslash1\8.png -900 -45
-0 0 1800 1
-skill0 0 0 1800 1
-1 0 5 1800 100
+0 0 5000 1
+skill0 0 0 5000 1
+2 0 5 1800 100

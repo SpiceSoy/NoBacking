@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameObject.h"
 #include "GameFramework.h"
+#include <vector>
 
 bool GameStateObject::isCollision(GameStateObject& other)
 {
@@ -14,7 +15,7 @@ bool GameStateObject::isCollision(GameStateObject& other)
 	}
 }
 
-bool GameStateObject::CheckCollision(GameStateObject& other)
+bool GameStateObject::CheckCollision(GameStateObject& other,bool ignoreChangeFrame)
 {
 	if (isActive)
 	{
@@ -22,7 +23,7 @@ bool GameStateObject::CheckCollision(GameStateObject& other)
 		auto thisPos = this->transform.Position;
 		auto& otherCol = other.playerAnime.GetCurrentCollisionData();
 		auto otherPos = other.transform.Position;
-		if (this->playerAnime.isChangeFrame() || other.playerAnime.isChangeFrame())
+		if (ignoreChangeFrame || this->playerAnime.isChangeFrame() || other.playerAnime.isChangeFrame())
 		{
 			if (CollisionCollection::CheckIntersect(thisCol, thisPos, this, otherCol, otherPos, &other))
 			{

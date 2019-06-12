@@ -94,7 +94,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 				auto& player = static_cast<Player&>(object);
 				object.playerAnime.ChangeState(CharacterNormalState::IDLE);
 			},
-				[framework, &Costume = (this->Costume)](GameStateObject & object, float deltaTime) -> void
+				[framework, &Costume = (this->Costume),this](GameStateObject & object, float deltaTime) -> void
 				{
 					auto& player = static_cast<Player&>(object);
 					if (GetAsyncKeyState(VK_DOWN) & 0x8000)
@@ -129,9 +129,10 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					{
 						object.playerState.ChangeState(static_cast<CharacterNormalState>(PlayerState::STING));
 					}
-					else if (GetAsyncKeyState('C') & 0x8000)
+					else if (this->curskillCool <= 0 && GetAsyncKeyState('C') & 0x8000)
 					{
 						object.playerState.ChangeState(CharacterNormalState::MOTION16);
+						this->curskillCool = this->skillCool;
 					}
 					else if (GetAsyncKeyState('U') & 0x8000)
 					{
@@ -724,11 +725,13 @@ void Player::Update(float deltaTime)
 		this->transform.Update(deltaTime);
 		this->playerAnime.Update(deltaTime);
 		this->playerState.Update(deltaTime);
+		this->curskillCool -= deltaTime;
 		if (this->framework->GetOnePunchMan())
 		{
 			static float time = 0;
 			time += deltaTime;
 			this->framework->container->playerHpBar->ChangeDest((sin(time)+1)/2);
+			this->curskillCool = 0;
 		}
 	}
 }

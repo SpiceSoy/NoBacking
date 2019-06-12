@@ -47,7 +47,7 @@ void GameFramework::Create()
 	//this->container = new ObjectContainer(this);
 	this->uiObjects.emplace_back(std::make_unique<UIDied>(this));
 	this->uiObjects.emplace_back(std::make_unique<UITitle>(this));
-	SoundSystem::PlaySound("zero");
+	//SoundSystem::PlaySound("zero");
 
 }
 
@@ -67,13 +67,13 @@ void GameFramework::Update(float deltaTime)
 	if (GameStart)
 	{
 		this->container->player->Update(deltaTime);
-		for (auto& ptr : container->Monsters)
-		{
-			ptr->Update(deltaTime);
-		}
 		for (size_t i = 0; i < container->Effects.size(); i++)
 		{
 			container->Effects[i]->Update(deltaTime);
+		}
+		for (auto& ptr : container->Monsters)
+		{
+			ptr->Update(deltaTime);
 		}
 		//UI
 		this->container->playerHpBar->Update(deltaTime);
@@ -123,8 +123,9 @@ bool GameFramework::CheckCollision(GameStateObject& obj, bool isMonsters)
 			bool ret = false;
 			for (auto& mon : this->container->Monsters)
 			{
-				ret |= mon->CheckCollision(obj);
+				obj.CheckCollision(*mon,true);
 			}
+			return ret;
 		}
 	}
 }

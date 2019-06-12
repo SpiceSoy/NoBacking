@@ -89,9 +89,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR ipszCmdPa
 			INT64 elapsed = Endtime.QuadPart - BeginTime.QuadPart;
 			double duringtime = (double)elapsed / (double)Frequency.QuadPart;
 
+			QueryPerformanceCounter(&BeginTime);
 			framework.Update(static_cast<float>(duringtime));
 			updatecnt++;
-			QueryPerformanceCounter(&BeginTime);
 			InvalidateRect(hWnd, nullptr, false);
 		}
 	}

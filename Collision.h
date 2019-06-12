@@ -40,6 +40,7 @@ struct CollisionResult
 		{
 			assert(false);
 		}
+		return ResultVector();
 	}
 	static void clear() { result.clear(); reverseResult.clear(); }
 	static void reserve(size_t size) { result.reserve(size); reverseResult.reserve(size);}

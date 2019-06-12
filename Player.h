@@ -13,6 +13,8 @@ public:
 	int Costume = 0;
 	float ground = 600;
 	float maxHP = 100;
+	float skillCool = 30.0f;
+	float curskillCool = 0.0f;
 	bool isPerfect = false;
 	virtual void Update(float deltaTime) override;
 	virtual void Draw(PaintInfo info) override;

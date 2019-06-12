@@ -38,7 +38,7 @@ public:
 	virtual void Reset() {};
 	//true == StopMove, false == Moving
 	virtual bool isCollision(GameStateObject& other);
-	virtual bool CheckCollision(GameStateObject& other);
+	virtual bool CheckCollision(GameStateObject& other, bool ignoreChangeFrame = false);
 	virtual void Damaged(int hp, bool off = false);
 	virtual void ResetDamageCounter();
 	bool CheckBound(GameStateObject& other, bool justCheck = false);

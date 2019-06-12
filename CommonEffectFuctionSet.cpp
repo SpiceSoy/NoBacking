@@ -42,7 +42,10 @@ StateFunction CommonEffectFunctionSet::GetSkillSet(GameFramework* framework)
 			}
 			if (framework != nullptr)
 			{
-				framework->CheckCollision(object,false);
+				if (object.playerAnime.isChangeFrame())
+				{
+					framework->CheckCollision(object,false);
+				}
 			}
 		},
 			[](GameStateObject & object, CharacterNormalState state) -> bool
