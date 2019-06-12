@@ -58,7 +58,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 			{
 				if (res.second == "weapon" && res.first != "bound")
 				{
-					this->Damaged(19);
+					this->Damaged(24);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
@@ -152,7 +152,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 			{
 				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
-					this->Damaged(19);
+					this->Damaged(24);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
@@ -198,7 +198,7 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 			{
 				if (res.second == "weapon" && this->isCanDamaged && res.first != "bound")
 				{
-					this->Damaged(19);
+					this->Damaged(24);
 					framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-cut");
 					if (hp == 0)
