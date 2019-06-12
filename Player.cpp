@@ -4,6 +4,7 @@
 #include "GameFramework.h"
 #include "PlayerHPBar.h"
 #include "ObjectContainer.h"
+#include "Camera.h"
 #include <atlimage.h>
 Player::Player(GameFramework* framework, const std::string& tag)
 	:GameStateObject(framework, tag)
@@ -679,11 +680,12 @@ Player::Player(GameFramework* framework, const std::string& tag)
 					[this, framework](GameStateObject & object, float deltaTime) -> void
 				{
 					static bool cnt = false;
-					if (object.playerAnime.GetCurrentFrame() == 7)
+					if (object.playerAnime.GetCurrentFrame() == 15)
 					{
 						if (!cnt)
 						{
-							framework->OnEffect("flashslash1", object.transform.Position + Vec2DF::Up() * 50);
+							framework->OnEffect("flashslash1", Vec2DF{framework->GetCamera().GetMinPosition().x + 900 ,object.transform.Position.y} + Vec2DF::Up() * 50);
+							//framework->OnEffect("flashslash1", object.transform.Position + Vec2DF::Up() * 50);
 						}
 						cnt = true;
 					}

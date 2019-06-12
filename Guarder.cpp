@@ -82,6 +82,17 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 						object.playerState.ChangeState(CharacterNormalState::MOTION4);
 					}
 				}
+				if (res.second == "skill0")
+				{
+					framework->OnEffect("flashslash2", this->transform.Position + Vec2DF::Up() * 50);
+				}
+				if (res.second == "skill1")
+				{
+					ResetDamageCounter();
+					SoundSystem::PlaySound("hit-cut");
+					object.Damaged(1); if (hp == 0) { object.playerState.ChangeState(CharacterNormalState::MOTION5); }
+
+				}
 			}
 			return false;
 		}
@@ -128,6 +139,17 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 				{
 					other.Damaged(8);
 				}
+				if (res.second == "skill0")
+				{
+					framework->OnEffect("flashslash2", this->transform.Position + Vec2DF::Up() * 50);
+				}
+				if (res.second == "skill1")
+				{
+					ResetDamageCounter();
+					SoundSystem::PlaySound("hit-cut");
+					object.Damaged(1); if (hp == 0) { object.playerState.ChangeState(CharacterNormalState::MOTION5); }
+
+				}
 			}
 			return false;
 		}
@@ -173,6 +195,17 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 				if (res.first == "weapon" && res.second == "body")
 				{
 					other.Damaged(8);
+				}
+				if (res.second == "skill0")
+				{
+					framework->OnEffect("flashslash2", this->transform.Position + Vec2DF::Up() * 50);
+				}
+				if (res.second == "skill1")
+				{
+					ResetDamageCounter();
+					SoundSystem::PlaySound("hit-cut");
+					object.Damaged(1); if (hp == 0) { object.playerState.ChangeState(CharacterNormalState::MOTION5); }
+
 				}
 			}
 			return false;
@@ -248,6 +281,17 @@ Guarder::Guarder(GameFramework* framework, const std::string& tag)
 					framework->OnEffect("shield", this->transform.Position + Vec2DF::Up() * 50 + Vec2DF::Left() * 30);
 					//framework->OnEffect("effect1", this->transform.Position + Vec2DF::Up() * 50);
 					SoundSystem::PlaySound("hit-steel");
+				}
+				if (res.second == "skill0")
+				{
+					framework->OnEffect("flashslash2", this->transform.Position + Vec2DF::Up() * 50);
+				}
+				if (res.second == "skill1")
+				{
+					ResetDamageCounter();
+					SoundSystem::PlaySound("hit-cut");
+					object.Damaged(1); if (hp == 0) { object.playerState.ChangeState(CharacterNormalState::MOTION5); }
+
 				}
 			}
 			return false;

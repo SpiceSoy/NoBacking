@@ -27,6 +27,34 @@ StateFunction CommonEffectFunctionSet::GetOnceAnimeSet()
 		}
 	));
 }
+StateFunction CommonEffectFunctionSet::GetSkillSet(GameFramework* framework)
+{
+	return std::move(StateFunction(
+		[](GameStateObject & object) -> void
+		{
+			object.playerAnime.ChangeState(CharacterNormalState::IDLE, true);
+		},
+		[framework](GameStateObject & object, float deltaTime) -> void
+		{
+			if (object.playerAnime.isEnd())
+			{
+				object.Deactive();
+			}
+			if (framework != nullptr)
+			{
+				framework->CheckCollision(object,false);
+			}
+		},
+			[](GameStateObject & object, CharacterNormalState state) -> bool
+		{
+			return true;
+		},
+			[](GameStateObject & object, GameStateObject & other, const CollisionResult::ResultVector & result)->bool
+		{
+			return false;
+		}
+		));
+}
 
 StateFunction CommonEffectFunctionSet::GetMoveingEffectSet(const Vec2DF& moveVector , StateFunction::CollisionFuncType colFunc,GameFramework* framework)
 {

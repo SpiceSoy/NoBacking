@@ -127,6 +127,13 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character1", C1Dir + L"76.png");
 		ResourceManager::AddImages("character1", C1Dir + L"77.png");
 		ResourceManager::AddImages("character1", C1Dir + L"78.png");
+		ResourceManager::AddImages("character1", C1Dir + L"78.png");
+		ResourceManager::AddImages("character1", C1Dir + L"78.png");
+		ResourceManager::AddImages("character1", C1Dir + L"78.png");
+		ResourceManager::AddImages("character1", C1Dir + L"78.png");
+		ResourceManager::AddImages("character1", C1Dir + L"78.png");
+		ResourceManager::AddImages("character1", C1Dir + L"78.png");
+		ResourceManager::AddImages("character1", C1Dir + L"78.png");
 		ResourceManager::AddImages("character1", C1Dir + L"79.png");
 		ResourceManager::AddImages("character1", C1Dir + L"80.png");
 		ResourceManager::AddImages("character1", C1Dir + L"81.png");
@@ -249,6 +256,13 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character2", C2Dir + L"75.png");
 		ResourceManager::AddImages("character2", C2Dir + L"76.png");
 		ResourceManager::AddImages("character2", C2Dir + L"77.png");
+		ResourceManager::AddImages("character2", C2Dir + L"78.png");
+		ResourceManager::AddImages("character2", C2Dir + L"78.png");
+		ResourceManager::AddImages("character2", C2Dir + L"78.png");
+		ResourceManager::AddImages("character2", C2Dir + L"78.png");
+		ResourceManager::AddImages("character2", C2Dir + L"78.png");
+		ResourceManager::AddImages("character2", C2Dir + L"78.png");
+		ResourceManager::AddImages("character2", C2Dir + L"78.png");
 		ResourceManager::AddImages("character2", C2Dir + L"78.png");
 		ResourceManager::AddImages("character2", C2Dir + L"79.png");
 		ResourceManager::AddImages("character2", C2Dir + L"80.png");
@@ -373,6 +387,13 @@ void GameFramework::Load()
 		ResourceManager::AddImages("character3", C3Dir + L"76.png");
 		ResourceManager::AddImages("character3", C3Dir + L"77.png");
 		ResourceManager::AddImages("character3", C3Dir + L"78.png");
+		ResourceManager::AddImages("character3", C3Dir + L"78.png");
+		ResourceManager::AddImages("character3", C3Dir + L"78.png");
+		ResourceManager::AddImages("character3", C3Dir + L"78.png");
+		ResourceManager::AddImages("character3", C3Dir + L"78.png");
+		ResourceManager::AddImages("character3", C3Dir + L"78.png");
+		ResourceManager::AddImages("character3", C3Dir + L"78.png");
+		ResourceManager::AddImages("character3", C3Dir + L"78.png");
 		ResourceManager::AddImages("character3", C3Dir + L"79.png");
 		ResourceManager::AddImages("character3", C3Dir + L"80.png");
 		ResourceManager::AddImages("character3", C3Dir + L"81.png");
@@ -483,8 +504,8 @@ void GameFramework::Load()
 		//skill
 		subAnim.next = CharacterNormalState::None;
 		subAnim.subImageStartIndex = 93;
-		subAnim.scale = 1.0;
-		subAnim.subImageSize = 10;
+		subAnim.scale = 2.0;
+		subAnim.subImageSize = 17;
 		motionContainer[CharacterNormalState::MOTION16] = subAnim;
 		ResourceManager::AddMotion("character", std::move(motionContainer));
 	}
@@ -604,6 +625,13 @@ void GameFramework::Load()
 		ResourceManager::AddCollision("character", ChaColDir + "75.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "76.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "77.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "78.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "78.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "78.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "78.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "78.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "78.txt");
+		ResourceManager::AddCollision("character", ChaColDir + "78.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "78.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "79.txt");
 		ResourceManager::AddCollision("character", ChaColDir + "80.txt");
@@ -1636,7 +1664,7 @@ void GameFramework::Load()
 	// Player Skill1
 	{
 		const std::wstring flashslash1Dir = L"Resources/effect/flashslash1/";
-		const std::string flashslash1ColDir = "Resources/effect1/flashslash1/col/";
+		const std::string flashslash1ColDir = "Resources/effect/flashslash1/";
 		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"8.png", true);
 		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"9.png", true);
 		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"10.png", true);
@@ -1646,6 +1674,15 @@ void GameFramework::Load()
 		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"14.png", true);
 		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"15.png", true);
 		ResourceManager::AddImages("flashslash1", flashslash1Dir + L"16.png", true);
+		ResourceManager::AddCollision("flashslash1", flashslash1ColDir + "8.txt");
+		ResourceManager::AddCollision("flashslash1", flashslash1ColDir + "9.txt");
+		ResourceManager::AddCollision("flashslash1", flashslash1ColDir + "10.txt");
+		ResourceManager::AddCollision("flashslash1", flashslash1ColDir + "11.txt");
+		ResourceManager::AddCollision("flashslash1", flashslash1ColDir + "12.txt");
+		ResourceManager::AddCollision("flashslash1", flashslash1ColDir + "13.txt");
+		ResourceManager::AddCollision("flashslash1", flashslash1ColDir + "14.txt");
+		ResourceManager::AddCollision("flashslash1", flashslash1ColDir + "15.txt");
+		ResourceManager::AddCollision("flashslash1", flashslash1ColDir + "16.txt");
 		MotionContainer motionContainer;
 
 		subAnimation subAnim;
@@ -1660,51 +1697,52 @@ void GameFramework::Load()
 		subEffect.ImageTag = "flashslash1";
 		subEffect.MotionTag = "flashslash1";
 		subEffect.CollisionTag = "flashslash1";
-		subEffect.ImageMargin = Vec2DF{ 500,60 };
-		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		subEffect.ImageMargin = Vec2DF{ 900,45 };
+		subEffect.func = CommonEffectFunctionSet::GetSkillSet(this);
 		Effect::AddEffect("flashslash1", std::move(subEffect));
+
 	}
 	{
 		const std::wstring flashslash2Dir = L"Resources/effect/flashslash2/";
-		const std::string flashslash2ColDir = "Resources/effect1/flashslash2/col/";
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash0.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash1.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash2.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash3.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash4.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash5.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash6.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash7.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash8.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash9.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash10.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash11.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash12.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash13.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash14.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash15.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash16.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash17.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash18.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash19.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash20.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash21.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash22.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash23.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash24.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash25.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash26.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash27.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash28.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash29.png");
-		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"FlashSlash30.png");
+		const std::string flashslash2ColDir = "Resources/effect/flashslash2/";
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"0.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"1.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"2.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"3.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"4.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"5.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"6.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"7.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"8.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"9.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"10.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"11.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"12.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"13.png");
+		ResourceManager::AddImages("flashslash2", flashslash2Dir + L"14.png");
+
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "0.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "1.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "2.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "3.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "4.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "5.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "6.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "7.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "8.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "9.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "10.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "11.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "12.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "13.txt");
+		ResourceManager::AddCollision("flashslash2", flashslash2ColDir + "14.txt");
 		MotionContainer motionContainer;
 
 		subAnimation subAnim;
 		subAnim.next = CharacterNormalState::None;
-		subAnim.scale = 1.5;
+		subAnim.scale = 1;
 		subAnim.subImageStartIndex = 0;
-		subAnim.subImageSize = 30;
+		subAnim.subImageSize = 15;
 		motionContainer[CharacterNormalState::IDLE] = subAnim;
 		ResourceManager::AddMotion("flashslash2", std::move(motionContainer));
 
@@ -1712,8 +1750,8 @@ void GameFramework::Load()
 		subEffect.ImageTag = "flashslash2";
 		subEffect.MotionTag = "flashslash2";
 		subEffect.CollisionTag = "flashslash2";
-		subEffect.ImageMargin = Vec2DF{ 350,280 };
-		subEffect.func = CommonEffectFunctionSet::GetOnceAnimeSet();
+		subEffect.ImageMargin = Vec2DF{ 375,251 };
+		subEffect.func = CommonEffectFunctionSet::GetSkillSet(this);
 		Effect::AddEffect("flashslash2", std::move(subEffect));
 	}
 	

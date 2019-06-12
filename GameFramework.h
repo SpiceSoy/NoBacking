@@ -28,7 +28,7 @@ public:
 	void Update(float deltaTime);
 	void Draw(PaintInfo info);
 	void Load();
-	bool CheckCollision(GameStateObject& obj);
+	bool CheckCollision(GameStateObject& obj,bool isMonsters = true);
 	bool CheckBound(GameStateObject& obj);
 	void ToggleDebugCollision();
 	void OnEffect(const std::string& tag, const Vec2DF& Position, bool isCopy = false);

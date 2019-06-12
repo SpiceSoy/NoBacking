@@ -70,6 +70,17 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 						object.playerState.ChangeState(CharacterNormalState::MOTION2);
 					}
 				}
+				if (res.second == "skill0")
+				{
+					framework->OnEffect("flashslash2", this->transform.Position + Vec2DF::Up() * 50);
+				}
+				if (res.second == "skill1")
+				{
+					ResetDamageCounter();
+					SoundSystem::PlaySound("hit-cut");
+					object.Damaged(1); if (hp == 0) { object.playerState.ChangeState(CharacterNormalState::MOTION3); }
+
+				}
 			}
 			return false;
 		}
@@ -168,6 +179,16 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 				{
 					//other.Damaged(0);
 				}
+				if (res.second == "skill0")
+				{
+					framework->OnEffect("flashslash2", this->transform.Position + Vec2DF::Up() * 50);
+				}
+				if (res.second == "skill1")
+				{
+					ResetDamageCounter();
+					SoundSystem::PlaySound("hit-cut");
+					object.Damaged(1); if (hp == 0) { object.playerState.ChangeState(CharacterNormalState::MOTION3); }
+				}
 			}
 			return false;
 		}
@@ -213,6 +234,20 @@ Archer::Archer(GameFramework* framework, const std::string& tag)
 				if (res.first == "weapon" && res.second == "body")
 				{
 					other.Damaged(15);
+				}
+				if (res.second == "skill0")
+				{
+					framework->OnEffect("flashslash2", this->transform.Position + Vec2DF::Up() * 50);
+				}
+				if (res.second == "skill1")
+				{
+					ResetDamageCounter();
+					SoundSystem::PlaySound("hit-cut");
+					object.Damaged(1);
+					if (hp == 0)
+					{
+						object.playerState.ChangeState(CharacterNormalState::MOTION3);
+					}
 				}
 			}
 			return false;
