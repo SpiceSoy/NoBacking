@@ -30,13 +30,6 @@ void SoundSystem::Load(const std::string& tag, const std::string& dir, bool isBg
 
 void SoundSystem::OnDestory()
 {
-	//for (auto& pr : SoundSystem::Sounds)
-	//{
-	//	if (pr.second.second != nullptr)
-	//	{
-	//		pr.second.second->release();
-	//	}
-	//}
 	if (SoundSystem::System != nullptr)
 	{
 		SoundSystem::System->close();

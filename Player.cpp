@@ -134,7 +134,7 @@ Player::Player(GameFramework* framework, const std::string& tag)
 						object.playerState.ChangeState(CharacterNormalState::MOTION16);
 						this->curskillCool = this->skillCool;
 					}
-					else if (GetAsyncKeyState('U') & 0x8000)
+					else if (GetAsyncKeyState('U') & 0x0001)
 					{
 						framework->ToggleOnePunchMan();
 					}

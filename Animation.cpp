@@ -159,7 +159,6 @@ const CollisionCollection& Animation::GetCurrentCollisionData() const
 	if (motionData == nullptr || motionData->empty())
 	{
 		return CollisionCollection::Null();
-		//return this->frameCollision->at(0);
 	}
 	else
 	{
